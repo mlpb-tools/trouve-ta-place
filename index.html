@@ -3,1022 +3,1098 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trouve Ta Place · LS4YOU</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;0,800;0,900;1,700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<title>LS4YOU – Trouve ta place sur le territoire</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --r:#C62828;--rl:#FFEBEE;--rm:#EF5350;
-  --j:#FFD600;--jl:#FFF9C4;--jd:#F57F17;
-  --t:#00BCD4;--tl:#E0F7FA;--td:#00838F;
-  --m:#66BB6A;--ml:#E8F5E9;--md:#2E7D32;
-  --o:#FF8C42;--ol:#FFF3E0;--od:#E65100;
-  --v:#9C27B0;--vl:#F3E5F5;--vd:#6A1B9A;
-  --dk:#1A1A2E;--gr:#607D8B;--bg:#F4F6F9;--wh:#fff;
-  --rose-bg:#FCE4EC;--rose-bd:#E91E63;--rose-tx:#880E4F;
-  --vert-bg:#E8F5E9;--vert-bd:#43A047;--vert-tx:#1B5E20;
-  --vio-bg:#EDE7F6;--vio-bd:#7B1FA2;--vio-tx:#4A148C;
-  --ora-bg:#FFF3E0;--ora-bd:#EF6C00;--ora-tx:#BF360C;
-  --bleu-bg:#E3F2FD;--bleu-bd:#1565C0;--bleu-tx:#0D47A1;
-  --gre-bg:#E8F5E9;--gre-bd:#2E7D32;--gre-tx:#1B5E20;
-  --org-bg:#FFF3E0;--org-bd:#E65100;--org-tx:#BF360C;
-  --pin-bg:#FCE4EC;--pin-bd:#AD1457;--pin-tx:#880E4F;
-  --bar:58px;--ap:340px;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;overflow:hidden;font-family:'Nunito Sans',sans-serif;background:var(--bg);color:var(--dk);}
+  :root {
+    --red:    #C62828;
+    --yellow: #FFD54F;
+    --turq:   #00ACC1;
+    --mint:   #66BB6A;
+    --orange: #FB8C00;
+    --violet: #7E57C2;
+    --teal:   #00838F;  /* couleur principale de cet atelier */
+    --teal-l: #E0F7FA;
+    --black:  #1A1A1A;
+    --white:  #FFFDF7;
+    --shadow: 4px 4px 0px var(--black);
+    --shadow-lg: 6px 6px 0px var(--black);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Montserrat',sans-serif; background:var(--white); color:var(--black); min-height:100vh; }
 
-/* ─── TOPBAR ──────────────────────────── */
-#bar{
-  position:fixed;top:0;left:0;right:0;height:var(--bar);z-index:200;
-  background:var(--wh);border-bottom:3px solid var(--r);
-  box-shadow:0 2px 10px rgba(0,0,0,.08);
-  display:flex;align-items:center;
-}
-.bar-logo{
-  padding:0 16px;font-family:'Nunito',sans-serif;font-weight:900;font-size:14px;
-  color:var(--r);white-space:nowrap;border-right:2px solid #eee;height:100%;
-  display:flex;align-items:center;gap:6px;flex-shrink:0;
-}
-#bar-steps{
-  flex:1;display:flex;gap:2px;overflow-x:auto;padding:0 10px;
-  align-items:center;height:100%;
-}
-#bar-steps::-webkit-scrollbar{height:0;}
-.step-btn{
-  font-family:'Nunito',sans-serif;font-weight:700;font-size:11.5px;
-  padding:5px 12px;border-radius:7px;border:none;
-  background:transparent;color:var(--gr);cursor:pointer;
-  transition:background .15s,color .15s;white-space:nowrap;
-  display:flex;align-items:center;gap:4px;
-}
-.step-btn:hover{background:var(--bg);}
-.step-btn.on{background:var(--r);color:#fff;}
-.step-btn.on.orig{background:var(--td);}
-.step-btn.done{color:var(--md);}
-.step-btn .sn{
-  width:17px;height:17px;border-radius:50%;
-  background:rgba(0,0,0,.1);
-  display:flex;align-items:center;justify-content:center;font-size:10px;
-}
-.step-btn.on .sn{background:rgba(255,255,255,.25);}
+  /* ── PROGRESS BAR ── */
+  .progress-bar-wrapper { background:#fff; border-bottom:3px solid var(--black); padding:10px 20px; position:sticky; top:0; z-index:100; display:flex; align-items:center; gap:14px; }
+  .progress-steps { display:flex; gap:6px; flex:1; }
+  .step-dot { flex:1; height:8px; border-radius:4px; border:1.5px solid var(--black); background:#e0e0e0; transition:background 0.3s; }
+  .step-dot.active { background:var(--teal); }
+  .progress-label { font-family:'Poppins',sans-serif; font-size:0.72rem; font-weight:700; color:var(--black); white-space:nowrap; }
 
-.bar-right{
-  display:flex;align-items:center;gap:7px;padding:0 12px;
-  border-left:2px solid #eee;height:100%;flex-shrink:0;
-}
-.vbadge{
-  font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;
-  padding:3px 10px;border-radius:6px;white-space:nowrap;
-}
-#timer{
-  font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;
-  color:var(--dk);min-width:56px;text-align:center;
-}
-#timer.warn{color:var(--r);animation:blink .7s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.35;}}
-.tb{
-  font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;
-  padding:5px 11px;border-radius:7px;border:none;cursor:pointer;transition:all .15s;
-}
-.tb-play{background:var(--r);color:#fff;}
-.tb-pause{background:var(--j);color:var(--dk);}
-.tb-rst{background:var(--bg);color:var(--gr);}
-#btn-anim{
-  font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;
-  padding:5px 11px;border-radius:7px;border:2px solid var(--r);
-  background:var(--rl);color:var(--r);cursor:pointer;transition:all .15s;
-  display:none;align-items:center;gap:5px;white-space:nowrap;
-}
-#btn-anim.open{background:var(--r);color:#fff;}
-#btn-anim:hover{background:var(--r);color:#fff;}
+  /* ── PARCOURS BANNER ── */
+  .parcours-banner { background:var(--black); padding:10px 24px; display:flex; align-items:center; gap:0; overflow-x:auto; scrollbar-width:none; }
+  .parcours-banner::-webkit-scrollbar { display:none; }
+  .parc-step { display:flex; align-items:center; gap:10px; padding:7px 16px 7px 12px; font-family:'Poppins',sans-serif; font-size:0.68rem; font-weight:700; color:rgba(255,255,255,0.45); white-space:nowrap; }
+  .parc-step .pnum { background:rgba(255,255,255,0.12); width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.65rem; flex-shrink:0; }
+  .parc-step.current { color:var(--yellow); }
+  .parc-step.current .pnum { background:var(--yellow); color:var(--black); }
+  .parc-arrow { color:rgba(255,255,255,0.25); font-size:0.7rem; flex-shrink:0; }
 
-/* ─── APP SHELL ───────────────────────── */
-#app{
-  position:fixed;top:var(--bar);left:0;right:0;bottom:0;
-  display:flex;overflow:hidden;
-}
+  /* ── HEADER ── */
+  .header { background:var(--teal); padding:0; position:relative; overflow:hidden; }
+  .header::before { content:''; position:absolute; top:-40px; right:-60px; width:220px; height:220px; border-radius:50%; background:rgba(255,255,255,0.07); pointer-events:none; }
+  .header-inner { max-width:960px; margin:0 auto; padding:32px 24px 28px; display:flex; align-items:center; gap:20px; }
+  .header-badge { background:var(--yellow); border:3px solid var(--black); box-shadow:var(--shadow); border-radius:50%; width:64px; height:64px; display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0; }
+  .header-text h1 { font-family:'Poppins',sans-serif; font-size:2rem; font-weight:900; color:#fff; line-height:1.1; letter-spacing:-0.5px; }
+  .header-text h1 span { color:var(--yellow); }
+  .header-meta { display:flex; gap:10px; margin-top:8px; flex-wrap:wrap; }
+  .tag { background:rgba(255,255,255,0.18); border:2px solid rgba(255,255,255,0.5); border-radius:20px; padding:4px 12px; font-size:0.75rem; font-weight:600; color:#fff; }
+  .tag.solid { background:var(--yellow); color:var(--black); border-color:var(--black); box-shadow:2px 2px 0 var(--black); }
+  .tag.dark { background:rgba(0,0,0,0.2); border-color:rgba(255,255,255,0.3); }
 
-/* ─── MAIN PANE ─────────────────────── */
-#main{
-  flex:1;overflow-y:auto;min-width:0;
-}
-#main::-webkit-scrollbar{width:5px;}
-#main::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px;}
+  /* ── CITATION ── */
+  .citation { background:var(--black); max-width:960px; margin:0 auto; padding:16px 28px; display:flex; align-items:flex-start; gap:12px; }
+  .citation-mark { color:var(--yellow); font-family:'Poppins',sans-serif; font-size:2.5rem; font-weight:900; line-height:1; margin-top:-4px; flex-shrink:0; }
+  .citation-text { color:rgba(255,255,255,0.82); font-size:0.82rem; font-style:italic; line-height:1.6; }
 
-/* ─── PANELS ────────────────────────── */
-.pnl{display:none;padding:22px 24px 48px;}
-.pnl.on{display:block;}
-.wrap{max-width:820px;margin:0 auto;}
+  /* ── MAIN ── */
+  .main { max-width:960px; margin:0 auto; padding:28px 20px 60px; }
 
-/* ─── HOME ──────────────────────────── */
-.home-hero{text-align:center;padding:32px 16px 24px;}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:5px;
-  background:var(--rl);color:var(--r);
-  font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;
-  letter-spacing:2px;text-transform:uppercase;
-  padding:4px 14px;border-radius:50px;margin-bottom:14px;
-}
-.home-hero h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(26px,5vw,50px);line-height:1.1;margin-bottom:8px;}
-.hl-r{color:var(--r);}.hl-t{color:var(--t);}
-.home-hero p{font-size:14px;color:var(--gr);max-width:440px;margin:0 auto 24px;line-height:1.6;}
+  /* ── INTRO CARD ── */
+  .intro-card { background:var(--teal-l); border:3px solid var(--black); box-shadow:var(--shadow-lg); border-radius:16px; padding:22px 28px; margin-bottom:32px; display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media(max-width:640px){ .intro-card { grid-template-columns:1fr; } }
+  .intro-card h2 { font-family:'Poppins',sans-serif; font-size:0.95rem; font-weight:800; color:var(--teal); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+  .intro-card p { font-size:0.84rem; line-height:1.6; color:#333; }
+  .meta-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  .meta-pill { background:var(--white); border:2px solid var(--black); border-radius:8px; padding:5px 12px; font-size:0.78rem; font-weight:700; display:flex; align-items:center; gap:6px; box-shadow:2px 2px 0 var(--black); }
+  .meta-pill.teal   { background:var(--teal-l); }
+  .meta-pill.yellow { background:#FFFDE7; }
+  .meta-pill.mint   { background:#F1F8E9; }
+  .meta-pill.orange { background:#FFF3E0; }
 
-.vswitch{
-  display:grid;grid-template-columns:1fr 1fr;
-  border-radius:14px;overflow:hidden;border:2px solid #E0E0E0;
-  box-shadow:0 3px 16px rgba(0,0,0,.07);max-width:580px;margin:0 auto 24px;
-}
-.vt{
-  padding:18px 14px;text-align:center;cursor:pointer;border:none;
-  transition:all .2s;background:var(--wh);
-  display:flex;flex-direction:column;align-items:center;gap:5px;
-}
-.vt:first-child{border-right:2px solid #E0E0E0;}
-.vt .vi{font-size:28px;}
-.vt .vn{font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;}
-.vt .vs{font-size:10px;color:var(--gr);line-height:1.4;}
-.vt.sls{background:var(--rl);}
-.vt.sls .vn{color:var(--r);}
-.vt.sls .vs{color:var(--rm);}
-.vt.sorig{background:var(--tl);}
-.vt.sorig .vn{color:var(--td);}
-.vt.sorig .vs{color:var(--td);}
+  /* ── PHASE WRAPPER ── */
+  .phase { background:#fff; border:3px solid var(--black); box-shadow:var(--shadow-lg); border-radius:16px; overflow:hidden; margin-bottom:28px; }
+  .phase-header { padding:16px 24px; display:flex; align-items:center; gap:14px; border-bottom:3px solid var(--black); }
+  .phase-header.teal   { background:var(--teal);   color:#fff; }
+  .phase-header.mint   { background:var(--mint);   color:#fff; }
+  .phase-header.turq   { background:var(--turq);   color:#fff; }
+  .phase-header.yellow { background:var(--yellow); color:var(--black); }
+  .phase-header.orange { background:var(--orange); color:#fff; }
+  .phase-header.red    { background:var(--red);    color:#fff; }
+  .phase-header.black  { background:var(--black);  color:var(--yellow); }
+  .phase-icon { font-size:1.8rem; flex-shrink:0; }
+  .phase-title { flex:1; }
+  .phase-title h3 { font-family:'Poppins',sans-serif; font-weight:800; font-size:1rem; line-height:1.2; }
+  .phase-title small { font-size:0.75rem; opacity:0.85; font-weight:600; }
+  .phase-duration { background:rgba(0,0,0,0.15); border-radius:20px; padding:4px 12px; font-size:0.75rem; font-weight:700; white-space:nowrap; }
+  .phase-body { padding:22px 24px; }
 
-.vpanel{display:none;}
-.vpanel.on{display:block;}
+  /* ── AXE BADGES ── */
+  .axe-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .axe-badge { border:2px solid var(--black); border-radius:20px; padding:4px 12px; font-size:0.72rem; font-weight:700; box-shadow:2px 2px 0 var(--black); display:flex; align-items:center; gap:5px; }
+  .axe-badge.perso  { background:#EDE7F6; color:var(--violet); }
+  .axe-badge.bienetre { background:#E0F7FA; color:var(--teal); }
+  .axe-badge.valori { background:#FFF3E0; color:var(--orange); }
+  .axe-badge.ressou { background:#E0F7FA; color:var(--teal); }
 
-.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-bottom:20px;}
-.chip{font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;padding:5px 13px;border-radius:50px;display:flex;align-items:center;gap:4px;border:2px solid transparent;}
-.cr{background:var(--rl);color:var(--r);border-color:var(--rm);}
-.ct{background:var(--tl);color:var(--td);border-color:var(--t);}
-.cj{background:var(--jl);color:var(--jd);border-color:var(--j);}
-.cm{background:var(--ml);color:var(--md);border-color:var(--m);}
+  /* ── TIP BOX ── */
+  .tip-box { border:2px solid var(--black); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); margin-top:16px; }
+  .tip-box-header { background:var(--black); color:var(--yellow); padding:9px 16px; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.8rem; display:flex; align-items:center; gap:8px; }
+  .tip-box-body { padding:14px 16px; background:#FFFDE7; font-size:0.79rem; line-height:1.6; color:#333; }
+  .tip-box-body ul { list-style:none; padding:0; display:flex; flex-direction:column; gap:5px; }
+  .tip-box-body ul li { display:flex; align-items:flex-start; gap:6px; }
+  .tip-box.teal .tip-box-header { background:var(--teal); }
+  .tip-box.teal .tip-box-body { background:var(--teal-l); }
 
-.ls4g{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;max-width:560px;margin:0 auto 24px;}
-.ls4g2{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;max-width:560px;margin:0 auto 24px;}
-@media(max-width:540px){.ls4g,.ls4g2{grid-template-columns:1fr 1fr;}}
-.ls4i{border-radius:12px;padding:14px 10px;text-align:center;}
-.ls4i .ico{font-size:26px;margin-bottom:5px;}
-.ls4i .nm{font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;margin-bottom:3px;}
-.ls4i .sb{font-size:10px;opacity:.7;line-height:1.4;}
+  /* ── PLT4U CARDS ── */
+  .cards-plt4u { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px; margin-top:14px; }
+  .plt-card { border:3px solid var(--black); border-radius:14px; overflow:hidden; box-shadow:var(--shadow); transition:transform 0.15s,box-shadow 0.15s; cursor:pointer; }
+  .plt-card:hover { transform:translateY(-3px); box-shadow:6px 6px 0 var(--black); }
+  .plt-card.flipped .plt-front { display:none; }
+  .plt-card.flipped .plt-back { display:flex; }
+  .plt-front { display:flex; flex-direction:column; }
+  .plt-back { display:none; flex-direction:column; }
+  .plt-color { padding:14px 16px; border-bottom:2px solid var(--black); display:flex; align-items:center; gap:10px; }
+  .plt-icon { font-size:1.6rem; }
+  .plt-type { font-family:'Poppins',sans-serif; font-weight:800; font-size:0.88rem; }
+  .plt-body { padding:12px 16px; font-size:0.78rem; line-height:1.4; background:#fff; flex:1; }
+  .plt-body ul { list-style:none; padding:0; display:flex; flex-direction:column; gap:4px; }
+  .plt-body ul li::before { content:'→ '; font-weight:700; }
+  .plt-flip-hint { font-size:0.68rem; color:#aaa; text-align:center; padding:6px; background:#f9f9f9; border-top:1px solid #eee; font-weight:600; }
+  .plt-card.bleue .plt-color  { background:#E3F2FD; }
+  .plt-card.verte .plt-color  { background:#E8F5E9; }
+  .plt-card.orange .plt-color { background:#FFF3E0; }
+  .plt-card.rouge .plt-color  { background:#FFEBEE; }
 
-.start-btn{
-  font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;
-  padding:13px 36px;border-radius:11px;border:none;cursor:pointer;
-  display:inline-flex;align-items:center;gap:9px;transition:all .2s;
-}
-.sls{background:var(--r);color:#fff;box-shadow:0 5px 20px rgba(198,40,40,.35);}
-.sls:hover{box-shadow:0 9px 28px rgba(198,40,40,.5);}
-.sorig{background:var(--td);color:#fff;box-shadow:0 5px 20px rgba(0,131,143,.3);}
-.sorig:hover{box-shadow:0 9px 28px rgba(0,131,143,.4);}
+  /* ── QUESTIONS DE JEU ── */
+  .questions-jeu { display:flex; flex-direction:column; gap:12px; margin-top:14px; }
+  .q-jeu { border:2px solid var(--black); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+  .q-jeu-header { padding:10px 16px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.82rem; border-bottom:2px solid var(--black); display:flex; align-items:center; gap:8px; }
+  .q-jeu-body { padding:12px 16px; background:#fff; font-size:0.82rem; line-height:1.5; color:#333; }
+  .q-jeu-body em { font-style:normal; font-weight:700; color:var(--teal); }
 
-.frise{display:flex;gap:5px;max-width:440px;margin:24px auto 0;}
-.cap{height:8px;border-radius:4px;flex:1;animation:cp 3s ease-in-out infinite;}
-@keyframes cp{0%,100%{opacity:.5;transform:scaleY(1);}50%{opacity:1;transform:scaleY(1.7);}}
+  /* ── TOURS COUNTER ── */
+  .tours-wrapper { display:flex; gap:10px; align-items:center; margin:16px 0 10px; flex-wrap:wrap; }
+  .tour-dot-row { display:flex; gap:8px; }
+  .tour-dot { width:36px; height:36px; border:2px solid var(--black); border-radius:8px; display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.8rem; background:#fff; box-shadow:2px 2px 0 var(--black); cursor:pointer; transition:all 0.15s; }
+  .tour-dot.done { background:var(--teal); color:#fff; box-shadow:2px 2px 0 var(--teal); }
+  .tour-dot:hover { transform:translateY(-1px); }
+  .tours-label { font-size:0.8rem; font-weight:700; color:#555; }
 
-/* ─── PHASE HEAD ────────────────────── */
-.ph{border-radius:13px;padding:18px 22px;margin-bottom:16px;position:relative;overflow:hidden;}
-.ph::after{content:'';position:absolute;bottom:-25px;right:-25px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.12);}
-.ph .ptag{font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;background:rgba(255,255,255,.22);padding:3px 11px;border-radius:50px;display:inline-block;margin-bottom:7px;color:rgba(255,255,255,.9);}
-.ph h2{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(16px,2.8vw,22px);color:#fff;margin-bottom:4px;}
-.ph .dur{font-size:12px;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:5px;}
-.lstags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
-.lstag{font-family:'Nunito',sans-serif;font-weight:700;font-size:10px;padding:3px 9px;border-radius:50px;background:rgba(255,255,255,.22);color:#fff;display:flex;align-items:center;gap:3px;}
+  /* ── CARTOGRAPHIE COLS ── */
+  .carto-cols { display:grid; grid-template-columns:1fr 1fr 1fr; gap:3px; border:3px solid var(--black); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); margin-top:14px; }
+  .carto-col-header { padding:11px 14px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.82rem; text-align:center; border-bottom:2px solid var(--black); }
+  .carto-col-header.connais    { background:var(--mint);   color:#fff; }
+  .carto-col-header.decouvrir  { background:var(--turq);   color:#fff; border-left:1.5px solid var(--black); border-right:1.5px solid var(--black); }
+  .carto-col-header.interesse  { background:var(--yellow); color:var(--black); }
+  .carto-drop { min-height:120px; padding:10px; background:#fff; display:flex; flex-direction:column; gap:6px; vertical-align:top; }
+  .carto-drop.mid { border-left:1.5px solid #e0e0e0; border-right:1.5px solid #e0e0e0; }
+  .carto-postit { background:var(--yellow); border:1.5px solid var(--black); border-radius:6px; padding:6px 10px; font-size:0.75rem; font-weight:700; box-shadow:2px 2px 0 rgba(0,0,0,0.12); cursor:grab; display:flex; justify-content:space-between; align-items:flex-start; gap:4px; animation:pop-in 0.2s ease; }
+  @keyframes pop-in { from { transform:scale(0.85); opacity:0; } to { transform:scale(1); opacity:1; } }
+  .postit-del { background:none; border:none; cursor:pointer; font-size:0.8rem; color:#888; padding:0; line-height:1; }
+  .postit-del:hover { color:var(--red); }
+  .carto-input-row { display:flex; gap:6px; padding:8px 10px; border-top:1.5px dashed #ddd; }
+  .carto-input { flex:1; border:1.5px solid #ccc; border-radius:6px; padding:6px 9px; font-size:0.75rem; font-family:'Montserrat',sans-serif; outline:none; }
+  .carto-input:focus { border-color:var(--teal); }
+  .carto-add-btn { background:var(--teal); color:#fff; border:2px solid var(--black); border-radius:6px; padding:5px 10px; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.72rem; cursor:pointer; white-space:nowrap; }
 
-/* ─── BOXES ─────────────────────────── */
-.box{background:var(--wh);border-radius:13px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:13px;}
-.box h3{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+  /* ── PERSONNES QUI... ── */
+  .personnes-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+  @media(max-width:560px) { .personnes-grid { grid-template-columns:1fr; } }
+  .pq-card { border:2px solid var(--black); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
+  .pq-header { padding:9px 14px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.78rem; border-bottom:2px solid var(--black); display:flex; align-items:center; gap:7px; }
+  .pq-body { padding:10px 14px; background:#fff; }
+  .pq-body textarea { width:100%; border:1.5px solid #ddd; border-radius:7px; padding:8px 10px; font-size:0.78rem; font-family:'Montserrat',sans-serif; resize:none; outline:none; background:var(--white); }
+  .pq-body textarea:focus { border-color:var(--teal); }
 
-/* question big */
-.qbig{background:var(--dk);border-radius:13px;padding:22px;text-align:center;margin-bottom:13px;}
-.qlbl{font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--j);margin-bottom:7px;}
-.qtxt{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(14px,2.4vw,19px);color:#fff;line-height:1.45;font-style:italic;}
+  /* ── POST-IT ENGAGEMENT ── */
+  .postit-big { background:var(--yellow); border:3px solid var(--black); border-radius:14px; box-shadow:var(--shadow-lg); padding:22px 24px; margin-top:14px; }
+  .postit-big h4 { font-family:'Poppins',sans-serif; font-weight:900; font-size:0.95rem; margin-bottom:14px; }
+  .postit-big textarea { width:100%; border:2px solid var(--black); border-radius:8px; padding:10px 14px; font-size:0.85rem; font-family:'Montserrat',sans-serif; font-weight:600; background:#fff; resize:none; outline:none; box-shadow:inset 2px 2px 0 rgba(0,0,0,0.05); }
+  .postit-big textarea:focus { box-shadow:inset 2px 2px 0 rgba(0,0,0,0.05), 0 0 0 2px var(--teal); }
+  .postit-big .btn-ok { margin-top:10px; background:var(--teal); color:#fff; border:2.5px solid var(--black); border-radius:8px; padding:10px 22px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.85rem; cursor:pointer; box-shadow:3px 3px 0 var(--black); transition:transform 0.1s,box-shadow 0.1s; }
+  .postit-big .btn-ok:hover { transform:translateY(-2px); box-shadow:5px 5px 0 var(--black); }
+  .engagements-list { display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+  .eng-item { background:var(--yellow); border:2px solid var(--black); border-radius:10px; padding:10px 14px; font-size:0.82rem; font-weight:700; box-shadow:2px 2px 0 var(--black); display:flex; justify-content:space-between; align-items:center; }
 
-/* 3 questions */
-.q3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:9px;}
-@media(max-width:520px){.q3{grid-template-columns:1fr;}}
-.q3i{border-radius:11px;padding:13px;display:flex;flex-direction:column;gap:5px;}
-.q3i .qn{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;color:#fff;flex-shrink:0;}
-.q3i .qt{font-weight:700;font-size:12px;line-height:1.5;color:var(--dk);font-style:italic;}
+  /* ── RÉSEAU DE SOUTIEN ── */
+  .reseau-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:12px; }
+  @media(max-width:560px) { .reseau-grid { grid-template-columns:1fr; } }
+  .rs-card { border:3px solid var(--black); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+  .rs-header { padding:12px 14px; border-bottom:2px solid var(--black); display:flex; align-items:center; gap:8px; }
+  .rs-icon { font-size:1.4rem; }
+  .rs-title { font-family:'Poppins',sans-serif; font-weight:800; font-size:0.82rem; }
+  .rs-question { font-size:0.72rem; opacity:0.85; font-weight:600; margin-top:2px; }
+  .rs-body { padding:12px 14px; background:#fff; }
+  .rs-body input { width:100%; border:1.5px solid #ddd; border-radius:7px; padding:8px 10px; font-size:0.8rem; font-family:'Montserrat',sans-serif; outline:none; margin-bottom:7px; }
+  .rs-body input:focus { border-color:var(--teal); }
+  .rs-body input:last-child { margin-bottom:0; }
+  .rs-header.pratique  { background:#E3F2FD; }
+  .rs-header.consultat { background:#FFF9C4; }
+  .rs-header.emotion   { background:#FCE4EC; }
 
-/* conseil */
-.conseil{background:var(--jl);border:2px solid var(--j);border-radius:11px;padding:11px 14px;font-size:12.5px;line-height:1.6;margin-bottom:12px;}
-.chead{font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;color:var(--jd);margin-bottom:3px;display:flex;align-items:center;gap:4px;}
+  /* ── DEBRIEF QUESTIONS ── */
+  .debrief-list { display:flex; flex-direction:column; gap:10px; margin-top:12px; }
+  .debrief-q { border:2px solid var(--black); border-radius:10px; padding:12px 16px; background:#fff; box-shadow:2px 2px 0 var(--black); font-size:0.82rem; display:flex; align-items:flex-start; gap:10px; cursor:pointer; transition:background 0.15s; }
+  .debrief-q:hover { background:#f5f5f5; }
+  .debrief-q.revealed { background:var(--teal-l); }
+  .debrief-axe { flex-shrink:0; width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.9rem; border:1.5px solid var(--black); }
+  .debrief-content { flex:1; }
+  .debrief-content strong { font-family:'Poppins',sans-serif; font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:3px; }
+  .debrief-content em { font-style:italic; color:#333; }
+  .debrief-reveal { display:none; margin-top:8px; padding:8px 12px; background:#fff; border:1.5px solid var(--teal); border-radius:7px; font-size:0.75rem; color:var(--teal); font-weight:600; }
+  .debrief-q.revealed .debrief-reveal { display:block; }
 
-/* nav row */
-.nav-row{display:flex;align-items:center;gap:9px;margin-top:14px;flex-wrap:wrap;}
-.nbtn{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;padding:10px 24px;border-radius:9px;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .15s;}
-.nnext{background:var(--r);color:#fff;box-shadow:0 3px 10px rgba(198,40,40,.28);}
-.nnext:hover{background:var(--rm);}
-.nnext.teal{background:var(--td);box-shadow:0 3px 10px rgba(0,131,143,.25);}
-.nnext.teal:hover{background:var(--t);}
-.nnext.green{background:var(--md);box-shadow:0 3px 10px rgba(46,125,50,.25);}
-.nback{background:var(--bg);color:var(--gr);border:2px solid #ddd;}
-.nback:hover{background:#eee;}
+  /* ── MATÉRIEL & SUIVI ── */
+  .materiel-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:0; }
+  @media(max-width:560px) { .materiel-grid { grid-template-columns:1fr; } }
+  .mat-item { border:2px solid var(--black); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
+  .mat-header { padding:9px 14px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.8rem; border-bottom:2px solid var(--black); display:flex; align-items:center; gap:7px; }
+  .mat-body { padding:10px 14px; background:#fff; font-size:0.78rem; line-height:1.6; }
+  .mat-body ul { list-style:none; padding:0; }
+  .mat-body ul li { padding:2px 0; display:flex; align-items:flex-start; gap:6px; }
+  .mat-body ul li::before { content:'·'; font-weight:900; color:var(--teal); }
 
-/* ─── CARD FAMILIES ─────────────────── */
-.ftabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
-.ftab{font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;padding:6px 14px;border-radius:7px;cursor:pointer;border:2px solid transparent;transition:all .15s;display:flex;align-items:center;gap:4px;}
-.ftab:hover{transform:translateY(-1px);}
-.ftab.sel{transform:translateY(-2px);box-shadow:0 3px 12px rgba(0,0,0,.15);}
-.ft-rose{background:var(--rose-bg);color:var(--rose-tx);border-color:var(--rose-bd);}
-.ft-vert{background:var(--vert-bg);color:var(--vert-tx);border-color:var(--vert-bd);}
-.ft-vio {background:var(--vio-bg); color:var(--vio-tx); border-color:var(--vio-bd);}
-.ft-ora {background:var(--ora-bg); color:var(--ora-tx); border-color:var(--ora-bd);}
-.ft-bleu{background:var(--bleu-bg);color:var(--bleu-tx);border-color:var(--bleu-bd);}
-.ft-gre {background:var(--gre-bg); color:var(--gre-tx); border-color:var(--gre-bd);}
-.ft-org {background:var(--org-bg); color:var(--org-tx); border-color:var(--org-bd);}
-.ft-pin {background:var(--pin-bg); color:var(--pin-tx); border-color:var(--pin-bd);}
+  /* ── ANIMATIONS ── */
+  @keyframes bounce-in { 0% { transform:scale(0.8);opacity:0; } 70% { transform:scale(1.05); } 100% { transform:scale(1);opacity:1; } }
+  .bounce { animation:bounce-in 0.3s ease forwards; }
 
-.deck{display:none;}
-.deck.on{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:9px;}
-
-.gc{border-radius:12px;padding:14px 12px;position:relative;min-height:100px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .18s,box-shadow .18s;border:2px solid transparent;}
-.gc:hover{transform:translateY(-4px);box-shadow:0 7px 20px rgba(0,0,0,.12);}
-.gc .gbadge{position:absolute;top:-8px;right:9px;background:var(--wh);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 7px rgba(0,0,0,.14);}
-.gc .gtxt{font-family:'Nunito',sans-serif;font-weight:800;font-size:12.5px;line-height:1.4;flex:1;padding-top:4px;margin-bottom:7px;font-style:italic;}
-.gc .gsk{font-size:10px;font-weight:700;opacity:.6;letter-spacing:.3px;}
-.gc.rose{background:var(--rose-bg);border-color:var(--rose-bd);}
-.gc.vert{background:var(--vert-bg);border-color:var(--vert-bd);}
-.gc.vio {background:var(--vio-bg); border-color:var(--vio-bd);}
-.gc.ora {background:var(--ora-bg); border-color:var(--ora-bd);}
-.gc.bleu{background:var(--bleu-bg);border-color:var(--bleu-bd);}
-.gc.gre {background:var(--gre-bg); border-color:var(--gre-bd);}
-.gc.org {background:var(--org-bg); border-color:var(--org-bd);}
-.gc.pin {background:var(--pin-bg); border-color:var(--pin-bd);}
-
-/* ─── COLONNES ──────────────────────── */
-.col3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px;}
-@media(max-width:500px){.col3{grid-template-columns:1fr;}}
-.czone{border-radius:11px;padding:13px;min-height:120px;}
-.czone .czh{font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;margin-bottom:5px;display:flex;align-items:center;gap:4px;}
-.czone p{font-size:11.5px;opacity:.7;line-height:1.5;font-style:italic;}
-
-/* ─── RÉSEAU ────────────────────────── */
-.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
-@media(max-width:480px){.rgrid{grid-template-columns:1fr;}}
-.ri{border-radius:12px;padding:14px;border:2px solid;}
-.ri.rrose{background:var(--rose-bg);border-color:var(--rose-bd);}
-.ri.rvert{background:var(--vert-bg);border-color:var(--vert-bd);}
-.ri.rvio {background:var(--vio-bg); border-color:var(--vio-bd);}
-.ri.rora {background:var(--ora-bg); border-color:var(--ora-bd);}
-.ri .rh{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;margin-bottom:5px;display:flex;align-items:center;gap:4px;}
-.ri .rq{font-size:12px;line-height:1.5;font-style:italic;font-weight:700;margin-bottom:7px;}
-.rinp{width:100%;border:none;border-radius:8px;padding:6px 9px;font-family:'Nunito Sans',sans-serif;font-size:12px;resize:none;outline:none;background:rgba(255,255,255,.65);min-height:44px;}
-.rinp:focus{background:#fff;box-shadow:0 0 0 2px rgba(0,188,212,.25);}
-
-/* ─── POST-IT ───────────────────────── */
-.postit{background:#FFF59D;border-radius:3px 14px 14px 14px;padding:20px 22px;box-shadow:3px 4px 0 rgba(0,0,0,.11);position:relative;max-width:480px;}
-.postit::before{content:'';position:absolute;top:0;left:0;width:0;height:0;border-style:solid;border-width:0 0 17px 17px;border-color:transparent transparent #E6D600 transparent;}
-.postit h4{font-family:'Nunito',sans-serif;font-weight:900;font-size:14px;font-style:italic;color:var(--dk);margin-bottom:13px;}
-.prow{display:flex;align-items:center;gap:7px;margin-bottom:9px;}
-.pl{font-family:'Nunito',sans-serif;font-weight:700;font-size:11.5px;color:var(--gr);min-width:105px;}
-.pi{flex:1;border:none;border-bottom:2px solid #c8a800;background:transparent;padding:3px 5px;font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:700;outline:none;color:var(--dk);}
-
-/* ─── DEBRIEF ───────────────────────── */
-.dbqs{display:flex;flex-direction:column;gap:7px;}
-.dbq{background:var(--wh);border-radius:9px;padding:11px 14px;border-left:4px solid var(--r);font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;font-style:italic;box-shadow:0 2px 7px rgba(0,0,0,.05);}
-
-/* obs table */
-.obst{width:100%;border-collapse:separate;border-spacing:0 3px;margin-top:5px;}
-.obst td{font-size:11.5px;padding:6px 9px;vertical-align:top;}
-.obst .oa{background:var(--bg);border-radius:7px 0 0 7px;font-weight:700;}
-.obst .ob{background:var(--tl);border-radius:0 7px 7px 0;color:var(--td);font-weight:600;font-style:italic;}
-
-/* why grid */
-.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px;}
-@media(max-width:440px){.wgrid{grid-template-columns:1fr;}}
-.wi{background:var(--wh);border-radius:9px;padding:10px;display:flex;align-items:flex-start;gap:7px;font-size:12px;line-height:1.5;color:var(--gr);box-shadow:0 2px 7px rgba(0,0,0,.05);}
-.wic{font-size:18px;flex-shrink:0;}
-
-/* dark box */
-.dbox{background:var(--dk);color:#fff;border-radius:13px;padding:18px 20px;margin-bottom:13px;}
-.dbox h3{color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;margin-bottom:9px;display:flex;align-items:center;gap:7px;}
-.dbox2{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
-@media(max-width:460px){.dbox2{grid-template-columns:1fr;}}
-.d2{background:rgba(255,255,255,.1);border-radius:9px;padding:11px;font-size:12px;line-height:1.6;}
-.d2 strong{display:block;margin-bottom:3px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;}
-
-/* end */
-.endbox{background:linear-gradient(135deg,var(--dk),#16213E);border-radius:14px;color:#fff;text-align:center;padding:40px 28px;max-width:680px;margin:0 auto;}
-.endbox h2{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(20px,4vw,34px);margin-bottom:10px;}
-.endbox p{font-size:14px;opacity:.8;max-width:400px;margin:0 auto 24px;line-height:1.7;}
-.egrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px;margin-bottom:22px;}
-.ei{background:rgba(255,255,255,.08);border-radius:11px;padding:14px;border:1px solid rgba(255,255,255,.12);}
-.eico{font-size:28px;margin-bottom:5px;}
-.elbl{font-family:'Nunito',sans-serif;font-weight:800;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--j);margin-bottom:2px;}
-.eval{font-size:24px;font-weight:900;font-family:'Nunito',sans-serif;}
-.suivibox{background:rgba(255,255,255,.07);border-radius:11px;padding:15px;text-align:left;margin-bottom:18px;border:1px solid rgba(255,255,255,.1);}
-.suivibox .sh{font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--j);margin-bottom:8px;}
-.suivibox ul{font-size:12px;opacity:.85;line-height:2;padding-left:16px;}
-
-/* ─── ANIMATOR PANE ─────────────────── */
-#apane{
-  width:0;overflow:hidden;
-  transition:width .28s ease;
-  border-left:0 solid #eee;
-  background:var(--wh);
-}
-#apane.open{width:var(--ap);border-left:2px solid #eee;overflow-y:auto;}
-#apane::-webkit-scrollbar{width:4px;}
-#apane::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px;}
-.apane-inner{padding:18px;display:flex;flex-direction:column;gap:12px;min-width:310px;}
-.acard{background:var(--bg);border-radius:11px;padding:14px;border-top:3px solid var(--r);}
-.acard.at{border-top-color:var(--t);}
-.acard.aj{border-top-color:var(--j);}
-.acard.am{border-top-color:var(--m);}
-.acard.av{border-top-color:var(--v);}
-.abd{font-family:'Nunito',sans-serif;font-weight:800;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:3px;}
-.acard h4{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;margin-bottom:5px;color:var(--dk);}
-.acard p{font-size:11.5px;color:var(--gr);line-height:1.6;}
-.akey{display:flex;align-items:flex-start;gap:6px;background:var(--wh);border-radius:7px;padding:7px;margin-top:6px;font-size:11px;color:var(--dk);line-height:1.5;font-weight:600;}
-.apane-title{font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;color:var(--gr);padding:4px 2px 8px;border-bottom:2px solid #eee;margin-bottom:2px;display:flex;align-items:center;gap:6px;}
-ul.alist{font-size:11.5px;line-height:1.9;padding-left:16px;color:var(--gr);margin-top:5px;}
-ul.alist strong{color:var(--dk);}
-ul.list{font-size:12.5px;line-height:2;padding-left:18px;color:var(--gr);}
-ul.list strong{color:var(--dk);}
+  /* ── FOOTER ── */
+  .footer { background:var(--black); color:var(--yellow); text-align:center; padding:16px; font-family:'Poppins',sans-serif; font-size:0.75rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
 </style>
 </head>
 <body>
 
-<!-- ═══ TOPBAR ═══════════════════════════ -->
-<div id="bar">
-  <div class="bar-logo">🗺️ TROUVE TA PLACE</div>
-  <div id="bar-steps"></div>
-  <div class="bar-right">
-    <span class="vbadge" id="vbadge" style="display:none;"></span>
-    <div id="timer">--:--</div>
-    <button class="tb tb-play" id="btn-tp" onclick="timerToggle()">▶</button>
-    <button class="tb tb-rst" onclick="timerReset()">↺</button>
-    <button id="btn-anim" onclick="toggleAnim()">📋 Animateur</button>
+<!-- STICKY PROGRESS -->
+<div class="progress-bar-wrapper">
+  <span class="progress-label">LS4YOU · Axe 4 + Axe 1</span>
+  <div class="progress-steps" id="progressDots">
+    <div class="step-dot active"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+  </div>
+  <span class="progress-label">⏱ 1h30</span>
+</div>
+
+<!-- PARCOURS BANNER -->
+<div class="parcours-banner">
+  <div class="parc-step current">
+    <span class="pnum">1</span> Trouve ta place
+  </div>
+  <span class="parc-arrow">›</span>
+  <div class="parc-step">
+    <span class="pnum">2</span> Image de soi
+  </div>
+  <span class="parc-arrow">›</span>
+  <div class="parc-step">
+    <span class="pnum">3</span> Zine de Territoire
+  </div>
+  <span class="parc-arrow">›</span>
+  <div class="parc-step">
+    <span class="pnum">4</span> On passe à la scène
   </div>
 </div>
 
-<!-- ═══ APP ═══════════════════════════════ -->
-<div id="app">
-<div id="main">
-
-<!-- ▸ HOME -->
-<div class="pnl on" id="pnl-home">
-<div class="wrap">
-  <div class="home-hero">
-    <div class="hero-badge">🌍 LS4YOU · Life Skills · Mission Locale</div>
-    <h1>Trouve ta <span class="hl-r">Place</span><br>sur le <span class="hl-t">Territoire</span></h1>
-    <p>Un atelier participatif pour explorer, comprendre et activer son territoire comme levier d'insertion socio-professionnelle.</p>
-  </div>
-  <div class="vswitch">
-    <button class="vt sls" id="vt-ls" onclick="setVar('ls')">
-      <span class="vi">🎯</span><span class="vn">Version LS4YOU</span>
-      <span class="vs">7 participants · 4 familles Life Skills<br>Personnalité · Bien-être · Valorisation · Ressources</span>
-    </button>
-    <button class="vt" id="vt-orig" onclick="setVar('orig')">
-      <span class="vi">🗺️</span><span class="vn">Version Originale</span>
-      <span class="vs">Jusqu'à 42 participants<br>Lieux · Personnes · Actions · Expression</span>
-    </button>
-  </div>
-  <div class="vpanel on" id="vp-ls">
-    <div class="chips">
-      <span class="chip cr">👥 7 participants</span><span class="chip ct">⏱ 1h30</span>
-      <span class="chip cj">🃏 28 cartes · 4 familles</span><span class="chip cm">🏠 Présentiel</span>
-    </div>
-    <div class="ls4g">
-      <div class="ls4i" style="background:var(--rose-bg)"><div class="ico">🧠</div><div class="nm" style="color:var(--rose-tx)">Personnalité</div><div class="sb">Espace vécu, zones de confort</div></div>
-      <div class="ls4i" style="background:var(--vert-bg)"><div class="ico">💚</div><div class="nm" style="color:var(--vert-tx)">Bien-être</div><div class="sb">Santé, soutien, équilibre</div></div>
-      <div class="ls4i" style="background:var(--vio-bg)"><div class="ico">⭐</div><div class="nm" style="color:var(--vio-tx)">Valorisation</div><div class="sb">Compétences, réseau pairs</div></div>
-      <div class="ls4i" style="background:var(--ora-bg)"><div class="ico">💰</div><div class="nm" style="color:var(--ora-tx)">Ressources</div><div class="sb">Aides, droits, services</div></div>
-    </div>
-    <div style="text-align:center"><button class="start-btn sls" onclick="launch('ls')">🚀 Démarrer la version LS4YOU</button></div>
-  </div>
-  <div class="vpanel" id="vp-orig">
-    <div class="chips">
-      <span class="chip ct">👥 Jusqu'à 42 participants</span><span class="chip ct">⏱ 1h15–1h30</span>
-      <span class="chip cj">🃏 40 cartes · 4 types</span><span class="chip cm">🏠 Sous-groupes de 6</span>
-    </div>
-    <div class="ls4g2">
-      <div class="ls4i" style="background:var(--bleu-bg)"><div class="ico">📍</div><div class="nm" style="color:var(--bleu-tx)">Je peux y aller</div><div class="sb">Lieux accessibles</div></div>
-      <div class="ls4i" style="background:var(--gre-bg)"><div class="ico">🤝</div><div class="nm" style="color:var(--gre-tx)">Je peux rencontrer</div><div class="sb">Personnes ressources</div></div>
-      <div class="ls4i" style="background:var(--org-bg)"><div class="ico">🎯</div><div class="nm" style="color:var(--org-tx)">Je peux essayer</div><div class="sb">Actions possibles</div></div>
-      <div class="ls4i" style="background:var(--pin-bg)"><div class="ico">💬</div><div class="nm" style="color:var(--pin-tx)">Moi et le territoire</div><div class="sb">Expression personnelle</div></div>
-    </div>
-    <div style="text-align:center"><button class="start-btn sorig" onclick="launch('orig')">🗺️ Démarrer la version originale</button></div>
-  </div>
-  <div class="frise">
-    <div class="cap" style="background:var(--r);animation-delay:0s"></div>
-    <div class="cap" style="background:var(--o);animation-delay:.2s"></div>
-    <div class="cap" style="background:var(--j);animation-delay:.4s"></div>
-    <div class="cap" style="background:var(--t);animation-delay:.6s"></div>
-    <div class="cap" style="background:var(--m);animation-delay:.8s"></div>
-    <div class="cap" style="background:var(--t);animation-delay:1s"></div>
-    <div class="cap" style="background:var(--j);animation-delay:1.2s"></div>
-    <div class="cap" style="background:var(--r);animation-delay:1.4s"></div>
-  </div>
-</div></div>
-
-<!-- ▸ LS1 BRISE-GLACE -->
-<div class="pnl" id="pnl-ls1"><div class="wrap">
-  <div class="ph" style="background:linear-gradient(135deg,#AD1457,#E91E63)">
-    <div class="ptag">⏱ 10 min · Phase 1/5 — LS4YOU</div>
-    <h2>🌍 Brise-glace — Mon territoire à moi</h2>
-    <div class="dur">⏱ 10 minutes · Tour de table oral</div>
-    <div class="lstags"><span class="lstag">🧠 Personnalité</span><span class="lstag">💚 Bien-être</span></div>
-  </div>
-  <div class="qbig"><div class="qlbl">Question d'ouverture — à lancer à voix haute</div>
-    <div class="qtxt">« Dans ce territoire, où est-ce que tu vas... en dehors des obligations ? »</div>
-  </div>
-  <div class="box"><h3>🗺️ Déroulement</h3>
-    <ul class="list">
-      <li>Chaque participant répond <strong>oralement</strong> — pas d'écrit à ce stade</li>
-      <li>L'animateur colle un <strong>post-it sur la carte du territoire</strong> pour chaque lieu cité</li>
-      <li>On part de <strong>leur réalité vécue</strong>, pas du système ni des institutions</li>
-      <li>Aucun jugement — un quartier, un banc, chez soi : tout lieu compte</li>
-    </ul>
-  </div>
-  <div class="conseil"><div class="chead">💡 Conseil animateur</div>
-    Un jeune qui dit « je ne vais nulle part » : reformulez <strong>« Même un endroit où tu passes souvent ? »</strong> — c'est un point de départ, pas un manque.
-  </div>
-  <div class="nav-row">
-    <button class="nbtn nback" onclick="goP('home')">← Accueil</button>
-    <button class="nbtn nnext" onclick="goP('ls2')">Jeu des cartes →</button>
-  </div>
-</div></div>
-
-<!-- ▸ LS2 JEU DES CARTES -->
-<div class="pnl" id="pnl-ls2"><div class="wrap">
-  <div class="ph" style="background:linear-gradient(135deg,var(--r),#E53935)">
-    <div class="ptag">⏱ 30 min · Phase 2/5 — Cœur du jeu</div>
-    <h2>🃏 Le jeu des 4 familles Life Skills</h2>
-    <div class="dur">⏱ 30 min · 4 cartes par participant (1 par famille)</div>
-    <div class="lstags"><span class="lstag">🧠</span><span class="lstag">💚</span><span class="lstag">⭐</span><span class="lstag">💰</span></div>
-  </div>
-  <div class="box"><h3>❓ 3 questions à poser pour chaque carte</h3>
-    <div class="q3">
-      <div class="q3i" style="background:var(--tl)"><div class="qn" style="background:var(--t)">1</div><div class="qt">Est-ce que je connais un endroit ou une personne pour ça ?</div></div>
-      <div class="q3i" style="background:var(--ml)"><div class="qn" style="background:var(--m)">2</div><div class="qt">Quelqu'un d'autre dans le groupe connaît ?</div></div>
-      <div class="q3i" style="background:var(--jl)"><div class="qn" style="background:var(--j);color:var(--dk)">3</div><div class="qt">Sinon, est-ce que ça vaudrait le coup d'aller voir ?</div></div>
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-badge">📍</div>
+    <div class="header-text">
+      <h1>Trouve ta place<br><span>sur le territoire</span></h1>
+      <div class="header-meta">
+        <span class="tag solid">LS4YOU</span>
+        <span class="tag">Ressources territoriales</span>
+        <span class="tag">Réseau de soutien</span>
+        <span class="tag dark">Atelier 1 / 4</span>
+      </div>
     </div>
   </div>
-  <div class="box"><h3>🎴 Les 28 cartes — par famille LS</h3>
-    <div class="ftabs">
-      <button class="ftab ft-rose sel" onclick="showDeck(this,'ls-rose')">🧠 Personnalité</button>
-      <button class="ftab ft-vert" onclick="showDeck(this,'ls-vert')">💚 Bien-être</button>
-      <button class="ftab ft-vio"  onclick="showDeck(this,'ls-vio')">⭐ Valorisation</button>
-      <button class="ftab ft-ora"  onclick="showDeck(this,'ls-ora')">💰 Ressources</button>
-    </div>
-    <div class="deck on" id="deck-ls-rose">
-      <div class="gc rose"><div class="gbadge">🧠</div><div class="gtxt">→ Un lieu où tu te sens toi-même</div><div class="gsk">Zone de confort personnel</div></div>
-      <div class="gc rose"><div class="gbadge">🧠</div><div class="gtxt">→ Un endroit qui t'intimide</div><div class="gsk">Zone d'inconfort → dépassement</div></div>
-      <div class="gc rose"><div class="gbadge">🧠</div><div class="gtxt">→ Là où tu vas quand tu as besoin de calme</div><div class="gsk">Ressource bien-être spontanée</div></div>
-      <div class="gc rose"><div class="gbadge">🧠</div><div class="gtxt">→ Un lieu où on te connaît par ton prénom</div><div class="gsk">Ancrage social, appartenance</div></div>
-      <div class="gc rose"><div class="gbadge">🧠</div><div class="gtxt">→ Quelque chose que tu pensais impossible ici</div><div class="gsk">Dépasser ses représentations</div></div>
-      <div class="gc rose"><div class="gbadge">🧠</div><div class="gtxt">→ Un endroit que tu évites sans savoir pourquoi</div><div class="gsk">Exploration des résistances</div></div>
-      <div class="gc rose"><div class="gbadge">🧠</div><div class="gtxt">→ Le lieu qui représente « ton quartier »</div><div class="gsk">Identité territoriale</div></div>
-    </div>
-    <div class="deck" id="deck-ls-vert">
-      <div class="gc vert"><div class="gbadge">💚</div><div class="gtxt">→ Où aller si tu as un souci de santé sans médecin traitant</div><div class="gsk">Accès aux soins sans barrière</div></div>
-      <div class="gc vert"><div class="gbadge">💚</div><div class="gtxt">→ Un lieu pour faire du sport gratuitement</div><div class="gsk">Bien-être physique accessible</div></div>
-      <div class="gc vert"><div class="gbadge">💚</div><div class="gtxt">→ Où parler si tu te sens pas bien dans ta tête</div><div class="gsk">Soutien psychologique</div></div>
-      <div class="gc vert"><div class="gbadge">💚</div><div class="gtxt">→ Un endroit où manger bien pas cher</div><div class="gsk">Solidarité alimentaire locale</div></div>
-      <div class="gc vert"><div class="gbadge">💚</div><div class="gtxt">→ Où aller quand tu as besoin d'être seul(e)</div><div class="gsk">Régulation émotionnelle</div></div>
-      <div class="gc vert"><div class="gbadge">💚</div><div class="gtxt">→ Un lieu qui t'aide à tenir le rythme quand ça va pas</div><div class="gsk">Ancrage de routine positive</div></div>
-      <div class="gc vert"><div class="gbadge">💚</div><div class="gtxt">→ Où trouver quelqu'un à qui parler sans jugement</div><div class="gsk">Points écoute, ESM, ML...</div></div>
-    </div>
-    <div class="deck" id="deck-ls-vio">
-      <div class="gc vio"><div class="gbadge">⭐</div><div class="gtxt">→ Où montrer quelque chose que tu sais faire</div><div class="gsk">Espace de mise en valeur</div></div>
-      <div class="gc vio"><div class="gbadge">⭐</div><div class="gtxt">→ Une personne qui pourrait te recommander à un employeur</div><div class="gsk">Capital réseau, ambassadeurs</div></div>
-      <div class="gc vio"><div class="gbadge">⭐</div><div class="gtxt">→ Un endroit où tu as appris quelque chose récemment</div><div class="gsk">Apprentissage informel</div></div>
-      <div class="gc vio"><div class="gbadge">⭐</div><div class="gtxt">→ Où rencontrer des gens qui font ce que tu aimerais faire</div><div class="gsk">Réseaux pro informels</div></div>
-      <div class="gc vio"><div class="gbadge">⭐</div><div class="gtxt">→ Un lieu où tu t'es senti(e) fier(ère) de toi</div><div class="gsk">Mémoire positive, estime</div></div>
-      <div class="gc vio"><div class="gbadge">⭐</div><div class="gtxt">→ Quelqu'un sur ce territoire qui croit en toi</div><div class="gsk">Cartographie des soutiens</div></div>
-      <div class="gc vio"><div class="gbadge">⭐</div><div class="gtxt">→ Une activité locale qui pourrait figurer dans un CV</div><div class="gsk">Expériences non formelles</div></div>
-    </div>
-    <div class="deck" id="deck-ls-ora">
-      <div class="gc ora"><div class="gbadge">💰</div><div class="gtxt">→ Où obtenir une aide financière d'urgence</div><div class="gsk">CAF, FSL, aides locales</div></div>
-      <div class="gc ora"><div class="gbadge">💰</div><div class="gtxt">→ Où trouver un ordinateur gratuitement</div><div class="gsk">Médiathèque, espace numérique</div></div>
-      <div class="gc ora"><div class="gbadge">💰</div><div class="gtxt">→ Où se renseigner sur le logement jeune</div><div class="gsk">CLLAJ, Foyer jeunes...</div></div>
-      <div class="gc ora"><div class="gbadge">💰</div><div class="gtxt">→ Un endroit pour chercher un job saisonnier ou court</div><div class="gsk">Intérim social, missions</div></div>
-      <div class="gc ora"><div class="gbadge">💰</div><div class="gtxt">→ Où obtenir une aide pour passer le permis</div><div class="gsk">PASS mobilité, FSE, ML</div></div>
-      <div class="gc ora"><div class="gbadge">💰</div><div class="gtxt">→ Un lieu pour faire des démarches sans se perdre</div><div class="gsk">France Services, MDS...</div></div>
-      <div class="gc ora"><div class="gbadge">💰</div><div class="gtxt">→ Où trouver des vêtements ou équipements gratuits</div><div class="gsk">Croix-Rouge, vestiaires...</div></div>
-    </div>
-  </div>
-  <div class="conseil"><div class="chead">💡 Conseil animateur</div>
-    <strong>On ne débat pas.</strong> On collecte des pistes. Si personne ne connaît → la carte rejoint « À découvrir ». Ce n'est pas un échec, c'est une piste.
-  </div>
-  <div class="nav-row">
-    <button class="nbtn nback" onclick="goP('ls1')">← Brise-glace</button>
-    <button class="nbtn nnext" onclick="goP('ls3')">Cartographie →</button>
-  </div>
-</div></div>
-
-<!-- ▸ LS3 CARTOGRAPHIE -->
-<div class="pnl" id="pnl-ls3"><div class="wrap">
-  <div class="ph" style="background:linear-gradient(135deg,var(--td),#00ACC1)">
-    <div class="ptag">⏱ 20 min · Phase 3/5</div>
-    <h2>🗂️ Cartographie vivante du groupe</h2>
-    <div class="dur">⏱ 20 min · Les participants collent eux-mêmes leurs cartes</div>
-    <div class="lstags"><span class="lstag">⭐ Valorisation</span><span class="lstag">💚 Bien-être</span></div>
-  </div>
-  <div class="box"><h3>📌 Tracer 3 colonnes sur le mur</h3>
-    <div class="col3">
-      <div class="czone" style="background:var(--ml);border:2px solid var(--m)"><div class="czh" style="color:var(--md)">✅ Je connais</div><p>Au moins un participant connaît le lieu ou la ressource.</p></div>
-      <div class="czone" style="background:#FFF8E1;border:2px solid var(--j)"><div class="czh" style="color:var(--jd)">🔍 À découvrir</div><p>Personne ne connaît → piste collective à explorer.</p></div>
-      <div class="czone" style="background:var(--tl);border:2px solid var(--t)"><div class="czh" style="color:var(--td)">💡 Ça m'intéresse</div><p>Connu ou non, cela correspond à un besoin ou une curiosité.</p></div>
-    </div>
-  </div>
-  <div class="box"><h3>💬 Questions de facilitation</h3>
-    <div class="dbqs">
-      <div class="dbq" style="border-color:var(--t)">« Qu'est-ce qu'on voit ? Qu'est-ce qui revient souvent ? »</div>
-      <div class="dbq" style="border-color:var(--t)">« Qui savait le plus de choses ? Qu'est-ce que tu ressens ? »</div>
-      <div class="dbq" style="border-color:var(--t)">« Dans 'À découvrir' — qu'est-ce qui semble le plus utile à explorer ? »</div>
-    </div>
-  </div>
-  <div class="conseil"><div class="chead">💡 Conseil animateur</div>
-    Un jeune sans carte en « Je connais » → note discrète pour suivi individualisé. <strong>Ne pas le signaler publiquement.</strong>
-  </div>
-  <div class="nav-row">
-    <button class="nbtn nback" onclick="goP('ls2')">← Jeu des cartes</button>
-    <button class="nbtn nnext" onclick="goP('ls4')">Cartographie réseau →</button>
-  </div>
-</div></div>
-
-<!-- ▸ LS4 RÉSEAU -->
-<div class="pnl" id="pnl-ls4"><div class="wrap">
-  <div class="ph" style="background:linear-gradient(135deg,var(--vd),var(--v))">
-    <div class="ptag">⏱ 15 min · Phase 4/5</div>
-    <h2>👥 Ma cartographie réseau — Les personnes qui...</h2>
-    <div class="dur">⏱ 15 min · Individuel + partage en binôme (2 min)</div>
-    <div class="lstags"><span class="lstag">🧠</span><span class="lstag">💚</span><span class="lstag">⭐</span><span class="lstag">💰</span></div>
-  </div>
-  <div class="box"><h3>✍️ 4 questions — une par domaine LS</h3>
-    <p style="font-size:12px;color:var(--gr);margin-bottom:12px">Exercice individuel. Confidentiel si le jeune le souhaite.</p>
-    <div class="rgrid">
-      <div class="ri rrose"><div class="rh" style="color:var(--rose-tx)">🧠 PERSONNALITÉ</div><div class="rq">Sur ce territoire, qui me connaît vraiment et me fait confiance ?</div><textarea class="rinp" placeholder="Écrire ici..."></textarea></div>
-      <div class="ri rvert"><div class="rh" style="color:var(--vert-tx)">💚 BIEN-ÊTRE</div><div class="rq">À qui je m'adresse en premier si j'ai un coup dur ?</div><textarea class="rinp" placeholder="Écrire ici..."></textarea></div>
-      <div class="ri rvio"><div class="rh" style="color:var(--vio-tx)">⭐ VALORISATION</div><div class="rq">Qui reconnaît ce que je sais faire ? Qui pourrait me recommander ?</div><textarea class="rinp" placeholder="Écrire ici..."></textarea></div>
-      <div class="ri rora"><div class="rh" style="color:var(--ora-tx)">💰 RESSOURCES</div><div class="rq">Qui me donne des tuyaux sur les aides, logements, jobs ?</div><textarea class="rinp" placeholder="Écrire ici..."></textarea></div>
-    </div>
-  </div>
-  <div class="qbig" style="margin-top:12px"><div class="qlbl">Partage en binôme — 2 minutes</div>
-    <div class="qtxt" style="font-size:16px">« Est-ce qu'il y a des cases vides ? Qu'est-ce que ça t'inspire ? »</div>
-  </div>
-  <div class="conseil"><div class="chead">💡 Conseil animateur</div>
-    Cases vides = capital relationnel à construire. <strong>Ne pas forcer le partage oral.</strong> Piste d'accompagnement individualisé post-atelier.
-  </div>
-  <div class="nav-row">
-    <button class="nbtn nback" onclick="goP('ls3')">← Cartographie</button>
-    <button class="nbtn nnext" onclick="goP('ls5')">Passage à l'action →</button>
-  </div>
-</div></div>
-
-<!-- ▸ LS5 ACTION -->
-<div class="pnl" id="pnl-ls5"><div class="wrap">
-  <div class="ph" style="background:linear-gradient(135deg,var(--od),var(--o))">
-    <div class="ptag">⏱ 15 min · Phase 5/5 — Le plus important</div>
-    <h2>🎯 Passage à l'action — Mon premier pas</h2>
-    <div class="dur">⏱ 15 min · Du collectif au micro-engagement individuel</div>
-    <div class="lstags"><span class="lstag">⭐ Valorisation → mobilisation</span><span class="lstag">💰 Capital territorial</span></div>
-  </div>
-  <div class="box"><h3>📝 Choisir UNE carte — compléter son post-it</h3>
-    <p style="font-size:12px;color:var(--gr);margin-bottom:14px">Dans « À découvrir » ou « Ça m'intéresse ». Pas un projet — <strong>juste un premier pas concret.</strong></p>
-    <div class="postit">
-      <h4>« Dans les semaines à venir, je pourrais aller voir... »</h4>
-      <div class="prow"><span class="pl">📍 Je vais à :</span><input class="pi" type="text" placeholder="Nom du lieu ou de la personne..."></div>
-      <div class="prow"><span class="pl">📅 Le :</span><input class="pi" type="text" placeholder="Date ou période..."></div>
-      <div class="prow"><span class="pl">👤 Avec :</span><input class="pi" type="text" placeholder="Seul(e), ami, conseiller ML..."></div>
-      <div class="prow"><span class="pl">👟 Mon 1er pas :</span><input class="pi" type="text" placeholder="Appeler, passer devant, chercher..."></div>
-    </div>
-  </div>
-  <div class="box"><h3>💬 Questions de débriefing</h3>
-    <div class="dbqs">
-      <div class="dbq">« Qu'est-ce que vous avez découvert sur votre territoire aujourd'hui ? »</div>
-      <div class="dbq">« Y a-t-il une carte qui vous a surpris ? »</div>
-      <div class="dbq">« Qu'est-ce que vous saviez que les autres ne savaient pas ? »</div>
-      <div class="dbq">« Comment vous sentez-vous par rapport à votre territoire maintenant ? »</div>
-    </div>
-  </div>
-  <div class="conseil"><div class="chead">💡 Suivi post-atelier</div>
-    📷 Photographier le mur. <strong>Reprendre le post-it au prochain entretien comme point de départ.</strong>
-  </div>
-  <div class="nav-row">
-    <button class="nbtn nback" onclick="goP('ls4')">← Réseau</button>
-    <button class="nbtn nnext green" onclick="goP('end')">Terminer ✅</button>
-  </div>
-</div></div>
-
-<!-- ▸ O1 BRISE-GLACE -->
-<div class="pnl" id="pnl-o1"><div class="wrap">
-  <div class="ph" style="background:linear-gradient(135deg,var(--td),#00838F)">
-    <div class="ptag">⏱ 10 min · Étape 1/5 — Version Originale</div>
-    <h2>🌍 Brise-glace — Mon territoire à moi</h2>
-    <div class="dur">⏱ 10 min · Tour de table · Carte géo en support</div>
-  </div>
-  <div class="qbig"><div class="qlbl">Question d'ouverture</div>
-    <div class="qtxt">« Dans ce territoire, je vais où... en dehors de mes obligations ? »</div>
-  </div>
-  <div class="box"><h3>🗺️ Comment animer</h3>
-    <ul class="list">
-      <li>Utiliser la <strong>carte géographique du territoire</strong> comme support visible</li>
-      <li>Chaque participant colle <strong>un ou des post-it</strong> en réponse à la question</li>
-      <li>Objectif : repérer les <strong>connaissances existantes</strong> et installer un climat de confiance</li>
-      <li>On part de leur réalité, <strong>pas du système ni des institutions</strong></li>
-    </ul>
-  </div>
-  <div class="conseil"><div class="chead">💡 Conseil animateur</div>
-    Un post-it « mon banc dans le parc » est aussi valide qu'une structure. Tout lieu vécu est un point de départ légitime. <strong>Laisser s'exprimer sans cadrer.</strong>
-  </div>
-  <div class="nav-row">
-    <button class="nbtn nback" onclick="goP('home')">← Accueil</button>
-    <button class="nbtn nnext teal" onclick="goP('o2')">Distribution des cartes →</button>
-  </div>
-</div></div>
-
-<!-- ▸ O2 DISTRIBUTION + CARTES -->
-<div class="pnl" id="pnl-o2"><div class="wrap">
-  <div class="ph" style="background:linear-gradient(135deg,var(--td),#0097A7)">
-    <div class="ptag">⏱ 5 min · Étape 2/5</div>
-    <h2>📦 Distribution des cartes</h2>
-    <div class="dur">⏱ 5 min · 4 cartes de couleurs différentes par participant</div>
-  </div>
-  <div class="box"><h3>📌 Règle de distribution</h3>
-    <p style="font-size:12.5px;color:var(--gr);margin-bottom:14px">Distribuer <strong>1 carte par type/couleur</strong> (tirage aléatoire dans chaque pile). 2 minutes de lecture silencieuse avant les échanges.</p>
-  </div>
-  <div class="box"><h3>🎴 Les 40 cartes du jeu</h3>
-    <div class="ftabs">
-      <button class="ftab ft-bleu sel" onclick="showDeck(this,'o-bleu')">📍 Je peux y aller</button>
-      <button class="ftab ft-gre" onclick="showDeck(this,'o-gre')">🤝 Je peux rencontrer</button>
-      <button class="ftab ft-org" onclick="showDeck(this,'o-org')">🎯 Je peux essayer</button>
-      <button class="ftab ft-pin" onclick="showDeck(this,'o-pin')">💬 Moi et le territoire</button>
-    </div>
-    <!-- JE PEUX Y ALLER — 10 cartes -->
-    <div class="deck on" id="deck-o-bleu">
-      <div class="gc bleu"><div class="gbadge">📍</div><div class="gtxt">Trouver un lieu où travailler au calme</div><div class="gsk">Espace de travail accessible</div></div>
-      <div class="gc bleu"><div class="gbadge">📍</div><div class="gtxt">Participer à un atelier ou une formation courte</div><div class="gsk">Formation informelle locale</div></div>
-      <div class="gc bleu"><div class="gbadge">📍</div><div class="gtxt">Utiliser un ordinateur ou scanner gratuitement</div><div class="gsk">Accès numérique de proximité</div></div>
-      <div class="gc bleu"><div class="gbadge">📍</div><div class="gtxt">Poser des questions sans rendez-vous</div><div class="gsk">Accueil de proximité informel</div></div>
-      <div class="gc bleu"><div class="gbadge">📍</div><div class="gtxt">Être accompagné dans un projet personnel ou professionnel</div><div class="gsk">Accompagnement dédié</div></div>
-      <div class="gc bleu"><div class="gbadge">📍</div><div class="gtxt">Découvrir un métier de l'intérieur</div><div class="gsk">Immersion professionnelle</div></div>
-      <div class="gc bleu"><div class="gbadge">📍</div><div class="gtxt">Accéder à des aides alimentaires sans démarche compliquée</div><div class="gsk">Solidarité alimentaire locale</div></div>
-      <div class="gc bleu"><div class="gbadge">📍</div><div class="gtxt">Réparer ou récupérer des objets (repair café, ressourcerie)</div><div class="gsk">Économie circulaire locale</div></div>
-      <div class="gc bleu"><div class="gbadge">📍</div><div class="gtxt">Faire du sport gratuitement ou à prix libre</div><div class="gsk">Bien-être physique accessible</div></div>
-      <div class="gc bleu"><div class="gbadge">📍</div><div class="gtxt">Pratiquer une activité artistique ou créative</div><div class="gsk">Espace d'expression culturelle</div></div>
-    </div>
-    <!-- JE PEUX RENCONTRER — 10 cartes -->
-    <div class="deck" id="deck-o-gre">
-      <div class="gc gre"><div class="gbadge">🤝</div><div class="gtxt">Quelqu'un qui aide à refaire un CV sans jugement</div><div class="gsk">Accompagnement insertion</div></div>
-      <div class="gc gre"><div class="gbadge">🤝</div><div class="gtxt">Quelqu'un qui connaît les entreprises locales qui recrutent</div><div class="gsk">Réseau emploi local</div></div>
-      <div class="gc gre"><div class="gbadge">🤝</div><div class="gtxt">Un professionnel prêt à expliquer son métier</div><div class="gsk">Enquête métier informelle</div></div>
-      <div class="gc gre"><div class="gbadge">🤝</div><div class="gtxt">Une association qui aide à reprendre confiance en soi</div><div class="gsk">Soutien psychosocial</div></div>
-      <div class="gc gre"><div class="gbadge">🤝</div><div class="gtxt">Un réseau pour élargir ses contacts professionnels</div><div class="gsk">Capital social professionnel</div></div>
-      <div class="gc gre"><div class="gbadge">🤝</div><div class="gtxt">Quelqu'un qui a réussi un projet similaire ici</div><div class="gsk">Modèle et pair inspirant</div></div>
-      <div class="gc gre"><div class="gbadge">🤝</div><div class="gtxt">Un bénévole ou travailleur social disponible sans RDV</div><div class="gsk">Accueil inconditionnel</div></div>
-      <div class="gc gre"><div class="gbadge">🤝</div><div class="gtxt">Quelqu'un qui parle ma langue ou comprend ma situation</div><div class="gsk">Médiation culturelle</div></div>
-      <div class="gc gre"><div class="gbadge">🤝</div><div class="gtxt">Un tuteur ou mentor prêt à m'accompagner sur la durée</div><div class="gsk">Mentorat de proximité</div></div>
-      <div class="gc gre"><div class="gbadge">🤝</div><div class="gtxt">Un employeur qui accepte les stages d'observation courts</div><div class="gsk">Première expérience pro</div></div>
-    </div>
-    <!-- JE PEUX ESSAYER — 10 cartes -->
-    <div class="deck" id="deck-o-org">
-      <div class="gc org"><div class="gbadge">🎯</div><div class="gtxt">Visiter une structure que je ne connais pas du tout</div><div class="gsk">Exploration du territoire</div></div>
-      <div class="gc org"><div class="gbadge">🎯</div><div class="gtxt">Participer à un événement local ouvert à tous</div><div class="gsk">Vie citoyenne et locale</div></div>
-      <div class="gc org"><div class="gbadge">🎯</div><div class="gtxt">Demander un stage d'observation dans une entreprise</div><div class="gsk">Immersion professionnelle</div></div>
-      <div class="gc org"><div class="gbadge">🎯</div><div class="gtxt">Tester une activité pour voir si ça me correspond</div><div class="gsk">Exploration des centres d'intérêt</div></div>
-      <div class="gc org"><div class="gbadge">🎯</div><div class="gtxt">Aller à une réunion publique ou associative</div><div class="gsk">Engagement citoyen local</div></div>
-      <div class="gc org"><div class="gbadge">🎯</div><div class="gtxt">Proposer mon aide bénévolement pour une journée</div><div class="gsk">Bénévolat et expérience</div></div>
-      <div class="gc org"><div class="gbadge">🎯</div><div class="gtxt">Passer devant un lieu qui m'intimidait et entrer</div><div class="gsk">Dépassement d'obstacle</div></div>
-      <div class="gc org"><div class="gbadge">🎯</div><div class="gtxt">Contacter une structure par téléphone ou email</div><div class="gsk">Communication professionnelle</div></div>
-      <div class="gc org"><div class="gbadge">🎯</div><div class="gtxt">Participer à un forum, salon ou job dating local</div><div class="gsk">Réseau en présentiel</div></div>
-      <div class="gc org"><div class="gbadge">🎯</div><div class="gtxt">Documenter mon exploration et partager mes découvertes</div><div class="gsk">Capital social collectif</div></div>
-    </div>
-    <!-- MOI ET LE TERRITOIRE — 10 cartes -->
-    <div class="deck" id="deck-o-pin">
-      <div class="gc pin"><div class="gbadge">💬</div><div class="gtxt">Un endroit que je connais déjà et que j'aime fréquenter</div><div class="gsk">Ancrage territorial positif</div></div>
-      <div class="gc pin"><div class="gbadge">💬</div><div class="gtxt">Un lieu qui m'intimide ou que j'évite sans raison claire</div><div class="gsk">Zone d'inconfort à explorer</div></div>
-      <div class="gc pin"><div class="gbadge">💬</div><div class="gtxt">Quelque chose que j'aimerais découvrir ici</div><div class="gsk">Projection dans le territoire</div></div>
-      <div class="gc pin"><div class="gbadge">💬</div><div class="gtxt">Là où je me sens à l'aise et moi-même</div><div class="gsk">Espace de confort identitaire</div></div>
-      <div class="gc pin"><div class="gbadge">💬</div><div class="gtxt">Ce que je pensais impossible ici mais qui existe</div><div class="gsk">Dépassement des représentations</div></div>
-      <div class="gc pin"><div class="gbadge">💬</div><div class="gtxt">Un lieu lié à un souvenir ou une expérience marquante</div><div class="gsk">Mémoire territoriale personnelle</div></div>
-      <div class="gc pin"><div class="gbadge">💬</div><div class="gtxt">Un endroit où je voudrais emmener quelqu'un que j'apprécie</div><div class="gsk">Fierté d'appartenance</div></div>
-      <div class="gc pin"><div class="gbadge">💬</div><div class="gtxt">Une ressource que je connais mais que je n'utilise pas encore</div><div class="gsk">Capital inutilisé à activer</div></div>
-      <div class="gc pin"><div class="gbadge">💬</div><div class="gtxt">Ce qui manque selon moi dans ce territoire</div><div class="gsk">Regard critique et constructif</div></div>
-      <div class="gc pin"><div class="gbadge">💬</div><div class="gtxt">Un endroit d'où je vois mon territoire différemment</div><div class="gsk">Prise de recul et perspective</div></div>
-    </div>
-  </div>
-  <div class="conseil"><div class="chead">💡 Règle d'animation</div>
-    <strong>On ne débat pas.</strong> On collecte des pistes concrètes. Aucun lieu ni ressource n'est jugé.
-  </div>
-  <div class="nav-row">
-    <button class="nbtn nback" onclick="goP('o1')">← Brise-glace</button>
-    <button class="nbtn nnext teal" onclick="goP('o3')">Partage en sous-groupes →</button>
-  </div>
-</div></div>
-
-<!-- ▸ O3 PARTAGE -->
-<div class="pnl" id="pnl-o3"><div class="wrap">
-  <div class="ph" style="background:linear-gradient(135deg,#00838F,var(--t))">
-    <div class="ptag">⏱ 30 min · Étape 3/5</div>
-    <h2>🗣️ Partage en sous-groupes</h2>
-    <div class="dur">⏱ 30 min · Groupes de 6 · Chaque participant présente ses 4 cartes</div>
-  </div>
-  <div class="box"><h3>❓ 3 questions clé pour chaque carte</h3>
-    <div class="q3">
-      <div class="q3i" style="background:var(--tl)"><div class="qn" style="background:var(--t)">1</div><div class="qt">Est-ce que je connais un lieu ou une personne pour ça ?</div></div>
-      <div class="q3i" style="background:var(--ml)"><div class="qn" style="background:var(--m)">2</div><div class="qt">Quelqu'un d'autre ici connaît ?</div></div>
-      <div class="q3i" style="background:var(--jl)"><div class="qn" style="background:var(--j);color:var(--dk)">3</div><div class="qt">Sinon, est-ce à découvrir ensemble ?</div></div>
-    </div>
-  </div>
-  <div class="dbox"><h3>📋 Règle d'animation</h3>
-    <div class="dbox2">
-      <div class="d2"><strong style="color:var(--m)">✅ Si quelqu'un connaît</strong>Il explique simplement. La carte alimente la liste des « bons plans ».</div>
-      <div class="d2"><strong style="color:var(--j)">🔍 Personne ne connaît</strong>La carte devient une piste. Ce n'est pas un vide — c'est une opportunité.</div>
-    </div>
-  </div>
-  <div class="conseil"><div class="chead">💡 Conseil animateur</div>
-    La ML peut proposer une liste de lieux pré-identifiés pour alimenter les échanges. <strong>Ne pas débattre — collecter.</strong>
-  </div>
-  <div class="nav-row">
-    <button class="nbtn nback" onclick="goP('o2')">← Distribution</button>
-    <button class="nbtn nnext teal" onclick="goP('o4')">Cartographie vivante →</button>
-  </div>
-</div></div>
-
-<!-- ▸ O4 CARTOGRAPHIE -->
-<div class="pnl" id="pnl-o4"><div class="wrap">
-  <div class="ph" style="background:linear-gradient(135deg,#00838F,var(--t))">
-    <div class="ptag">⏱ 20 min · Étape 4/5</div>
-    <h2>🗂️ Cartographie vivante du groupe</h2>
-    <div class="dur">⏱ 20 min · Les participants déplacent eux-mêmes leurs cartes</div>
-  </div>
-  <div class="box"><h3>📌 Tracer 3 colonnes sur le mur ou la table</h3>
-    <div class="col3">
-      <div class="czone" style="background:var(--ml);border:2px solid var(--m)"><div class="czh" style="color:var(--md)">✅ Je connais</div><p>Les cartes dont au moins un participant connaît le lieu correspondant.</p></div>
-      <div class="czone" style="background:#FFF8E1;border:2px solid var(--j)"><div class="czh" style="color:var(--jd)">🔍 À découvrir</div><p>Personne ne connaît → liste des lieux ML à proposer en complément.</p></div>
-      <div class="czone" style="background:var(--tl);border:2px solid var(--t)"><div class="czh" style="color:var(--td)">💡 Ça m'intéresse</div><p>Connu ou non, ce lieu correspond à un besoin ou une curiosité.</p></div>
-    </div>
-  </div>
-  <div class="box" style="background:var(--tl)"><h3 style="color:var(--td)">👁️ Ce que les participants voient</h3>
-    <div class="wgrid">
-      <div class="wi"><span class="wic">💡</span>Ils savent déjà des choses sur leur territoire</div>
-      <div class="wi"><span class="wic">🤝</span>Ils peuvent s'entraider et partager</div>
-      <div class="wi"><span class="wic">📍</span>Le territoire est plus accessible qu'ils ne pensaient</div>
-      <div class="wi"><span class="wic">🗺️</span>Les zones à explorer sont maintenant visibles</div>
-    </div>
-  </div>
-  <div class="conseil"><div class="chead">💡 Animation</div>Faire émerger : <strong>« Qu'est-ce qu'on voit ? Qu'est-ce qui revient souvent ? »</strong></div>
-  <div class="nav-row">
-    <button class="nbtn nback" onclick="goP('o3')">← Partage</button>
-    <button class="nbtn nnext teal" onclick="goP('o5')">Passage à l'action →</button>
-  </div>
-</div></div>
-
-<!-- ▸ O5 ACTION -->
-<div class="pnl" id="pnl-o5"><div class="wrap">
-  <div class="ph" style="background:linear-gradient(135deg,#00838F,var(--t))">
-    <div class="ptag">⏱ 15 min · Étape 5/5 — Le plus important</div>
-    <h2>🎯 Passage à l'action</h2>
-    <div class="dur">⏱ 15 min · Du collectif au micro-engagement individuel</div>
-  </div>
-  <div class="box"><h3>📝 Choisir UNE carte dans « À découvrir »</h3>
-    <p style="font-size:12px;color:var(--gr);margin-bottom:14px">Pas un projet. <strong>Juste un premier pas.</strong></p>
-    <div class="postit">
-      <h4>« Dans les semaines à venir, je pourrais aller voir... »</h4>
-      <div class="prow"><span class="pl">📍 Je pourrais aller :</span><input class="pi" type="text" placeholder="Nom du lieu ou de la personne..."></div>
-      <div class="prow"><span class="pl">📅 Le :</span><input class="pi" type="text" placeholder="Date ou période..."></div>
-      <div class="prow"><span class="pl">👟 Mon 1er pas :</span><input class="pi" type="text" placeholder="Appeler, passer devant, chercher..."></div>
-    </div>
-  </div>
-  <div class="dbox"><h3>📅 Temps 2 — Propositions de visites ML</h3>
-    <p style="font-size:12px;opacity:.8;line-height:1.6">Présenter les lieux sélectionnés par la ML pour les visites programmées. Créer un lien entre les engagements individuels et l'agenda collectif.</p>
-    <div style="background:rgba(255,255,255,.1);border-radius:9px;padding:11px;margin-top:9px;font-size:11.5px;opacity:.85;line-height:1.7">📸 Photographier le mur des cartes · Transformer les « À découvrir » en plan d'action collectif</div>
-  </div>
-  <div class="box"><h3>💬 Questions de clôture</h3>
-    <div class="dbqs">
-      <div class="dbq" style="border-color:var(--t)">« Des nouveaux lieux identifiés grâce aux échanges ? »</div>
-      <div class="dbq" style="border-color:var(--t)">« Quelle action concrète allez-vous réaliser ? »</div>
-      <div class="dbq" style="border-color:var(--t)">« Y a-t-il une ressource qui vous a surpris ? »</div>
-      <div class="dbq" style="border-color:var(--t)">« Comment voyez-vous votre territoire différemment ? »</div>
-    </div>
-  </div>
-  <div class="nav-row">
-    <button class="nbtn nback" onclick="goP('o4')">← Cartographie</button>
-    <button class="nbtn nnext green" onclick="goP('end')">Terminer ✅</button>
-  </div>
-</div></div>
-
-<!-- ▸ END -->
-<div class="pnl" id="pnl-end"><div class="wrap">
-  <div class="endbox">
-    <h2>🎉 Atelier terminé !</h2>
-    <p>Chaque participant repart avec un territoire enrichi, des ressources identifiées, et un premier pas concret à franchir.</p>
-    <div class="egrid">
-      <div class="ei"><div class="eico">🃏</div><div class="elbl">Cartes jouées</div><div class="eval" id="ec">—</div></div>
-      <div class="ei"><div class="eico">🏃</div><div class="elbl">Phases</div><div class="eval">5</div></div>
-      <div class="ei"><div class="eico">🎯</div><div class="elbl">Engagements</div><div class="eval">7</div></div>
-    </div>
-    <div class="suivibox">
-      <div class="sh">📋 Suivi post-atelier (J+7 / J+14)</div>
-      <ul>
-        <li>Reprendre le post-it engagement en entretien individuel</li>
-        <li>Si fait → « Qu'est-ce que tu as appris sur toi ? »</li>
-        <li>Si pas fait → Explorer le frein sans jugement</li>
-        <li>La carte enrichie = document de suivi dans le dossier</li>
-      </ul>
-    </div>
-    <button class="start-btn" style="background:var(--t);color:#fff;box-shadow:0 5px 20px rgba(0,188,212,.3)" onclick="goP('home')">↺ Retour à l'accueil</button>
-    <div class="frise" style="margin-top:20px">
-      <div class="cap" style="background:var(--r);animation-delay:0s"></div>
-      <div class="cap" style="background:var(--o);animation-delay:.2s"></div>
-      <div class="cap" style="background:var(--j);animation-delay:.4s"></div>
-      <div class="cap" style="background:var(--t);animation-delay:.6s"></div>
-      <div class="cap" style="background:var(--m);animation-delay:.8s"></div>
-      <div class="cap" style="background:var(--r);animation-delay:1s"></div>
-    </div>
-  </div>
-</div></div>
-
-</div><!-- /main -->
-
-<!-- ─── ANIMATOR PANE ─────────────────── -->
-<div id="apane">
-  <div class="apane-inner" id="apane-inner"></div>
 </div>
 
-</div><!-- /app -->
+<!-- CITATION -->
+<div class="citation">
+  <div class="citation-mark">"</div>
+  <div class="citation-text">Le territoire n'est pas une carte abstraite. C'est un réseau vivant de lieux, de personnes et d'opportunités — souvent ignoré, toujours accessible.</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- INTRO -->
+  <div class="intro-card">
+    <div>
+      <h2>🎯 Description de l'atelier</h2>
+      <p>
+        Un atelier d'exploration collective du territoire local.
+        Les jeunes cartographient les lieux qu'ils connaissent, découvrent ceux qu'ils ignorent,
+        identifient les personnes-ressources de leur entourage et formalisent un premier
+        réseau de soutien ancré dans leur quotidien.
+      </p>
+    </div>
+    <div>
+      <h2>📋 Déroulé</h2>
+      <div class="meta-row">
+        <div class="meta-pill teal">🕐 1h30</div>
+        <div class="meta-pill yellow">👥 7 jeunes</div>
+        <div class="meta-pill mint">📍 Présentiel</div>
+        <div class="meta-pill orange">🃏 Cartes PLT4U</div>
+      </div>
+      <div style="margin-top:12px; font-size:0.82rem; line-height:1.6; color:#444;">
+        6 phases · Brise-glace carte géo · Jeu PLT4U · Cartographie vivante · Réseau territoire · Engagement · Clôture
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COMPÉTENCES VISÉES ── -->
+  <div style="background:#fff; border:3px solid var(--black); border-radius:14px; padding:18px 22px; margin-bottom:28px; box-shadow:var(--shadow-lg);">
+    <strong style="font-family:'Poppins',sans-serif; font-size:0.82rem; display:block; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">🧩 Ce que cet atelier développe</strong>
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; font-size:0.78rem;">
+        <thead>
+          <tr>
+            <th style="text-align:left; padding:7px 10px; background:var(--black); color:var(--yellow); font-family:'Poppins',sans-serif; border-radius:6px 0 0 0;">Ce que fait le jeune</th>
+            <th style="text-align:left; padding:7px 10px; background:var(--black); color:var(--yellow); font-family:'Poppins',sans-serif; border-left:2px solid var(--teal);">Axe LS4YOU</th>
+            <th style="text-align:left; padding:7px 10px; background:var(--black); color:var(--yellow); font-family:'Poppins',sans-serif; border-left:2px solid var(--teal); border-radius:0 6px 0 0;">Compétence développée</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:7px 10px;">Nommer un lieu où l'on va spontanément</td>
+            <td style="padding:7px 10px; border-left:1px solid #eee;"><span class="axe-badge perso">💜 Personnalité</span></td>
+            <td style="padding:7px 10px; border-left:1px solid #eee; color:#555;">Prise de conscience de son espace vécu</td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee; background:#fafafa;">
+            <td style="padding:7px 10px;">Dire si on connaît un lieu / une personne</td>
+            <td style="padding:7px 10px; border-left:1px solid #eee;"><span class="axe-badge ressou">💙 Ressources</span></td>
+            <td style="padding:7px 10px; border-left:1px solid #eee; color:#555;">Inventaire de ses ressources territoriales</td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:7px 10px;">Écouter et noter les connaissances des autres</td>
+            <td style="padding:7px 10px; border-left:1px solid #eee;"><span class="axe-badge ressou">💙 Ressources</span></td>
+            <td style="padding:7px 10px; border-left:1px solid #eee; color:#555;">Apprentissage par pair-à-pair</td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee; background:#fafafa;">
+            <td style="padding:7px 10px;">Coller une carte en "À découvrir"</td>
+            <td style="padding:7px 10px; border-left:1px solid #eee;"><span class="axe-badge bienetre">💚 Bien-être</span></td>
+            <td style="padding:7px 10px; border-left:1px solid #eee; color:#555;">Identification des zones d'inconnu → motivation</td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:7px 10px;">Choisir une action concrète sur post-it</td>
+            <td style="padding:7px 10px; border-left:1px solid #eee;"><span class="axe-badge valori">🧡 Valorisation</span></td>
+            <td style="padding:7px 10px; border-left:1px solid #eee; color:#555;">Passage intention → micro-mobilisation</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px; background:#fafafa;">Partager ses bons plans au groupe</td>
+            <td style="padding:7px 10px; border-left:1px solid #eee; background:#fafafa;"><span class="axe-badge ressou">💙 Ressources</span></td>
+            <td style="padding:7px 10px; border-left:1px solid #eee; background:#fafafa; color:#555;">Construction d'un capital social local</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 1 ═══ -->
+  <div class="phase" id="phase1">
+    <div class="phase-header teal">
+      <div class="phase-icon">⚡</div>
+      <div class="phase-title">
+        <h3>Phase 1 · Brise-glace — Mon territoire à moi</h3>
+        <small>Ancrer chaque jeune dans son espace vécu · Lancer la dynamique</small>
+      </div>
+      <div class="phase-duration">10 min</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="axe-row">
+        <span class="axe-badge perso">💜 Personnalité</span>
+      </div>
+
+      <div style="background:var(--teal-l); border:2px solid var(--black); border-radius:10px; padding:14px 18px; font-size:0.84rem; line-height:1.6; margin-bottom:18px; box-shadow:3px 3px 0 var(--black);">
+        📍 <strong>Dispositif :</strong> Affichez une carte géographique du Pays Basque en grand format sur le mur.
+        La carte reste affichée toute la séance — elle s'enrichit au fil des phases.
+      </div>
+
+      <!-- Consigne -->
+      <div style="background:var(--black); border-radius:12px; padding:18px 22px; margin-bottom:16px; text-align:center;">
+        <div style="font-family:'Poppins',sans-serif; font-size:0.7rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--yellow); margin-bottom:8px;">CONSIGNE ORALE</div>
+        <div style="font-family:'Poppins',sans-serif; font-size:1rem; font-weight:800; color:#fff; line-height:1.5; font-style:italic;">
+          "Dans ce territoire, où allez-vous en dehors de vos obligations ?<br>
+          Pas la ML, pas Pôle emploi — un endroit qui vous appartient."
+        </div>
+      </div>
+
+      <div style="font-size:0.83rem; line-height:1.5; margin-bottom:16px; color:#444;">
+        Chacun écrit <strong>1 post-it</strong> et vient le coller sur la carte. Aucune explication obligatoire.
+        <br>Observation collective : zones vides ? Lieux récurrents ? Surprises ?
+      </div>
+
+      <!-- Saisie collective simulée -->
+      <div style="background:#f9f9f9; border:2px solid var(--black); border-radius:12px; padding:14px 16px; box-shadow:var(--shadow);">
+        <strong style="font-family:'Poppins',sans-serif; font-size:0.8rem; display:block; margin-bottom:10px;">🗺️ Simulation — Les lieux nommés par le groupe</strong>
+        <div style="display:flex; gap:8px; margin-bottom:10px;">
+          <input id="lieu-input" type="text" placeholder="Un lieu que tu fréquentes…" style="flex:1; border:2px solid var(--black); border-radius:7px; padding:8px 12px; font-family:'Montserrat',sans-serif; font-size:0.82rem; outline:none;">
+          <button onclick="addLieu()" style="background:var(--teal); color:#fff; border:2px solid var(--black); border-radius:7px; padding:8px 16px; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer; box-shadow:2px 2px 0 var(--black); white-space:nowrap;">Coller ✓</button>
+        </div>
+        <div id="lieux-wall" style="display:flex; flex-wrap:wrap; gap:8px; min-height:48px;"></div>
+      </div>
+
+      <div class="tip-box teal">
+        <div class="tip-box-header">⚠️ Si un jeune dit "je ne vais nulle part"</div>
+        <div class="tip-box-body">
+          Reformulez : <em>"Même un banc, une rue, un parc — tout compte. Un endroit où tu te poses, même seul·e ?"</em><br>
+          Proposez de montrer directement sur la carte plutôt que de devoir mettre des mots.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 2 ═══ -->
+  <div class="phase" id="phase2">
+    <div class="phase-header mint">
+      <div class="phase-icon">🃏</div>
+      <div class="phase-title">
+        <h3>Phase 2 · Distribution des cartes PLT4U</h3>
+        <small>Présenter les 4 types de cartes · Tirage aléatoire · Lecture silencieuse</small>
+      </div>
+      <div class="phase-duration">5 min</div>
+    </div>
+    <div class="phase-body">
+
+      <div style="font-size:0.84rem; line-height:1.5; margin-bottom:14px; color:#444;">
+        👉 Distribuer <strong>1 carte par type et par couleur</strong> à chaque participant (tirage aléatoire dans chaque pile).
+        <br>Laisser <strong>2 minutes de lecture silencieuse</strong> avant de commencer le jeu.
+      </div>
+
+      <div class="cards-plt4u">
+
+        <div class="plt-card bleue" onclick="this.classList.toggle('flipped')">
+          <div class="plt-front">
+            <div class="plt-color">
+              <span class="plt-icon">🟦</span>
+              <div>
+                <div class="plt-type">JE PEUX Y ALLER</div>
+                <div style="font-size:0.68rem; color:#555; margin-top:2px;">Lieux du territoire</div>
+              </div>
+            </div>
+            <div class="plt-body">
+              Des lieux accessibles au quotidien :<br>
+              mairie, MJC, fab lab, associations, médiathèque, espaces jeunes…
+            </div>
+            <div class="plt-flip-hint">Cliquer pour voir les exemples →</div>
+          </div>
+          <div class="plt-back">
+            <div class="plt-color">
+              <span class="plt-icon">🟦</span>
+              <div><div class="plt-type">Exemples de lieux</div></div>
+            </div>
+            <div class="plt-body">
+              <ul>
+                <li>Mairie / Maison des services publics</li>
+                <li>MJC / Centre social / Espace jeunes</li>
+                <li>Médiathèque / Fab lab</li>
+                <li>Associations sportives, culturelles</li>
+                <li>Lieux d'insertion / Chantiers école</li>
+              </ul>
+            </div>
+            <div class="plt-flip-hint">← Cliquer pour revenir</div>
+          </div>
+        </div>
+
+        <div class="plt-card verte" onclick="this.classList.toggle('flipped')">
+          <div class="plt-front">
+            <div class="plt-color">
+              <span class="plt-icon">🟩</span>
+              <div>
+                <div class="plt-type">JE PEUX RENCONTRER</div>
+                <div style="font-size:0.68rem; color:#555; margin-top:2px;">Personnes ressources</div>
+              </div>
+            </div>
+            <div class="plt-body">
+              Des personnes-clés pour progresser :<br>
+              conseiller, mentor, professionnel, voisin actif, bénévole…
+            </div>
+            <div class="plt-flip-hint">Cliquer pour voir les exemples →</div>
+          </div>
+          <div class="plt-back">
+            <div class="plt-color">
+              <span class="plt-icon">🟩</span>
+              <div><div class="plt-type">Exemples de personnes</div></div>
+            </div>
+            <div class="plt-body">
+              <ul>
+                <li>Conseiller·ère ML, référent·e social·e</li>
+                <li>Professionnel·le d'un secteur qui m'intéresse</li>
+                <li>Mentor, ancien·ne en emploi</li>
+                <li>Responsable bénévolat d'une asso</li>
+                <li>Voisin·e avec un réseau local</li>
+              </ul>
+            </div>
+            <div class="plt-flip-hint">← Cliquer pour revenir</div>
+          </div>
+        </div>
+
+        <div class="plt-card orange" onclick="this.classList.toggle('flipped')">
+          <div class="plt-front">
+            <div class="plt-color">
+              <span class="plt-icon">🟧</span>
+              <div>
+                <div class="plt-type">JE PEUX ESSAYER</div>
+                <div style="font-size:0.68rem; color:#555; margin-top:2px;">Actions possibles</div>
+              </div>
+            </div>
+            <div class="plt-body">
+              Des actions concrètes à tenter :<br>
+              stage d'observation, réunion publique, bénévolat, forum emploi…
+            </div>
+            <div class="plt-flip-hint">Cliquer pour voir les exemples →</div>
+          </div>
+          <div class="plt-back">
+            <div class="plt-color">
+              <span class="plt-icon">🟧</span>
+              <div><div class="plt-type">Exemples d'actions</div></div>
+            </div>
+            <div class="plt-body">
+              <ul>
+                <li>Participer à une réunion publique</li>
+                <li>S'inscrire à un atelier de quartier</li>
+                <li>Faire une journée de bénévolat</li>
+                <li>Aller à un forum emploi / découverte</li>
+                <li>Demander un stage d'observation</li>
+              </ul>
+            </div>
+            <div class="plt-flip-hint">← Cliquer pour revenir</div>
+          </div>
+        </div>
+
+        <div class="plt-card rouge" onclick="this.classList.toggle('flipped')">
+          <div class="plt-front">
+            <div class="plt-color">
+              <span class="plt-icon">🟥</span>
+              <div>
+                <div class="plt-type">MOI ET LE TERRITOIRE</div>
+                <div style="font-size:0.68rem; color:#555; margin-top:2px;">Expression personnelle</div>
+              </div>
+            </div>
+            <div class="plt-body">
+              Ma relation au territoire :<br>
+              lieu connu, lieu qui intimide, zone à découvrir, souvenir lié à un endroit…
+            </div>
+            <div class="plt-flip-hint">Cliquer pour voir les exemples →</div>
+          </div>
+          <div class="plt-back">
+            <div class="plt-color">
+              <span class="plt-icon">🟥</span>
+              <div><div class="plt-type">Ce que ça peut évoquer</div></div>
+            </div>
+            <div class="plt-body">
+              <ul>
+                <li>Un lieu qui me fait peur ou m'intimide</li>
+                <li>Un endroit où je me sens bien</li>
+                <li>Une zone que je n'ai jamais explorée</li>
+                <li>Un souvenir fort lié à un lieu</li>
+                <li>Un lieu que j'aimerais découvrir</li>
+              </ul>
+            </div>
+            <div class="plt-flip-hint">← Cliquer pour revenir</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 3 ═══ -->
+  <div class="phase" id="phase3">
+    <div class="phase-header turq">
+      <div class="phase-icon">🎲</div>
+      <div class="phase-title">
+        <h3>Phase 3 · Le jeu des cartes</h3>
+        <small>4 tours de ~7 min · 1 carte par participant par tour · 3 questions</small>
+      </div>
+      <div class="phase-duration">30 min</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="axe-row">
+        <span class="axe-badge ressou">💙 Ressources</span>
+      </div>
+
+      <div style="font-size:0.84rem; line-height:1.5; margin-bottom:16px; padding:12px 16px; background:#E0F7FA; border:2px solid var(--black); border-radius:10px; box-shadow:3px 3px 0 var(--black);">
+        🧭 Pour chaque carte présentée, l'animateur·rice pose les 3 questions ci-dessous au groupe.
+        Les réponses sont notées sur le paperboard dans la colonne <strong>Liste collective des lieux connus</strong>.
+        <br><em style="color:#00838F; font-weight:600;">Si personne ne connaît → la carte rejoint la pile "À découvrir" — ce n'est pas un vide, c'est une piste.</em>
+      </div>
+
+      <!-- Les 3 questions -->
+      <div class="questions-jeu">
+        <div class="q-jeu">
+          <div class="q-jeu-header" style="background:#E3F2FD;">
+            <span style="background:var(--teal); color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0;">1</span>
+            Question au porteur de la carte
+          </div>
+          <div class="q-jeu-body">
+            <em>"Est-ce que toi, tu connais un endroit ou une personne pour ça ?"</em>
+          </div>
+        </div>
+        <div class="q-jeu">
+          <div class="q-jeu-header" style="background:#E8F5E9;">
+            <span style="background:var(--mint); color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0;">2</span>
+            Question au reste du groupe
+          </div>
+          <div class="q-jeu-body">
+            <em>"Est-ce que quelqu'un dans le groupe connaît un lieu ou une personne pour ça ?"</em>
+          </div>
+        </div>
+        <div class="q-jeu">
+          <div class="q-jeu-header" style="background:#FFF9C4;">
+            <span style="background:var(--orange); color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0;">3</span>
+            Question sur le vécu
+          </div>
+          <div class="q-jeu-body">
+            <em>"Est-ce que tu as déjà eu une expérience là-bas ? Qu'est-ce que tu y as fait ou appris ?"</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compteur de tours -->
+      <div style="margin-top:18px; background:#f9f9f9; border:2px solid var(--black); border-radius:10px; padding:14px 16px; box-shadow:var(--shadow);">
+        <strong style="font-family:'Poppins',sans-serif; font-size:0.82rem; display:block; margin-bottom:10px;">⏱️ Avancement des tours (cocher au fil du jeu)</strong>
+        <div class="tours-wrapper">
+          <span class="tours-label">Tour :</span>
+          <div class="tour-dot-row">
+            <div class="tour-dot" onclick="toggleTour(this)" id="t1">1</div>
+            <div class="tour-dot" onclick="toggleTour(this)" id="t2">2</div>
+            <div class="tour-dot" onclick="toggleTour(this)" id="t3">3</div>
+            <div class="tour-dot" onclick="toggleTour(this)" id="t4">4</div>
+          </div>
+          <span class="tours-label" id="tour-msg" style="color:var(--teal);"></span>
+        </div>
+        <div style="font-size:0.76rem; color:#888; margin-top:8px;">
+          ~7 min par tour · 1 carte / participant / tour · Si échanges riches : réduire la Phase 4B (Personnes Qui) à 5 min
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-box-header">💡 Règle d'or du jeu des cartes</div>
+        <div class="tip-box-body">
+          <ul>
+            <li>✦ On ne débat pas. On collecte des pistes concrètes.</li>
+            <li>✦ Aucun lieu n'est jugé — pas de "c'est nul" ni de "c'est bien".</li>
+            <li>✦ Valorisez chaque savoir partagé : <em>"Tu savais ça ? Excellent !"</em> — c'est de la valorisation de soi en acte.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 4 ═══ -->
+  <div class="phase" id="phase4">
+    <div class="phase-header yellow">
+      <div class="phase-icon">🗺️</div>
+      <div class="phase-title">
+        <h3>Phase 4 · Cartographie vivante + Les personnes qui…</h3>
+        <small>Classer les cartes en 3 colonnes · Transformer les lieux en réseau humain</small>
+      </div>
+      <div class="phase-duration">20 min</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="axe-row">
+        <span class="axe-badge bienetre">💚 Bien-être</span>
+      </div>
+
+      <!-- Étape A -->
+      <div style="margin-bottom:20px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+          <div style="background:var(--teal); color:#fff; width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.82rem; flex-shrink:0;">A</div>
+          <strong style="font-family:'Poppins',sans-serif; font-size:0.88rem;">Cartographie des lieux (10 min)</strong>
+        </div>
+
+        <div style="font-size:0.83rem; margin-bottom:12px; color:#444;">
+          Les participants viennent coller eux-mêmes leurs cartes dans les 3 colonnes.
+          Le geste d'appropriation compte autant que le résultat.
+          <br>Débriefing rapide : <em>"Regardez ce que vous savez déjà. Et ce que vous pourriez découvrir ensemble."</em>
+        </div>
+
+        <div class="carto-cols">
+          <div class="carto-col-header connais">✅ Je connais</div>
+          <div class="carto-col-header decouvrir">🔍 À découvrir</div>
+          <div class="carto-col-header interesse">⭐ Ça m'intéresse</div>
+
+          <div class="carto-drop" id="col-connais">
+            <div class="carto-input-row">
+              <input class="carto-input" id="inp-connais" placeholder="Un lieu que je connais…">
+              <button class="carto-add-btn" onclick="addPostit('connais')">+ Ajouter</button>
+            </div>
+          </div>
+          <div class="carto-drop mid" id="col-decouvrir">
+            <div class="carto-input-row">
+              <input class="carto-input" id="inp-decouvrir" placeholder="Un lieu à explorer…">
+              <button class="carto-add-btn" onclick="addPostit('decouvrir')" style="background:var(--turq);">+ Ajouter</button>
+            </div>
+          </div>
+          <div class="carto-drop" id="col-interesse">
+            <div class="carto-input-row">
+              <input class="carto-input" id="inp-interesse" placeholder="Un lieu qui m'attire…">
+              <button class="carto-add-btn" onclick="addPostit('interesse')" style="background:var(--orange);">+ Ajouter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape B -->
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+          <div style="background:var(--orange); color:#fff; width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.82rem; flex-shrink:0;">B</div>
+          <strong style="font-family:'Poppins',sans-serif; font-size:0.88rem;">Les personnes qui… (10 min)</strong>
+        </div>
+
+        <div style="font-size:0.83rem; margin-bottom:12px; padding:10px 14px; background:#FFF3E0; border:2px solid var(--black); border-radius:8px; box-shadow:2px 2px 0 var(--black); color:#444;">
+          Pour chaque lieu dans <strong>"Je connais"</strong>, on pose ces questions au groupe :
+          <em>"Qui dans ton entourage connaît ou fréquente cet endroit ?"</em> · <em>"Qui pourrait t'y accompagner ?"</em> · <em>"Qui t'y a fait entrer ?"</em>
+          <br><strong>Résultat :</strong> la carte devient un <strong>réseau-territoire</strong> — des lieux ET des personnes.
+        </div>
+
+        <div class="personnes-grid">
+          <div class="pq-card">
+            <div class="pq-header" style="background:#E0F7FA;">
+              <span>👤</span> Qui t'y a emmené ou te l'a fait découvrir ?
+            </div>
+            <div class="pq-body">
+              <textarea rows="3" placeholder="Nom / lien avec la personne…"></textarea>
+            </div>
+          </div>
+          <div class="pq-card">
+            <div class="pq-header" style="background:#E8F5E9;">
+              <span>🤝</span> Qui pourrait t'accompagner la première fois ?
+            </div>
+            <div class="pq-body">
+              <textarea rows="3" placeholder="Nom / lien avec la personne…"></textarea>
+            </div>
+          </div>
+          <div class="pq-card">
+            <div class="pq-header" style="background:#FFF9C4;">
+              <span>📡</span> Qui pourrait te donner des tuyaux sur ce lieu ?
+            </div>
+            <div class="pq-body">
+              <textarea rows="3" placeholder="Nom / lien avec la personne…"></textarea>
+            </div>
+          </div>
+          <div class="pq-card">
+            <div class="pq-header" style="background:#FCE4EC;">
+              <span>🔗</span> Qui pourrait te présenter quelqu'un là-bas ?
+            </div>
+            <div class="pq-body">
+              <textarea rows="3" placeholder="Nom / lien avec la personne…"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 5 ═══ -->
+  <div class="phase" id="phase5">
+    <div class="phase-header orange">
+      <div class="phase-icon">🎯</div>
+      <div class="phase-title">
+        <h3>Phase 5 · Passage à l'action</h3>
+        <small>Choisir 1 carte · Écrire 1 engagement · Partage oral volontaire</small>
+      </div>
+      <div class="phase-duration">15 min</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="axe-row">
+        <span class="axe-badge valori">🧡 Valorisation de soi</span>
+      </div>
+
+      <div style="font-size:0.84rem; line-height:1.5; margin-bottom:14px; color:#444;">
+        Chaque participant choisit <strong>UNE carte</strong> dans "À découvrir" ou "Ça m'intéresse"
+        et écrit son engagement sur un post-it en suivant la formule ci-dessous.
+      </div>
+
+      <!-- Formule -->
+      <div style="background:var(--black); border-radius:12px; padding:16px 20px; margin-bottom:18px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+        <span style="font-size:1.5rem;">✍️</span>
+        <div style="font-family:'Poppins',sans-serif; font-size:0.92rem; font-weight:800; color:var(--yellow); font-style:italic;">
+          "Dans les prochaines semaines, je pourrais aller voir <span style="text-decoration:underline;">___</span>… parce que <span style="text-decoration:underline;">___</span>"
+        </div>
+      </div>
+
+      <!-- Post-it interactif -->
+      <div class="postit-big">
+        <h4>📝 Mon post-it engagement</h4>
+        <textarea id="engagement-text" rows="3" placeholder="Dans les prochaines semaines, je pourrais aller voir… parce que…"></textarea>
+        <br>
+        <button class="btn-ok" onclick="addEngagement()">Coller mon post-it sur la carte ✓</button>
+      </div>
+
+      <div class="engagements-list" id="eng-list"></div>
+
+      <div class="tip-box teal" style="margin-top:16px;">
+        <div class="tip-box-header">⚠️ Important — Ne pas forcer</div>
+        <div class="tip-box-body">
+          Si un jeune ne se sent pas prêt : <em>"Si tu ne te sens pas prêt·e, c'est OK. Juste noter pour voir, c'est déjà quelque chose."</em>
+          <br><br>
+          Si disponible : présenter les lieux pré-identifiés par la ML (visites, journées découverte) en lien avec les cartes "À découvrir".
+          Photographier le mur des cartes + post-its → trace collective à réutiliser en entretien individuel.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 6 ═══ -->
+  <div class="phase" id="phase6">
+    <div class="phase-header red">
+      <div class="phase-icon">🤝</div>
+      <div class="phase-title">
+        <h3>Phase 6 · Clôture — Réseau de soutien social</h3>
+        <small>Identifier les personnes-soutien · Connecter territoire et bien-être</small>
+      </div>
+      <div class="phase-duration">10 min</div>
+    </div>
+    <div class="phase-body">
+
+      <div class="axe-row">
+        <span class="axe-badge bienetre">💚 Bien-être</span>
+        <span class="axe-badge ressou">💙 Ressources</span>
+      </div>
+
+      <div style="font-size:0.84rem; line-height:1.5; margin-bottom:16px; color:#444;">
+        Pour clore, on zoome sur les <strong>personnes-soutien</strong> derrière les lieux explorés.
+        Trois types de soutien à identifier dans son entourage.
+      </div>
+
+      <div class="reseau-grid">
+
+        <div class="rs-card">
+          <div class="rs-header pratique">
+            <span class="rs-icon">💼</span>
+            <div>
+              <div class="rs-title">Soutien pratique</div>
+              <div class="rs-question">QUI pourrait prendre soin de mes affaires si je devais m'absenter ?</div>
+            </div>
+          </div>
+          <div class="rs-body">
+            <input placeholder="Prénom / lien">
+            <input placeholder="Comment je pourrais le/la contacter ?">
+          </div>
+        </div>
+
+        <div class="rs-card">
+          <div class="rs-header consultat">
+            <span class="rs-icon">💡</span>
+            <div>
+              <div class="rs-title">Soutien consultatif</div>
+              <div class="rs-question">À QUI je parle quand je dois prendre une décision importante ?</div>
+            </div>
+          </div>
+          <div class="rs-body">
+            <input placeholder="Prénom / lien">
+            <input placeholder="Comment je pourrais le/la contacter ?">
+          </div>
+        </div>
+
+        <div class="rs-card">
+          <div class="rs-header emotion">
+            <span class="rs-icon">💛</span>
+            <div>
+              <div class="rs-title">Soutien émotionnel</div>
+              <div class="rs-question">À QUI je m'adresse en premier en cas de coup dur ?</div>
+            </div>
+          </div>
+          <div class="rs-body">
+            <input placeholder="Prénom / lien">
+            <input placeholder="Comment je pourrais le/la contacter ?">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Lien territoire → réseau -->
+      <div style="background:var(--black); color:#fff; border-radius:12px; padding:14px 18px; margin-top:16px; font-size:0.83rem; line-height:1.6;">
+        💬 <strong style="color:var(--yellow);">Question de connexion pour débriefer :</strong>
+        <em>"Les lieux que vous avez découverts aujourd'hui pourraient-ils vous connecter à de nouvelles personnes de soutien ?"</em>
+      </div>
+
+      <!-- Tour de table final -->
+      <div style="background:#f9f9f9; border:2px solid var(--black); border-radius:10px; padding:14px 16px; margin-top:14px; box-shadow:var(--shadow);">
+        <strong style="font-family:'Poppins',sans-serif; font-size:0.82rem; display:block; margin-bottom:10px;">🔄 Tour de table final · 1 mot / 1 image / 1 couleur</strong>
+        <div style="font-size:0.8rem; color:#555; line-height:1.5;">
+          Chacun choisit <strong>une seule chose</strong> pour décrire comment il repart :<br>
+          un mot · ou une image mentale · ou une couleur.
+          Pas d'obligation d'explication.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ QUESTIONS DE DÉBRIEFING LS ═══ -->
+  <div class="phase">
+    <div class="phase-header" style="background:#1A1A1A; color:var(--yellow);">
+      <div class="phase-icon">💬</div>
+      <div class="phase-title">
+        <h3>Questions de débriefing Life Skills</h3>
+        <small>À poser en clôture selon la dynamique du groupe — cliquer pour révéler la reformulation</small>
+      </div>
+    </div>
+    <div class="phase-body">
+
+      <div class="debrief-list">
+        <div class="debrief-q" onclick="this.classList.toggle('revealed')">
+          <div class="debrief-axe" style="background:#EDE7F6;">💜</div>
+          <div class="debrief-content">
+            <strong>Personnalité</strong>
+            <em>"Avez-vous découvert quelque chose sur les endroits qui vous correspondent vraiment ?"</em>
+            <div class="debrief-reveal">→ Ce que tu cherches dans un lieu, c'est souvent le reflet de ce dont tu as besoin. Se poser la question, c'est mieux se connaître.</div>
+          </div>
+        </div>
+        <div class="debrief-q" onclick="this.classList.toggle('revealed')">
+          <div class="debrief-axe" style="background:#E0F7FA;">💚</div>
+          <div class="debrief-content">
+            <strong>Bien-être</strong>
+            <em>"Avez-vous repéré un lieu ou une personne qui pourrait vous aider dans les moments difficiles ?"</em>
+            <div class="debrief-reveal">→ Savoir vers qui ou quoi aller quand ça ne va pas, c'est une ressource concrète. Aujourd'hui vous l'avez mise en mots.</div>
+          </div>
+        </div>
+        <div class="debrief-q" onclick="this.classList.toggle('revealed')">
+          <div class="debrief-axe" style="background:#FFF3E0;">🧡</div>
+          <div class="debrief-content">
+            <strong>Valorisation de soi</strong>
+            <em>"Qu'est-ce que vous saviez déjà sur votre territoire sans savoir que vous le saviez ?"</em>
+            <div class="debrief-reveal">→ Ça, c'est une compétence. Connaître son territoire local, ça s'appelle avoir un capital social et géographique — deux atouts réels pour s'insérer.</div>
+          </div>
+        </div>
+        <div class="debrief-q" onclick="this.classList.toggle('revealed')">
+          <div class="debrief-axe" style="background:#E0F7FA;">💙</div>
+          <div class="debrief-content">
+            <strong>Ressources</strong>
+            <em>"Quelle est la ressource la plus surprenante que vous avez découverte aujourd'hui ?"</em>
+            <div class="debrief-reveal">→ Souvent, ce sont les ressources les plus proches et les moins formelles qui débloquent les situations. Votre entourage est une ressource, votre quartier est une ressource.</div>
+          </div>
+        </div>
+        <div class="debrief-q" onclick="this.classList.toggle('revealed')">
+          <div class="debrief-axe" style="background:#E8F5E9;">🤝</div>
+          <div class="debrief-content">
+            <strong>Réseau</strong>
+            <em>"Qui, dans votre entourage, pourrait vous accompagner dans la première démarche que vous avez notée ?"</em>
+            <div class="debrief-reveal">→ Ne pas y aller seul·e pour la première fois, c'est une stratégie, pas une faiblesse. Un ancrage social, ça se construit pas à pas.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ MATÉRIEL & SUIVI ═══ -->
+  <div class="phase">
+    <div class="phase-header black">
+      <div class="phase-icon">📦</div>
+      <div class="phase-title">
+        <h3>Matériel · Gestion du temps · Suivi</h3>
+        <small>Tout ce qu'il faut préparer avant · Conseils pour les cas difficiles</small>
+      </div>
+    </div>
+    <div class="phase-body">
+
+      <div class="materiel-grid" style="margin-bottom:16px;">
+        <div class="mat-item">
+          <div class="mat-header" style="background:var(--teal-l);">📋 Matériel à préparer (J-1)</div>
+          <div class="mat-body">
+            <ul>
+              <li>Cartes PLT4U imprimées et découpées (4 types × 8–10 cartes min.)</li>
+              <li>Carte géographique Pays Basque A3+ pour le mur</li>
+              <li>Post-its 4 couleurs (une par type de carte) + post-its neutres</li>
+              <li>Feutres et marqueurs de couleur</li>
+              <li>Paperboard ou grand mur pour les 3 colonnes</li>
+              <li>Liste pré-établie des lieux ressources ML (à distribuer en fin)</li>
+              <li>Téléphone pour photographier le mur final</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mat-item">
+          <div class="mat-header" style="background:#FFFDE7;">⏱️ Gestion du temps · 7 participants</div>
+          <div class="mat-body">
+            <ul>
+              <li>La <strong>Phase 3</strong> (jeu des cartes) est la phase pivot — ne pas la sacrifier</li>
+              <li>Limiter à 1 carte / participant / tour — 4 tours × ~7 min</li>
+              <li>Si échanges riches : réduire la Phase 4B à 5 min</li>
+              <li>Ne jamais sacrifier Phase 5 (post-its) ni Phase 6 (clôture)</li>
+              <li>Phases 1 et 2 : non-négociables pour la dynamique de groupe</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mat-item">
+          <div class="mat-header" style="background:#FCE4EC;">🧩 Participants en difficulté d'expression</div>
+          <div class="mat-body">
+            <ul>
+              <li>Reformulez : <em>"Un endroit que tu as fréquenté, même une fois ?"</em></li>
+              <li>Valorisez chaque réponse minimale — pas de bonne ou mauvaise réponse</li>
+              <li>Proposez de dessiner ou de montrer sur la carte plutôt que de parler</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mat-item">
+          <div class="mat-header" style="background:#E8F5E9;">🔁 Suivi post-atelier · J+7 / J+14</div>
+          <div class="mat-body">
+            <ul>
+              <li>Reprendre le post-it : <em>"Tu avais dit vouloir aller voir… tu as pu ?"</em></li>
+              <li>Si fait → <em>"Qu'est-ce que tu as appris sur toi en y allant ?"</em> (Valorisation)</li>
+              <li>Si pas fait → explorer le frein sans jugement (Personnalité, zone d'inconfort)</li>
+              <li>La carte enrichie + les post-its = document de suivi dans le dossier jeune</li>
+              <li>Les cartes Ressources alimentent aussi le DiagMob360 (ROAMING)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">LS4YOU · Axe Ressources & Personnalité · Mission Locale Pays Basque · Atelier 1 – Trouve ta place sur le territoire</div>
 
 <script>
-// ══ DATA ════════════════════════════════
-const PHASES={
-  home:{label:null,min:0},
-  ls1:{label:'Brise-glace',min:10,v:'ls',n:1},
-  ls2:{label:'Jeu cartes',min:30,v:'ls',n:2},
-  ls3:{label:'Cartographie',min:20,v:'ls',n:3},
-  ls4:{label:'Réseau',min:15,v:'ls',n:4},
-  ls5:{label:'Action',min:15,v:'ls',n:5},
-  o1:{label:'Brise-glace',min:10,v:'orig',n:1},
-  o2:{label:'Distribution',min:5,v:'orig',n:2},
-  o3:{label:'Partage',min:30,v:'orig',n:3},
-  o4:{label:'Cartographie',min:20,v:'orig',n:4},
-  o5:{label:'Action',min:15,v:'orig',n:5},
-  end:{label:null,min:0},
-};
-const LS=['ls1','ls2','ls3','ls4','ls5'];
-const OR=['o1','o2','o3','o4','o5'];
-
-const ACONTENT={
-  ls1:[
-    {c:'at',b:'📚 Clé territoire #1',t:"L'Espace & la Mobilité",p:"Comprendre où se situent les emplois et comment y accéder. Le territoire se parcourt — il faut d'abord savoir le lire.",k:"🚌 Identifier transports, distances et zones d'emploi proches évite de rater des opportunités accessibles."},
-    {c:'aj',b:'🔭 Étape 1/4 du parcours',t:"Lire son environnement",p:"Identifier les acteurs, lieux, règles et usages qui composent le territoire.",k:"📍 Acteurs · Lieux · Règles · Usages"},
-    {c:'',b:'🧠 LS — Personnalité',t:"Espace vécu vs espace subi",p:"Maîtriser son territoire, c'est transformer un espace subi en espace choisi.",obs:[["Nommer un lieu spontané","🧠 Conscience espace vécu"],["Repérer un lieu ressourçant","💚 Bien-être territorial"]]},
-  ],
-  ls2:[
-    {c:'at',b:'📚 Clé territoire #2',t:"Le Réseau d'Acteurs",p:"Identifier personnes et structures qui détiennent l'information et l'influence.",k:"🔗 Derrière chaque lieu, des personnes. Ce sont elles qui ouvrent les portes."},
-    {c:'aj',b:'🔗 Étape 2/4',t:"Relier les ressources au projet",p:"Créer des ponts entre les éléments identifiés et les objectifs personnels.",k:"🌉 Projet · Ressources · Acteurs · Lieux"},
-    {c:'',b:'⭐ Observable → Compétence',t:"Ce que le jeu développe",obs:[["Dire si on connaît","💰 Inventaire ressources"],["Écouter les autres","💰 Pair-to-peer"],["Partager un bon plan","💰 Capital social local"]]},
-  ],
-  ls3:[
-    {c:'am',b:'📚 Clé territoire #5',t:"L'Importance de l'Usage",p:"Le territoire n'est utile que par la manière dont on décide de l'investir.",k:"🔄 Lieu subi → Lieu choisi"},
-    {c:'at',b:'⭐ Impact LS — Valorisation',t:"Ce que sait le groupe",p:"Le mur rempli montre que chaque jeune sait déjà des choses. C'est un acte de valorisation de soi collectif et visible."},
-  ],
-  ls4:[
-    {c:'av',b:'🤝 Méthode Les Personnes Qui... (Alèthéia)',t:"Cartographier son réseau",p:"Inspirée de la méthode ADVP — Cristallisation. Identifier le rôle de chacun dans son réseau de soutien.",k:"👥 Famille · Amis · Voisins · Travail · Systèmes sociaux"},
-    {c:'am',b:'💚 LS4YOU — Réseau de soutien social',t:"3 types de soutien",ks:["😊 Soutien émotionnel — coup dur","🔧 Soutien pratique — aide concrète","💡 Soutien consultatif — décisions"]},
-    {c:'',b:'⭐ Observable → Compétence',t:"Compléter sa cartographie réseau",p:"Développe la conscience de son capital relationnel — souvent sous-estimé par les jeunes NEET qui se perçoivent comme isolés."},
-  ],
-  ls5:[
-    {c:'at',b:'🏃 Étape 3/4',t:"Agir concrètement",p:"Se déplacer physiquement pour activer les ressources identifiées. Le post-it transforme l'intention en action réelle.",k:"🗺️ Action · Déplacement · Mobilisation"},
-    {c:'',b:'🤝 Étape 4/4',t:"Partager & co-construire",p:"Transmettre ses découvertes et participer à la carte collective.",k:"📖 Partage · Collectif · Carte vivante"},
-    {c:'am',b:'📚 Clé territoire #4',t:"Le Réservoir de Ressources",p:"Localiser les aides pour anticiper et résoudre ses problèmes.",k:"💊 Santé · Permis · Formation · Logement"},
-  ],
-  o1:[
-    {c:'at',b:'🗺️ Pourquoi ça fonctionne',t:"Avec ce public",ks:["😌 Ne parle pas d'emploi directement — moins anxiogène","⭐ Valorise ce qu'ils savent déjà","🤝 Remplace l'isolement par le partage","📍 Montre que des ressources sont physiquement proches"]},
-    {c:'aj',b:'📦 Matériel nécessaire',t:"Préparer avant l'atelier",p:"30 à 40 cartes imprimées découpées · Cartes géo du territoire (6 zones) · Post-it et feutres épais · Mur ou paperboard disponible"},
-  ],
-  o2:[
-    {c:'at',b:'👥 Organisation',t:"Sous-groupes de 6",p:"Pour les grands groupes (jusqu'à 42 participants), former des sous-groupes de 6. Chaque sous-groupe fonctionne en autonomie.",k:"6 personnes × 4 cartes = 24 échanges par sous-groupe"},
-    {c:'aj',b:'🃏 Règle',t:"Distribution aléatoire",p:"1 carte par type de couleur — tirage dans chaque pile distincte. 2 min de lecture silencieuse avant les échanges."},
-  ],
-  o3:[
-    {c:'at',b:'🎯 Objectifs du partage',t:"Ce qu'on construit",p:"Identifier des lieux utiles inconnus · Relier le territoire au projet · Partager les bons plans · Reprendre confiance à agir localement"},
-    {c:'aj',b:'📋 On travaille',t:"Les 4 dimensions",ks:["🗺️ Connaissance du territoire","🔗 Activation du réseau","🎯 Projection dans l'action","🗣️ Expression orale sans pression"]},
-  ],
-  o4:[
-    {c:'at',b:'📊 Résultat visible',t:"Une carte collective",p:"Les 3 colonnes matérialisent ce que le groupe sait, ne sait pas, veut découvrir. Chaque geste de coller une carte est un engagement."},
-  ],
-  o5:[
-    {c:'at',b:'🏁 Résultats attendus',t:"Ce que chaque participant emporte",ks:["Des nouveaux lieux identifiés","Une action concrète à réaliser","Des contacts ou idées nouvelles","Une vision moins fermée du territoire","Un plan de visites collectives validé"]},
-    {c:'',b:'🔗 Pour aller plus loin',t:"Version LS4YOU",p:"La version LS4YOU approfondit avec les 4 domaines Life Skills, la cartographie réseau et le suivi individualisé post-atelier."},
-  ],
-  end:[],
-};
-
-// ══ STATE ═══════════════════════════════
-let cur='home', variant='ls', animOpen=false;
-let tSec=0, tMax=0, tRun=false, tInt=null;
-
-// ══ NAVIGATION ══════════════════════════
-function goP(id){
-  document.getElementById('pnl-'+cur).classList.remove('on');
-  document.getElementById('pnl-'+id).classList.add('on');
-  if(id==='end') document.getElementById('ec').textContent = variant==='ls'?'28':'40';
-  cur=id;
-  updateBar();
-  setTimer((PHASES[id]?.min||0)*60);
-  renderAnim();
-}
-
-function launch(v){variant=v;goP(v==='ls'?'ls1':'o1');}
-
-function setVar(v){
-  variant=v;
-  document.getElementById('vt-ls').className='vt'+(v==='ls'?' sls':'');
-  document.getElementById('vt-orig').className='vt'+(v==='orig'?' sorig':'');
-  document.getElementById('vp-ls').className='vpanel'+(v==='ls'?' on':'');
-  document.getElementById('vp-orig').className='vpanel'+(v==='orig'?' on':'');
-}
-
-// ══ BAR ═════════════════════════════════
-function updateBar(){
-  const ph=PHASES[cur];
-  const steps=document.getElementById('bar-steps');
-  const vb=document.getElementById('vbadge');
-  const ba=document.getElementById('btn-anim');
-  steps.innerHTML='';
-  if(!ph?.v){vb.style.display='none';ba.style.display='none';return;}
-  const isLS=ph.v==='ls';
-  vb.textContent=isLS?'🎯 LS4YOU':'🗺️ Originale';
-  vb.style.cssText=`display:block;background:${isLS?'var(--rl)':'var(--tl)'};color:${isLS?'var(--r)':'var(--td)'}`;
-  ba.style.display='flex';
-  const order=isLS?LS:OR;
-  order.forEach((id,i)=>{
-    const p=PHASES[id];
-    const b=document.createElement('button');
-    b.className='step-btn'+(id===cur?' on'+(isLS?'':' orig'):'')+(p.n<ph.n?' done':'');
-    b.innerHTML=`<span class="sn">${i+1}</span>${p.label}`;
-    b.onclick=()=>goP(id);
-    steps.appendChild(b);
+// ── Scroll progress ──
+window.addEventListener('scroll', () => {
+  const phases = ['phase1','phase2','phase3','phase4','phase5','phase6'];
+  const dots = document.querySelectorAll('.step-dot');
+  let active = 0;
+  phases.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < window.innerHeight * 0.6) active = i;
   });
-}
-
-// ══ TIMER ════════════════════════════════
-function setTimer(secs){
-  clearInterval(tInt);tRun=false;tMax=secs;tSec=secs;
-  document.getElementById('btn-tp').textContent='▶';
-  document.getElementById('btn-tp').className='tb tb-play';
-  renderTimer();
-}
-function timerToggle(){
-  if(tRun){clearInterval(tInt);tRun=false;document.getElementById('btn-tp').textContent='▶';document.getElementById('btn-tp').className='tb tb-play';}
-  else{tRun=true;document.getElementById('btn-tp').textContent='⏸';document.getElementById('btn-tp').className='tb tb-pause';
-    tInt=setInterval(()=>{if(tSec>0){tSec--;renderTimer();}else{clearInterval(tInt);tRun=false;document.getElementById('timer').textContent='⏰ FIN';}},1000);}
-}
-function timerReset(){clearInterval(tInt);tRun=false;tSec=tMax;document.getElementById('btn-tp').textContent='▶';document.getElementById('btn-tp').className='tb tb-play';renderTimer();}
-function renderTimer(){
-  const el=document.getElementById('timer');
-  if(!tMax){el.textContent='--:--';el.className='';return;}
-  const m=Math.floor(tSec/60),s=tSec%60;
-  el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  el.className=tSec<120&&tSec>0?'warn':'';
-}
-
-// ══ ANIMATOR PANE ════════════════════════
-function toggleAnim(){
-  animOpen=!animOpen;
-  document.getElementById('apane').classList.toggle('open',animOpen);
-  document.getElementById('btn-anim').classList.toggle('open',animOpen);
-}
-function renderAnim(){
-  const data=ACONTENT[cur]||[];
-  const el=document.getElementById('apane-inner');
-  if(!data.length){el.innerHTML='<p style="font-size:12px;color:#aaa;padding:8px">Aucun contenu théorique pour cette phase.</p>';return;}
-  const cols={'at':'var(--t)','aj':'var(--j)','am':'var(--m)','av':'var(--v)','':'var(--r)'};
-  el.innerHTML='<div class="apane-title">📋 Guide animateur &amp; théorie</div>'+data.map(d=>{
-    const col=cols[d.c]||'var(--r)';
-    let body=d.p?`<p>${d.p}</p>`:'';
-    if(d.k) body+=`<div class="akey">💡 ${d.k}</div>`;
-    if(d.ks) body+=d.ks.map(k=>`<div class="akey">${k}</div>`).join('');
-    if(d.obs) body+=`<table class="obst">${d.obs.map(o=>`<tr><td class="oa">${o[0]}</td><td class="ob">${o[1]}</td></tr>`).join('')}</table>`;
-    return `<div class="acard ${d.c}" style="border-top-color:${col}"><div class="abd" style="color:${col}">${d.b}</div><h4>${d.t}</h4>${body}</div>`;
-  }).join('');
-}
-
-// ══ DECKS ════════════════════════════════
-function showDeck(btn,name){
-  const box=btn.closest('.box');
-  box.querySelectorAll('.deck').forEach(d=>d.classList.remove('on'));
-  box.querySelectorAll('.ftab').forEach(t=>t.classList.remove('sel'));
-  document.getElementById('deck-'+name).classList.add('on');
-  btn.classList.add('sel');
-}
-
-// ══ KEYBOARD ═════════════════════════════
-document.addEventListener('keydown',e=>{
-  if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName))return;
-  const ord=variant==='ls'?LS:OR, i=ord.indexOf(cur);
-  if(e.key==='ArrowRight'&&i<ord.length-1) goP(ord[i+1]);
-  if(e.key==='ArrowLeft'&&i>0) goP(ord[i-1]);
-  if((e.key==='a'||e.key==='A')&&cur!=='home'&&cur!=='end') toggleAnim();
+  dots.forEach((d, i) => d.classList.toggle('active', i <= active));
 });
 
-// ══ INIT ═════════════════════════════════
-updateBar();renderAnim();
+// ── Phase 1 · Mur des lieux ──
+const lieuxColors = ['#FFD54F','#A5D6A7','#90CAF9','#FFAB91','#CE93D8','#F48FB1'];
+let lieuxCount = 0;
+function addLieu() {
+  const inp = document.getElementById('lieu-input');
+  const val = inp.value.trim();
+  if (!val) return;
+  const wall = document.getElementById('lieux-wall');
+  const postit = document.createElement('div');
+  postit.style.cssText = `background:${lieuxColors[lieuxCount % lieuxColors.length]};border:2px solid var(--black);border-radius:8px;padding:7px 12px;font-size:0.78rem;font-weight:700;box-shadow:2px 2px 0 rgba(0,0,0,0.12);display:flex;align-items:center;gap:6px;animation:pop-in 0.2s ease;`;
+  postit.innerHTML = `<span style="font-size:0.85rem;">📍</span>${val}`;
+  wall.appendChild(postit);
+  lieuxCount++;
+  inp.value = '';
+  inp.focus();
+}
+document.getElementById('lieu-input').addEventListener('keypress', e => { if (e.key === 'Enter') addLieu(); });
+
+// ── Phase 3 · Tours ──
+const tourMsgs = ['', '1 tour terminé !', '2 tours terminés — à mi-parcours.', '3 tours — encore un !', '✅ 4 tours terminés — passer à la Phase 4.'];
+function toggleTour(el) {
+  el.classList.toggle('done');
+  const done = document.querySelectorAll('.tour-dot.done').length;
+  document.getElementById('tour-msg').textContent = tourMsgs[done] || '';
+}
+
+// ── Phase 4 · Cartographie ──
+const posColors = { connais:'#A5D6A7', decouvrir:'#90CAF9', interesse:'#FFD54F' };
+function addPostit(col) {
+  const inp = document.getElementById('inp-' + col);
+  const val = inp.value.trim();
+  if (!val) return;
+  const container = document.getElementById('col-' + col);
+  const inputRow = container.querySelector('.carto-input-row');
+  const postit = document.createElement('div');
+  postit.className = 'carto-postit';
+  postit.style.background = posColors[col];
+  const id = Date.now();
+  postit.innerHTML = `<span>${val}</span><button class="postit-del" onclick="this.parentElement.remove()">✕</button>`;
+  container.insertBefore(postit, inputRow);
+  inp.value = '';
+  inp.focus();
+}
+['connais','decouvrir','interesse'].forEach(col => {
+  document.getElementById('inp-' + col).addEventListener('keypress', e => { if (e.key === 'Enter') addPostit(col); });
+});
+
+// ── Phase 5 · Engagements ──
+function addEngagement() {
+  const val = document.getElementById('engagement-text').value.trim();
+  if (!val) { alert('Écris ton engagement d\'abord.'); return; }
+  const list = document.getElementById('eng-list');
+  const item = document.createElement('div');
+  item.className = 'eng-item bounce';
+  item.innerHTML = `<span>📌 ${val}</span><button style="background:none;border:none;cursor:pointer;color:#888;font-size:0.8rem;" onclick="this.parentElement.remove()">✕</button>`;
+  list.appendChild(item);
+  document.getElementById('engagement-text').value = '';
+}
 </script>
 </body>
 </html>
