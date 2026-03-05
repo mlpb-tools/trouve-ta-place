@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LS4YOU – Trouve ta place sur le territoire</title>
+<title>LS4YOU – Image de soi / Image publique</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -12,271 +12,710 @@
     --turq:   #00ACC1;
     --mint:   #66BB6A;
     --orange: #FB8C00;
-    --violet: #7E57C2;
-    --teal:   #00838F;  /* couleur principale de cet atelier */
-    --teal-l: #E0F7FA;
+    --pink:   #E91E8C;
     --black:  #1A1A1A;
     --white:  #FFFDF7;
     --shadow: 4px 4px 0px var(--black);
     --shadow-lg: 6px 6px 0px var(--black);
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Montserrat',sans-serif; background:var(--white); color:var(--black); min-height:100vh; }
 
-  /* ── PROGRESS BAR ── */
-  .progress-bar-wrapper { background:#fff; border-bottom:3px solid var(--black); padding:10px 20px; position:sticky; top:0; z-index:100; display:flex; align-items:center; gap:14px; }
-  .progress-steps { display:flex; gap:6px; flex:1; }
-  .step-dot { flex:1; height:8px; border-radius:4px; border:1.5px solid var(--black); background:#e0e0e0; transition:background 0.3s; }
-  .step-dot.active { background:var(--teal); }
-  .progress-label { font-family:'Poppins',sans-serif; font-size:0.72rem; font-weight:700; color:var(--black); white-space:nowrap; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* ── PARCOURS BANNER ── */
-  .parcours-banner { background:var(--black); padding:10px 24px; display:flex; align-items:center; gap:0; overflow-x:auto; scrollbar-width:none; }
-  .parcours-banner::-webkit-scrollbar { display:none; }
-  .parc-step { display:flex; align-items:center; gap:10px; padding:7px 16px 7px 12px; font-family:'Poppins',sans-serif; font-size:0.68rem; font-weight:700; color:rgba(255,255,255,0.45); white-space:nowrap; }
-  .parc-step .pnum { background:rgba(255,255,255,0.12); width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.65rem; flex-shrink:0; }
-  .parc-step.current { color:var(--yellow); }
-  .parc-step.current .pnum { background:var(--yellow); color:var(--black); }
-  .parc-arrow { color:rgba(255,255,255,0.25); font-size:0.7rem; flex-shrink:0; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    min-height: 100vh;
+  }
 
-  /* ── HEADER ── */
-  .header { background:var(--teal); padding:0; position:relative; overflow:hidden; }
-  .header::before { content:''; position:absolute; top:-40px; right:-60px; width:220px; height:220px; border-radius:50%; background:rgba(255,255,255,0.07); pointer-events:none; }
-  .header-inner { max-width:960px; margin:0 auto; padding:32px 24px 28px; display:flex; align-items:center; gap:20px; }
-  .header-badge { background:var(--yellow); border:3px solid var(--black); box-shadow:var(--shadow); border-radius:50%; width:64px; height:64px; display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0; }
-  .header-text h1 { font-family:'Poppins',sans-serif; font-size:2rem; font-weight:900; color:#fff; line-height:1.1; letter-spacing:-0.5px; }
-  .header-text h1 span { color:var(--yellow); }
-  .header-meta { display:flex; gap:10px; margin-top:8px; flex-wrap:wrap; }
-  .tag { background:rgba(255,255,255,0.18); border:2px solid rgba(255,255,255,0.5); border-radius:20px; padding:4px 12px; font-size:0.75rem; font-weight:600; color:#fff; }
-  .tag.solid { background:var(--yellow); color:var(--black); border-color:var(--black); box-shadow:2px 2px 0 var(--black); }
-  .tag.dark { background:rgba(0,0,0,0.2); border-color:rgba(255,255,255,0.3); }
+  /* ───── HEADER ───── */
+  .header {
+    background: var(--red);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .header-badge {
+    background: var(--yellow);
+    border: 3px solid var(--black);
+    box-shadow: var(--shadow);
+    border-radius: 50%;
+    width: 64px; height: 64px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; flex-shrink: 0;
+  }
+  .header-text h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .header-text h1 span {
+    color: var(--yellow);
+  }
+  .header-meta {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    background: rgba(255,255,255,0.18);
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.3px;
+  }
+  .tag.solid {
+    background: var(--yellow);
+    color: var(--black);
+    border-color: var(--black);
+    box-shadow: 2px 2px 0 var(--black);
+  }
+  .header-deco {
+    position: absolute;
+    right: -10px; top: -20px;
+    font-size: 140px;
+    opacity: 0.07;
+    pointer-events: none;
+    transform: rotate(15deg);
+  }
 
-  /* ── CITATION ── */
-  .citation { background:var(--black); max-width:960px; margin:0 auto; padding:16px 28px; display:flex; align-items:flex-start; gap:12px; }
-  .citation-mark { color:var(--yellow); font-family:'Poppins',sans-serif; font-size:2.5rem; font-weight:900; line-height:1; margin-top:-4px; flex-shrink:0; }
-  .citation-text { color:rgba(255,255,255,0.82); font-size:0.82rem; font-style:italic; line-height:1.6; }
+  /* ───── MAIN ───── */
+  .main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
 
-  /* ── MAIN ── */
-  .main { max-width:960px; margin:0 auto; padding:28px 20px 60px; }
+  /* ───── INTRO CARD ───── */
+  .intro-card {
+    background: #FFF9E6;
+    border: 3px solid var(--black);
+    box-shadow: var(--shadow-lg);
+    border-radius: 16px;
+    padding: 22px 28px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 640px) { .intro-card { grid-template-columns: 1fr; } }
+  .intro-card h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .intro-card p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #333;
+  }
+  .meta-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .meta-pill {
+    background: var(--white);
+    border: 2px solid var(--black);
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+    box-shadow: 2px 2px 0 var(--black);
+  }
+  .meta-pill.red   { background: #FFEBEE; }
+  .meta-pill.yellow{ background: #FFFDE7; }
+  .meta-pill.turq  { background: #E0F7FA; }
+  .meta-pill.mint  { background: #F1F8E9; }
 
-  /* ── INTRO CARD ── */
-  .intro-card { background:var(--teal-l); border:3px solid var(--black); box-shadow:var(--shadow-lg); border-radius:16px; padding:22px 28px; margin-bottom:32px; display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-  @media(max-width:640px){ .intro-card { grid-template-columns:1fr; } }
-  .intro-card h2 { font-family:'Poppins',sans-serif; font-size:0.95rem; font-weight:800; color:var(--teal); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
-  .intro-card p { font-size:0.84rem; line-height:1.6; color:#333; }
-  .meta-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
-  .meta-pill { background:var(--white); border:2px solid var(--black); border-radius:8px; padding:5px 12px; font-size:0.78rem; font-weight:700; display:flex; align-items:center; gap:6px; box-shadow:2px 2px 0 var(--black); }
-  .meta-pill.teal   { background:var(--teal-l); }
-  .meta-pill.yellow { background:#FFFDE7; }
-  .meta-pill.mint   { background:#F1F8E9; }
-  .meta-pill.orange { background:#FFF3E0; }
+  /* ───── SECTION TITLE ───── */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .section-label .num {
+    background: var(--black);
+    color: var(--yellow);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .section-label h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--black);
+  }
+  .section-label .time {
+    background: var(--yellow);
+    border: 2px solid var(--black);
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    box-shadow: 2px 2px 0 var(--black);
+    white-space: nowrap;
+  }
 
-  /* ── PHASE WRAPPER ── */
-  .phase { background:#fff; border:3px solid var(--black); box-shadow:var(--shadow-lg); border-radius:16px; overflow:hidden; margin-bottom:28px; }
-  .phase-header { padding:16px 24px; display:flex; align-items:center; gap:14px; border-bottom:3px solid var(--black); }
-  .phase-header.teal   { background:var(--teal);   color:#fff; }
-  .phase-header.mint   { background:var(--mint);   color:#fff; }
-  .phase-header.turq   { background:var(--turq);   color:#fff; }
-  .phase-header.yellow { background:var(--yellow); color:var(--black); }
-  .phase-header.orange { background:var(--orange); color:#fff; }
-  .phase-header.red    { background:var(--red);    color:#fff; }
-  .phase-header.black  { background:var(--black);  color:var(--yellow); }
-  .phase-icon { font-size:1.8rem; flex-shrink:0; }
-  .phase-title { flex:1; }
-  .phase-title h3 { font-family:'Poppins',sans-serif; font-weight:800; font-size:1rem; line-height:1.2; }
-  .phase-title small { font-size:0.75rem; opacity:0.85; font-weight:600; }
-  .phase-duration { background:rgba(0,0,0,0.15); border-radius:20px; padding:4px 12px; font-size:0.75rem; font-weight:700; white-space:nowrap; }
-  .phase-body { padding:22px 24px; }
+  /* ───── PHASE WRAPPER ───── */
+  .phase {
+    background: #fff;
+    border: 3px solid var(--black);
+    box-shadow: var(--shadow-lg);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .phase-header {
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 3px solid var(--black);
+  }
+  .phase-header.red    { background: var(--red);    color: #fff; }
+  .phase-header.yellow { background: var(--yellow); color: var(--black); }
+  .phase-header.turq   { background: var(--turq);   color: #fff; }
+  .phase-header.mint   { background: var(--mint);   color: #fff; }
+  .phase-header.orange { background: var(--orange); color: #fff; }
+  .phase-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .phase-title {
+    flex: 1;
+  }
+  .phase-title h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+  .phase-title small {
+    font-size: 0.75rem;
+    opacity: 0.85;
+    font-weight: 600;
+  }
+  .phase-duration {
+    background: rgba(0,0,0,0.15);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .phase-body {
+    padding: 22px 24px;
+  }
 
-  /* ── AXE BADGES ── */
-  .axe-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-  .axe-badge { border:2px solid var(--black); border-radius:20px; padding:4px 12px; font-size:0.72rem; font-weight:700; box-shadow:2px 2px 0 var(--black); display:flex; align-items:center; gap:5px; }
-  .axe-badge.perso  { background:#EDE7F6; color:var(--violet); }
-  .axe-badge.bienetre { background:#E0F7FA; color:var(--teal); }
-  .axe-badge.valori { background:#FFF3E0; color:var(--orange); }
-  .axe-badge.ressou { background:#E0F7FA; color:var(--teal); }
+  /* ───── CARDS GRID ───── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .card {
+    border: 2px solid var(--black);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 3px 3px 0 var(--black);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 5px 5px 0 var(--black);
+  }
+  .card.red    { background: #FFEBEE; }
+  .card.yellow { background: #FFFDE7; }
+  .card.turq   { background: #E0F7FA; }
+  .card.mint   { background: #F1F8E9; }
+  .card.orange { background: #FFF3E0; }
+  .card-icon { font-size: 1.5rem; margin-bottom: 6px; }
+  .card h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .card p {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: #444;
+  }
 
-  /* ── TIP BOX ── */
-  .tip-box { border:2px solid var(--black); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); margin-top:16px; }
-  .tip-box-header { background:var(--black); color:var(--yellow); padding:9px 16px; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.8rem; display:flex; align-items:center; gap:8px; }
-  .tip-box-body { padding:14px 16px; background:#FFFDE7; font-size:0.79rem; line-height:1.6; color:#333; }
-  .tip-box-body ul { list-style:none; padding:0; display:flex; flex-direction:column; gap:5px; }
-  .tip-box-body ul li { display:flex; align-items:flex-start; gap:6px; }
-  .tip-box.teal .tip-box-header { background:var(--teal); }
-  .tip-box.teal .tip-box-body { background:var(--teal-l); }
+  /* ───── SCENARIO ───── */
+  .scenario-block {
+    border: 2px solid var(--black);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 14px;
+  }
+  .scenario-header {
+    background: var(--black);
+    color: var(--yellow);
+    padding: 10px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .scenario-body {
+    padding: 14px 16px;
+    background: #FFFDE7;
+  }
+  .scenario-situation {
+    font-size: 0.83rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .scenario-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .choice {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 2px solid var(--black);
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 500;
+    transition: all 0.15s;
+    box-shadow: 2px 2px 0 var(--black);
+  }
+  .choice:hover { transform: translateX(3px); }
+  .choice.correct { background: #E8F5E9; border-color: var(--mint); }
+  .choice.wrong   { background: #FFEBEE; border-color: var(--red); }
+  .choice.selected-good { background: #C8E6C9; }
+  .choice.selected-bad  { background: #FFCDD2; }
+  .choice-letter {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    min-width: 22px;
+    height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--black);
+    color: var(--yellow);
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .choice-feedback {
+    display: none;
+    margin-top: 4px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.73rem;
+    font-weight: 600;
+    border: 1.5px solid var(--black);
+  }
+  .choice-feedback.good { background: #E8F5E9; display: block; }
+  .choice-feedback.bad  { background: #FFEBEE; display: block; }
 
-  /* ── PLT4U CARDS ── */
-  .cards-plt4u { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px; margin-top:14px; }
-  .plt-card { border:3px solid var(--black); border-radius:14px; overflow:hidden; box-shadow:var(--shadow); transition:transform 0.15s,box-shadow 0.15s; cursor:pointer; }
-  .plt-card:hover { transform:translateY(-3px); box-shadow:6px 6px 0 var(--black); }
-  .plt-card.flipped .plt-front { display:none; }
-  .plt-card.flipped .plt-back { display:flex; }
-  .plt-front { display:flex; flex-direction:column; }
-  .plt-back { display:none; flex-direction:column; }
-  .plt-color { padding:14px 16px; border-bottom:2px solid var(--black); display:flex; align-items:center; gap:10px; }
-  .plt-icon { font-size:1.6rem; }
-  .plt-type { font-family:'Poppins',sans-serif; font-weight:800; font-size:0.88rem; }
-  .plt-body { padding:12px 16px; font-size:0.78rem; line-height:1.4; background:#fff; flex:1; }
-  .plt-body ul { list-style:none; padding:0; display:flex; flex-direction:column; gap:4px; }
-  .plt-body ul li::before { content:'→ '; font-weight:700; }
-  .plt-flip-hint { font-size:0.68rem; color:#aaa; text-align:center; padding:6px; background:#f9f9f9; border-top:1px solid #eee; font-weight:600; }
-  .plt-card.bleue .plt-color  { background:#E3F2FD; }
-  .plt-card.verte .plt-color  { background:#E8F5E9; }
-  .plt-card.orange .plt-color { background:#FFF3E0; }
-  .plt-card.rouge .plt-color  { background:#FFEBEE; }
+  /* ───── MIROIR ACTIVITY ───── */
+  .miroir-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    border: 3px solid var(--black);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-top: 12px;
+  }
+  .miroir-header {
+    padding: 10px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    text-align: center;
+    border-bottom: 2px solid var(--black);
+  }
+  .miroir-header.left  { background: var(--turq); color: #fff; border-right: 1.5px solid var(--black); }
+  .miroir-header.right { background: var(--orange); color: #fff; border-left: 1.5px solid var(--black); }
+  .miroir-row {
+    display: contents;
+  }
+  .miroir-cell {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .miroir-cell.left  { background: #E0F7FA; border-right: 1.5px solid #ccc; }
+  .miroir-cell.right { background: #FFF3E0; }
+  .miroir-cell:last-child { border-bottom: none; }
 
-  /* ── QUESTIONS DE JEU ── */
-  .questions-jeu { display:flex; flex-direction:column; gap:12px; margin-top:14px; }
-  .q-jeu { border:2px solid var(--black); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
-  .q-jeu-header { padding:10px 16px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.82rem; border-bottom:2px solid var(--black); display:flex; align-items:center; gap:8px; }
-  .q-jeu-body { padding:12px 16px; background:#fff; font-size:0.82rem; line-height:1.5; color:#333; }
-  .q-jeu-body em { font-style:normal; font-weight:700; color:var(--teal); }
+  /* ───── SLIDER EVAL ───── */
+  .eval-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .eval-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .eval-item label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .eval-item label span.ico { font-size: 1rem; }
+  .star-row { display: flex; gap: 4px; margin-top: 2px; }
+  .star {
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.1s;
+    filter: grayscale(1);
+    opacity: 0.4;
+  }
+  .star:hover, .star.active {
+    filter: none;
+    opacity: 1;
+    transform: scale(1.15);
+  }
 
-  /* ── TOURS COUNTER ── */
-  .tours-wrapper { display:flex; gap:10px; align-items:center; margin:16px 0 10px; flex-wrap:wrap; }
-  .tour-dot-row { display:flex; gap:8px; }
-  .tour-dot { width:36px; height:36px; border:2px solid var(--black); border-radius:8px; display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.8rem; background:#fff; box-shadow:2px 2px 0 var(--black); cursor:pointer; transition:all 0.15s; }
-  .tour-dot.done { background:var(--teal); color:#fff; box-shadow:2px 2px 0 var(--teal); }
-  .tour-dot:hover { transform:translateY(-1px); }
-  .tours-label { font-size:0.8rem; font-weight:700; color:#555; }
+  /* ───── CODE CONDUITE ───── */
+  .code-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  @media (max-width: 560px) { .code-grid { grid-template-columns: 1fr; } }
+  .code-item {
+    border: 2px solid var(--black);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 3px 3px 0 var(--black);
+  }
+  .code-item-header {
+    padding: 9px 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.82rem;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 2px solid var(--black);
+  }
+  .code-item-header.do   { background: var(--mint); color: #fff; }
+  .code-item-header.dont { background: var(--red);  color: #fff; }
+  .code-item ul {
+    padding: 10px 14px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .code-item ul li {
+    font-size: 0.79rem;
+    line-height: 1.4;
+    display: flex; align-items: flex-start; gap: 6px;
+    padding: 4px 0;
+    border-bottom: 1px dashed #e0e0e0;
+  }
+  .code-item ul li:last-child { border-bottom: none; }
 
-  /* ── CARTOGRAPHIE COLS ── */
-  .carto-cols { display:grid; grid-template-columns:1fr 1fr 1fr; gap:3px; border:3px solid var(--black); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); margin-top:14px; }
-  .carto-col-header { padding:11px 14px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.82rem; text-align:center; border-bottom:2px solid var(--black); }
-  .carto-col-header.connais    { background:var(--mint);   color:#fff; }
-  .carto-col-header.decouvrir  { background:var(--turq);   color:#fff; border-left:1.5px solid var(--black); border-right:1.5px solid var(--black); }
-  .carto-col-header.interesse  { background:var(--yellow); color:var(--black); }
-  .carto-drop { min-height:120px; padding:10px; background:#fff; display:flex; flex-direction:column; gap:6px; vertical-align:top; }
-  .carto-drop.mid { border-left:1.5px solid #e0e0e0; border-right:1.5px solid #e0e0e0; }
-  .carto-postit { background:var(--yellow); border:1.5px solid var(--black); border-radius:6px; padding:6px 10px; font-size:0.75rem; font-weight:700; box-shadow:2px 2px 0 rgba(0,0,0,0.12); cursor:grab; display:flex; justify-content:space-between; align-items:flex-start; gap:4px; animation:pop-in 0.2s ease; }
-  @keyframes pop-in { from { transform:scale(0.85); opacity:0; } to { transform:scale(1); opacity:1; } }
-  .postit-del { background:none; border:none; cursor:pointer; font-size:0.8rem; color:#888; padding:0; line-height:1; }
-  .postit-del:hover { color:var(--red); }
-  .carto-input-row { display:flex; gap:6px; padding:8px 10px; border-top:1.5px dashed #ddd; }
-  .carto-input { flex:1; border:1.5px solid #ccc; border-radius:6px; padding:6px 9px; font-size:0.75rem; font-family:'Montserrat',sans-serif; outline:none; }
-  .carto-input:focus { border-color:var(--teal); }
-  .carto-add-btn { background:var(--teal); color:#fff; border:2px solid var(--black); border-radius:6px; padding:5px 10px; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.72rem; cursor:pointer; white-space:nowrap; }
+  /* ───── TIP BOX ───── */
+  .tip-box {
+    border: 2px solid var(--black);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-top: 18px;
+  }
+  .tip-box-header {
+    background: var(--black);
+    color: var(--yellow);
+    padding: 9px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tip-box-body {
+    padding: 14px 16px;
+    background: #FFFDE7;
+    font-size: 0.79rem;
+    line-height: 1.6;
+    color: #333;
+  }
+  .tip-box-body ul {
+    list-style: none;
+    padding: 0;
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .tip-box-body ul li { display: flex; align-items: flex-start; gap: 6px; }
 
-  /* ── PERSONNES QUI... ── */
-  .personnes-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
-  @media(max-width:560px) { .personnes-grid { grid-template-columns:1fr; } }
-  .pq-card { border:2px solid var(--black); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
-  .pq-header { padding:9px 14px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.78rem; border-bottom:2px solid var(--black); display:flex; align-items:center; gap:7px; }
-  .pq-body { padding:10px 14px; background:#fff; }
-  .pq-body textarea { width:100%; border:1.5px solid #ddd; border-radius:7px; padding:8px 10px; font-size:0.78rem; font-family:'Montserrat',sans-serif; resize:none; outline:none; background:var(--white); }
-  .pq-body textarea:focus { border-color:var(--teal); }
+  /* ───── ENGAGEMENT ───── */
+  .engagement-card {
+    background: var(--red);
+    border: 3px solid var(--black);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    padding: 24px;
+    margin-top: 28px;
+    text-align: center;
+    color: #fff;
+  }
+  .engagement-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+  .engagement-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .engagement-form input {
+    border: 2px solid #fff;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-weight: 600;
+    outline: none;
+  }
+  .engagement-form input::placeholder { color: rgba(255,255,255,0.6); }
+  .engagement-form input:focus { background: rgba(255,255,255,0.25); }
+  .btn-engage {
+    background: var(--yellow);
+    color: var(--black);
+    border: 2.5px solid var(--black);
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 var(--black);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .btn-engage:hover { transform: translateY(-2px); box-shadow: 5px 5px 0 var(--black); }
+  .engagement-result {
+    display: none;
+    background: var(--yellow);
+    color: var(--black);
+    border: 2px solid var(--black);
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
 
-  /* ── POST-IT ENGAGEMENT ── */
-  .postit-big { background:var(--yellow); border:3px solid var(--black); border-radius:14px; box-shadow:var(--shadow-lg); padding:22px 24px; margin-top:14px; }
-  .postit-big h4 { font-family:'Poppins',sans-serif; font-weight:900; font-size:0.95rem; margin-bottom:14px; }
-  .postit-big textarea { width:100%; border:2px solid var(--black); border-radius:8px; padding:10px 14px; font-size:0.85rem; font-family:'Montserrat',sans-serif; font-weight:600; background:#fff; resize:none; outline:none; box-shadow:inset 2px 2px 0 rgba(0,0,0,0.05); }
-  .postit-big textarea:focus { box-shadow:inset 2px 2px 0 rgba(0,0,0,0.05), 0 0 0 2px var(--teal); }
-  .postit-big .btn-ok { margin-top:10px; background:var(--teal); color:#fff; border:2.5px solid var(--black); border-radius:8px; padding:10px 22px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.85rem; cursor:pointer; box-shadow:3px 3px 0 var(--black); transition:transform 0.1s,box-shadow 0.1s; }
-  .postit-big .btn-ok:hover { transform:translateY(-2px); box-shadow:5px 5px 0 var(--black); }
-  .engagements-list { display:flex; flex-direction:column; gap:8px; margin-top:14px; }
-  .eng-item { background:var(--yellow); border:2px solid var(--black); border-radius:10px; padding:10px 14px; font-size:0.82rem; font-weight:700; box-shadow:2px 2px 0 var(--black); display:flex; justify-content:space-between; align-items:center; }
+  /* ───── PROGRESS BAR (top) ───── */
+  .progress-bar-wrapper {
+    background: #fff;
+    border-bottom: 3px solid var(--black);
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .progress-steps {
+    display: flex;
+    gap: 6px;
+    flex: 1;
+  }
+  .step-dot {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    border: 1.5px solid var(--black);
+    background: #e0e0e0;
+    transition: background 0.3s;
+  }
+  .step-dot.active { background: var(--red); }
+  .progress-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--black);
+    white-space: nowrap;
+  }
 
-  /* ── RÉSEAU DE SOUTIEN ── */
-  .reseau-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:12px; }
-  @media(max-width:560px) { .reseau-grid { grid-template-columns:1fr; } }
-  .rs-card { border:3px solid var(--black); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
-  .rs-header { padding:12px 14px; border-bottom:2px solid var(--black); display:flex; align-items:center; gap:8px; }
-  .rs-icon { font-size:1.4rem; }
-  .rs-title { font-family:'Poppins',sans-serif; font-weight:800; font-size:0.82rem; }
-  .rs-question { font-size:0.72rem; opacity:0.85; font-weight:600; margin-top:2px; }
-  .rs-body { padding:12px 14px; background:#fff; }
-  .rs-body input { width:100%; border:1.5px solid #ddd; border-radius:7px; padding:8px 10px; font-size:0.8rem; font-family:'Montserrat',sans-serif; outline:none; margin-bottom:7px; }
-  .rs-body input:focus { border-color:var(--teal); }
-  .rs-body input:last-child { margin-bottom:0; }
-  .rs-header.pratique  { background:#E3F2FD; }
-  .rs-header.consultat { background:#FFF9C4; }
-  .rs-header.emotion   { background:#FCE4EC; }
+  /* ───── DIVIDER ───── */
+  .divider {
+    height: 3px;
+    background: repeating-linear-gradient(90deg, var(--black) 0 8px, transparent 8px 14px);
+    margin: 28px 0;
+    opacity: 0.2;
+  }
 
-  /* ── DEBRIEF QUESTIONS ── */
-  .debrief-list { display:flex; flex-direction:column; gap:10px; margin-top:12px; }
-  .debrief-q { border:2px solid var(--black); border-radius:10px; padding:12px 16px; background:#fff; box-shadow:2px 2px 0 var(--black); font-size:0.82rem; display:flex; align-items:flex-start; gap:10px; cursor:pointer; transition:background 0.15s; }
-  .debrief-q:hover { background:#f5f5f5; }
-  .debrief-q.revealed { background:var(--teal-l); }
-  .debrief-axe { flex-shrink:0; width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.9rem; border:1.5px solid var(--black); }
-  .debrief-content { flex:1; }
-  .debrief-content strong { font-family:'Poppins',sans-serif; font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:3px; }
-  .debrief-content em { font-style:italic; color:#333; }
-  .debrief-reveal { display:none; margin-top:8px; padding:8px 12px; background:#fff; border:1.5px solid var(--teal); border-radius:7px; font-size:0.75rem; color:var(--teal); font-weight:600; }
-  .debrief-q.revealed .debrief-reveal { display:block; }
+  /* ───── FOOTER ───── */
+  .footer {
+    background: var(--black);
+    color: var(--yellow);
+    text-align: center;
+    padding: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
 
-  /* ── MATÉRIEL & SUIVI ── */
-  .materiel-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:0; }
-  @media(max-width:560px) { .materiel-grid { grid-template-columns:1fr; } }
-  .mat-item { border:2px solid var(--black); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
-  .mat-header { padding:9px 14px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.8rem; border-bottom:2px solid var(--black); display:flex; align-items:center; gap:7px; }
-  .mat-body { padding:10px 14px; background:#fff; font-size:0.78rem; line-height:1.6; }
-  .mat-body ul { list-style:none; padding:0; }
-  .mat-body ul li { padding:2px 0; display:flex; align-items:flex-start; gap:6px; }
-  .mat-body ul li::before { content:'·'; font-weight:900; color:var(--teal); }
+  .struct-btn { background:#fff; border:2px solid var(--black); border-radius:8px; padding:8px 14px; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer; box-shadow:2px 2px 0 var(--black); transition:all 0.15s; }
+  .struct-btn:hover { transform:translateY(-1px); box-shadow:3px 3px 0 var(--black); }
+  .struct-btn.selected { background:var(--turq); color:#fff; }
+  .metier-row { display:flex; gap:8px; align-items:center; }
+  .metier-row input { flex:1; }
+  .metier-del { background:#FFEBEE; border:2px solid var(--black); border-radius:6px; width:30px; height:30px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:0.9rem; flex-shrink:0; box-shadow:2px 2px 0 var(--black); }
+  .metier-del:hover { background:var(--red); color:#fff; }
 
-  /* ── ANIMATIONS ── */
-  @keyframes bounce-in { 0% { transform:scale(0.8);opacity:0; } 70% { transform:scale(1.05); } 100% { transform:scale(1);opacity:1; } }
-  .bounce { animation:bounce-in 0.3s ease forwards; }
+  /* ───── ENQUÊTE TABS ───── */
+  .enq-tab { flex:1; padding:12px 8px; background:#f5f5f5; border:none; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.72rem; cursor:pointer; transition:background 0.15s; display:flex; align-items:center; justify-content:center; gap:6px; text-align:center; }
+  .enq-tab span { background:var(--black); color:var(--yellow); width:20px; height:20px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.68rem; flex-shrink:0; }
+  .enq-tab.active { background:var(--turq); color:#fff; }
+  .enq-tab.active span { background:#fff; color:var(--turq); }
+  .enq-tab:hover:not(.active) { background:#e0e0e0; }
+  .enq-panel { display:block; }
+  .enq-panel.hidden { display:none; }
 
-  /* ── FOOTER ── */
-  .footer { background:var(--black); color:var(--yellow); text-align:center; padding:16px; font-family:'Poppins',sans-serif; font-size:0.75rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  /* ───── ENQUÊTE FORM ───── */
+  .enq-label { display:block; font-family:'Poppins',sans-serif; font-size:0.78rem; font-weight:700; margin-bottom:5px; color:var(--black); }
+  .enq-input { width:100%; border:2px solid var(--black); border-radius:8px; padding:9px 12px; font-family:'Montserrat',sans-serif; font-size:0.82rem; background:#fff; outline:none; transition:box-shadow 0.15s; box-shadow:2px 2px 0 var(--black); }
+  .enq-input:focus { box-shadow:4px 4px 0 var(--turq); border-color:var(--turq); }
+  .enq-textarea { width:100%; border:2px solid var(--black); border-radius:8px; padding:9px 12px; font-family:'Montserrat',sans-serif; font-size:0.82rem; background:#fff; outline:none; resize:vertical; transition:box-shadow 0.15s; box-shadow:2px 2px 0 var(--black); }
+  .enq-textarea:focus { box-shadow:4px 4px 0 var(--turq); border-color:var(--turq); }
+  .enq-btn-next { background:var(--turq); color:#fff; border:2.5px solid var(--black); border-radius:8px; padding:10px 20px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.83rem; cursor:pointer; box-shadow:3px 3px 0 var(--black); transition:transform 0.1s,box-shadow 0.1s; }
+  .enq-btn-next:hover { transform:translateY(-2px); box-shadow:5px 5px 0 var(--black); }
+
+  /* ───── QUESTION BLOCKS ───── */
+  .qblock { border:2px solid var(--black); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); margin-bottom:14px; }
+  .qblock-header { padding:11px 16px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.82rem; color:#fff; display:flex; align-items:center; gap:8px; border-bottom:2px solid var(--black); }
+  .q-counter { margin-left:auto; background:rgba(255,255,255,0.2); border-radius:20px; padding:2px 10px; font-size:0.7rem; }
+  .qblock-body { background:#fff; }
+  .qitem { display:flex; align-items:flex-start; gap:10px; padding:10px 16px; font-size:0.8rem; line-height:1.4; border-bottom:1px solid #f0f0f0; cursor:pointer; transition:background 0.1s; }
+  .qitem:last-child { border-bottom:none; }
+  .qitem:hover { background:#f9f9f9; }
+  .qitem.selected { background:#E0F7FA; }
+  .qcheck { font-size:1rem; flex-shrink:0; margin-top:-1px; }
+
+  /* ───── CHECKLIST ───── */
+  .chk-section-title { font-family:'Poppins',sans-serif; font-weight:800; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; color:var(--black); padding-bottom:4px; border-bottom:2px dashed #ccc; }
+  .chk-item { display:flex; align-items:flex-start; gap:10px; padding:9px 12px; margin-bottom:6px; background:#fff; border:2px solid var(--black); border-radius:8px; font-size:0.78rem; line-height:1.4; cursor:pointer; box-shadow:2px 2px 0 var(--black); transition:all 0.15s; }
+  .chk-item.checked { background:#E8F5E9; border-color:var(--mint); box-shadow:2px 2px 0 var(--mint); }
+  .chk-box { font-size:1rem; flex-shrink:0; }
+
+  /* ───── ATTRACT BUTTONS ───── */
+  .attract-btn { background:#fff; border:2px solid var(--black); border-radius:8px; padding:7px 12px; font-family:'Poppins',sans-serif; font-weight:600; font-size:0.75rem; cursor:pointer; box-shadow:2px 2px 0 var(--black); transition:all 0.15s; }
+  .attract-btn:hover { transform:translateY(-1px); box-shadow:3px 3px 0 var(--black); }
+  .attract-btn.selected { background:var(--turq); color:#fff; border-color:var(--black); }
+
+  /* ───── ANIMATIONS ───── */
+  @keyframes bounce-in {
+    0%   { transform: scale(0.8); opacity: 0; }
+    70%  { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .bounce { animation: bounce-in 0.4s ease forwards; }
+
+  .hidden { display: none !important; }
+
+  /* ───── TOOLTIP ───── */
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    border-bottom: 2px dashed var(--red);
+  }
+  .tooltip .tt {
+    visibility: hidden;
+    background: var(--black);
+    color: var(--yellow);
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 6px 10px;
+    position: absolute;
+    z-index: 10;
+    bottom: 125%; left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    box-shadow: var(--shadow);
+  }
+  .tooltip:hover .tt { visibility: visible; }
 </style>
 </head>
 <body>
 
 <!-- STICKY PROGRESS -->
 <div class="progress-bar-wrapper">
-  <span class="progress-label">LS4YOU · Axe 4 + Axe 1</span>
+  <span class="progress-label">Atelier LS4YOU</span>
   <div class="progress-steps" id="progressDots">
     <div class="step-dot active"></div>
     <div class="step-dot"></div>
     <div class="step-dot"></div>
     <div class="step-dot"></div>
     <div class="step-dot"></div>
-    <div class="step-dot"></div>
   </div>
-  <span class="progress-label">⏱ 1h30</span>
-</div>
-
-<!-- PARCOURS BANNER -->
-<div class="parcours-banner">
-  <div class="parc-step current">
-    <span class="pnum">1</span> Trouve ta place
-  </div>
-  <span class="parc-arrow">›</span>
-  <div class="parc-step">
-    <span class="pnum">2</span> Image de soi
-  </div>
-  <span class="parc-arrow">›</span>
-  <div class="parc-step">
-    <span class="pnum">3</span> Zine de Territoire
-  </div>
-  <span class="parc-arrow">›</span>
-  <div class="parc-step">
-    <span class="pnum">4</span> On passe à la scène
-  </div>
+  <span class="progress-label" id="timeLeft">⏱ 1h30</span>
 </div>
 
 <!-- HEADER -->
 <div class="header">
   <div class="header-inner">
-    <div class="header-badge">📍</div>
+    <div class="header-badge">🪞</div>
     <div class="header-text">
-      <h1>Trouve ta place<br><span>sur le territoire</span></h1>
+      <h1>Image de soi<br><span>vs image publique</span></h1>
       <div class="header-meta">
         <span class="tag solid">LS4YOU</span>
-        <span class="tag">Ressources territoriales</span>
-        <span class="tag">Réseau de soutien</span>
-        <span class="tag dark">Atelier 1 / 4</span>
+        <span class="tag">Personnalité</span>
+        <span class="tag">Posture professionnelle</span>
+        <span class="tag">Enquête professionnelle</span>
       </div>
     </div>
   </div>
-</div>
-
-<!-- CITATION -->
-<div class="citation">
-  <div class="citation-mark">"</div>
-  <div class="citation-text">Le territoire n'est pas une carte abstraite. C'est un réseau vivant de lieux, de personnes et d'opportunités — souvent ignoré, toujours accessible.</div>
+  <div class="header-deco">🧩</div>
 </div>
 
 <!-- MAIN -->
@@ -287,364 +726,62 @@
     <div>
       <h2>🎯 Description de l'atelier</h2>
       <p>
-        Un atelier d'exploration collective du territoire local.
-        Les jeunes cartographient les lieux qu'ils connaissent, découvrent ceux qu'ils ignorent,
-        identifient les personnes-ressources de leur entourage et formalisent un premier
-        réseau de soutien ancré dans leur quotidien.
+        Les jeunes explorent la perception qu'ils ont d'eux-mêmes et la comparent à celle que les autres ont d'eux.
+        Avant de partir en <strong>enquête professionnelle dans une structure</strong> (entreprise, association ou institution), ils identifient leur posture, leurs forces,
+        et les points à ajuster pour se comporter de manière adaptée.
       </p>
     </div>
     <div>
       <h2>📋 Déroulé</h2>
       <div class="meta-row">
-        <div class="meta-pill teal">🕐 1h30</div>
-        <div class="meta-pill yellow">👥 7 jeunes</div>
-        <div class="meta-pill mint">📍 Présentiel</div>
-        <div class="meta-pill orange">🃏 Cartes PLT4U</div>
+        <div class="meta-pill red">🕐 1h30</div>
+        <div class="meta-pill yellow">👥 Groupe</div>
+        <div class="meta-pill turq">🏢 Présentiel</div>
+        <div class="meta-pill mint">🎓 Compétence : Posture professionnelle</div>
       </div>
       <div style="margin-top:12px; font-size:0.82rem; line-height:1.6; color:#444;">
-        6 phases · Brise-glace carte géo · Jeu PLT4U · Cartographie vivante · Réseau territoire · Engagement · Clôture
+        5 phases progressives · Jeu de miroir · Scénarios · Code de conduite · Engagement individuel
       </div>
     </div>
   </div>
 
-  <!-- ── COMPÉTENCES VISÉES ── -->
-  <div style="background:#fff; border:3px solid var(--black); border-radius:14px; padding:18px 22px; margin-bottom:28px; box-shadow:var(--shadow-lg);">
-    <strong style="font-family:'Poppins',sans-serif; font-size:0.82rem; display:block; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">🧩 Ce que cet atelier développe</strong>
-    <div style="overflow-x:auto;">
-      <table style="width:100%; border-collapse:collapse; font-size:0.78rem;">
-        <thead>
-          <tr>
-            <th style="text-align:left; padding:7px 10px; background:var(--black); color:var(--yellow); font-family:'Poppins',sans-serif; border-radius:6px 0 0 0;">Ce que fait le jeune</th>
-            <th style="text-align:left; padding:7px 10px; background:var(--black); color:var(--yellow); font-family:'Poppins',sans-serif; border-left:2px solid var(--teal);">Axe LS4YOU</th>
-            <th style="text-align:left; padding:7px 10px; background:var(--black); color:var(--yellow); font-family:'Poppins',sans-serif; border-left:2px solid var(--teal); border-radius:0 6px 0 0;">Compétence développée</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid #eee;">
-            <td style="padding:7px 10px;">Nommer un lieu où l'on va spontanément</td>
-            <td style="padding:7px 10px; border-left:1px solid #eee;"><span class="axe-badge perso">💜 Personnalité</span></td>
-            <td style="padding:7px 10px; border-left:1px solid #eee; color:#555;">Prise de conscience de son espace vécu</td>
-          </tr>
-          <tr style="border-bottom:1px solid #eee; background:#fafafa;">
-            <td style="padding:7px 10px;">Dire si on connaît un lieu / une personne</td>
-            <td style="padding:7px 10px; border-left:1px solid #eee;"><span class="axe-badge ressou">💙 Ressources</span></td>
-            <td style="padding:7px 10px; border-left:1px solid #eee; color:#555;">Inventaire de ses ressources territoriales</td>
-          </tr>
-          <tr style="border-bottom:1px solid #eee;">
-            <td style="padding:7px 10px;">Écouter et noter les connaissances des autres</td>
-            <td style="padding:7px 10px; border-left:1px solid #eee;"><span class="axe-badge ressou">💙 Ressources</span></td>
-            <td style="padding:7px 10px; border-left:1px solid #eee; color:#555;">Apprentissage par pair-à-pair</td>
-          </tr>
-          <tr style="border-bottom:1px solid #eee; background:#fafafa;">
-            <td style="padding:7px 10px;">Coller une carte en "À découvrir"</td>
-            <td style="padding:7px 10px; border-left:1px solid #eee;"><span class="axe-badge bienetre">💚 Bien-être</span></td>
-            <td style="padding:7px 10px; border-left:1px solid #eee; color:#555;">Identification des zones d'inconnu → motivation</td>
-          </tr>
-          <tr style="border-bottom:1px solid #eee;">
-            <td style="padding:7px 10px;">Choisir une action concrète sur post-it</td>
-            <td style="padding:7px 10px; border-left:1px solid #eee;"><span class="axe-badge valori">🧡 Valorisation</span></td>
-            <td style="padding:7px 10px; border-left:1px solid #eee; color:#555;">Passage intention → micro-mobilisation</td>
-          </tr>
-          <tr>
-            <td style="padding:7px 10px; background:#fafafa;">Partager ses bons plans au groupe</td>
-            <td style="padding:7px 10px; border-left:1px solid #eee; background:#fafafa;"><span class="axe-badge ressou">💙 Ressources</span></td>
-            <td style="padding:7px 10px; border-left:1px solid #eee; background:#fafafa; color:#555;">Construction d'un capital social local</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ═══ PHASE 1 ═══ -->
+  <!-- PHASE 1 -->
   <div class="phase" id="phase1">
-    <div class="phase-header teal">
+    <div class="phase-header red">
       <div class="phase-icon">⚡</div>
       <div class="phase-title">
-        <h3>Phase 1 · Brise-glace — Mon territoire à moi</h3>
-        <small>Ancrer chaque jeune dans son espace vécu · Lancer la dynamique</small>
+        <h3>Phase 1 · Mise en route : Le Jeu du Miroir</h3>
+        <small>Brise-glace + prise de conscience de l'image perçue</small>
       </div>
-      <div class="phase-duration">10 min</div>
+      <div class="phase-duration">15 min</div>
     </div>
     <div class="phase-body">
 
-      <div class="axe-row">
-        <span class="axe-badge perso">💜 Personnalité</span>
+      <div style="font-size:0.84rem; line-height:1.6; margin-bottom:16px;">
+        👉 <strong>Consigne :</strong> En binôme, chaque jeune note <em>3 mots</em> qui le décrivent selon lui, et <em>3 mots</em> que son binôme noterait pour le décrire à un employeur.
+        On compare ensuite les deux listes.
       </div>
 
-      <div style="background:var(--teal-l); border:2px solid var(--black); border-radius:10px; padding:14px 18px; font-size:0.84rem; line-height:1.6; margin-bottom:18px; box-shadow:3px 3px 0 var(--black);">
-        📍 <strong>Dispositif :</strong> Affichez une carte géographique du Pays Basque en grand format sur le mur.
-        La carte reste affichée toute la séance — elle s'enrichit au fil des phases.
-      </div>
-
-      <!-- Consigne -->
-      <div style="background:var(--black); border-radius:12px; padding:18px 22px; margin-bottom:16px; text-align:center;">
-        <div style="font-family:'Poppins',sans-serif; font-size:0.7rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--yellow); margin-bottom:8px;">CONSIGNE ORALE</div>
-        <div style="font-family:'Poppins',sans-serif; font-size:1rem; font-weight:800; color:#fff; line-height:1.5; font-style:italic;">
-          "Dans ce territoire, où allez-vous en dehors de vos obligations ?<br>
-          Pas la ML, pas Pôle emploi — un endroit qui vous appartient."
+      <div class="miroir-grid">
+        <div class="miroir-header left">🤔 Comment je me vois</div>
+        <div class="miroir-header right">👀 Comment on me voit</div>
+        <div class="miroir-row">
+          <div class="miroir-cell left">Exemples&nbsp;: "discret", "motivé", "timide"…</div>
+          <div class="miroir-cell right">Exemples&nbsp;: "souriant", "sérieux", "à l'heure"…</div>
+        </div>
+        <div class="miroir-row">
+          <div class="miroir-cell left" style="font-size:0.75rem; color:#666; font-style:italic; border-right:1.5px solid #ccc;">Les qualités qu'on s'accorde</div>
+          <div class="miroir-cell right" style="font-size:0.75rem; color:#666; font-style:italic;">Les signaux qu'on envoie sans le savoir</div>
         </div>
       </div>
 
-      <div style="font-size:0.83rem; line-height:1.5; margin-bottom:16px; color:#444;">
-        Chacun écrit <strong>1 post-it</strong> et vient le coller sur la carte. Aucune explication obligatoire.
-        <br>Observation collective : zones vides ? Lieux récurrents ? Surprises ?
-      </div>
-
-      <!-- Saisie collective simulée -->
-      <div style="background:#f9f9f9; border:2px solid var(--black); border-radius:12px; padding:14px 16px; box-shadow:var(--shadow);">
-        <strong style="font-family:'Poppins',sans-serif; font-size:0.8rem; display:block; margin-bottom:10px;">🗺️ Simulation — Les lieux nommés par le groupe</strong>
-        <div style="display:flex; gap:8px; margin-bottom:10px;">
-          <input id="lieu-input" type="text" placeholder="Un lieu que tu fréquentes…" style="flex:1; border:2px solid var(--black); border-radius:7px; padding:8px 12px; font-family:'Montserrat',sans-serif; font-size:0.82rem; outline:none;">
-          <button onclick="addLieu()" style="background:var(--teal); color:#fff; border:2px solid var(--black); border-radius:7px; padding:8px 16px; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer; box-shadow:2px 2px 0 var(--black); white-space:nowrap;">Coller ✓</button>
-        </div>
-        <div id="lieux-wall" style="display:flex; flex-wrap:wrap; gap:8px; min-height:48px;"></div>
-      </div>
-
-      <div class="tip-box teal">
-        <div class="tip-box-header">⚠️ Si un jeune dit "je ne vais nulle part"</div>
-        <div class="tip-box-body">
-          Reformulez : <em>"Même un banc, une rue, un parc — tout compte. Un endroit où tu te poses, même seul·e ?"</em><br>
-          Proposez de montrer directement sur la carte plutôt que de devoir mettre des mots.
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ═══ PHASE 2 ═══ -->
-  <div class="phase" id="phase2">
-    <div class="phase-header mint">
-      <div class="phase-icon">🃏</div>
-      <div class="phase-title">
-        <h3>Phase 2 · Distribution des cartes PLT4U</h3>
-        <small>Présenter les 4 types de cartes · Tirage aléatoire · Lecture silencieuse</small>
-      </div>
-      <div class="phase-duration">5 min</div>
-    </div>
-    <div class="phase-body">
-
-      <div style="font-size:0.84rem; line-height:1.5; margin-bottom:14px; color:#444;">
-        👉 Distribuer <strong>1 carte par type et par couleur</strong> à chaque participant (tirage aléatoire dans chaque pile).
-        <br>Laisser <strong>2 minutes de lecture silencieuse</strong> avant de commencer le jeu.
-      </div>
-
-      <div class="cards-plt4u">
-
-        <div class="plt-card bleue" onclick="this.classList.toggle('flipped')">
-          <div class="plt-front">
-            <div class="plt-color">
-              <span class="plt-icon">🟦</span>
-              <div>
-                <div class="plt-type">JE PEUX Y ALLER</div>
-                <div style="font-size:0.68rem; color:#555; margin-top:2px;">Lieux du territoire</div>
-              </div>
-            </div>
-            <div class="plt-body">
-              Des lieux accessibles au quotidien :<br>
-              mairie, MJC, fab lab, associations, médiathèque, espaces jeunes…
-            </div>
-            <div class="plt-flip-hint">Cliquer pour voir les exemples →</div>
-          </div>
-          <div class="plt-back">
-            <div class="plt-color">
-              <span class="plt-icon">🟦</span>
-              <div><div class="plt-type">Exemples de lieux</div></div>
-            </div>
-            <div class="plt-body">
-              <ul>
-                <li>Mairie / Maison des services publics</li>
-                <li>MJC / Centre social / Espace jeunes</li>
-                <li>Médiathèque / Fab lab</li>
-                <li>Associations sportives, culturelles</li>
-                <li>Lieux d'insertion / Chantiers école</li>
-              </ul>
-            </div>
-            <div class="plt-flip-hint">← Cliquer pour revenir</div>
-          </div>
-        </div>
-
-        <div class="plt-card verte" onclick="this.classList.toggle('flipped')">
-          <div class="plt-front">
-            <div class="plt-color">
-              <span class="plt-icon">🟩</span>
-              <div>
-                <div class="plt-type">JE PEUX RENCONTRER</div>
-                <div style="font-size:0.68rem; color:#555; margin-top:2px;">Personnes ressources</div>
-              </div>
-            </div>
-            <div class="plt-body">
-              Des personnes-clés pour progresser :<br>
-              conseiller, mentor, professionnel, voisin actif, bénévole…
-            </div>
-            <div class="plt-flip-hint">Cliquer pour voir les exemples →</div>
-          </div>
-          <div class="plt-back">
-            <div class="plt-color">
-              <span class="plt-icon">🟩</span>
-              <div><div class="plt-type">Exemples de personnes</div></div>
-            </div>
-            <div class="plt-body">
-              <ul>
-                <li>Conseiller·ère ML, référent·e social·e</li>
-                <li>Professionnel·le d'un secteur qui m'intéresse</li>
-                <li>Mentor, ancien·ne en emploi</li>
-                <li>Responsable bénévolat d'une asso</li>
-                <li>Voisin·e avec un réseau local</li>
-              </ul>
-            </div>
-            <div class="plt-flip-hint">← Cliquer pour revenir</div>
-          </div>
-        </div>
-
-        <div class="plt-card orange" onclick="this.classList.toggle('flipped')">
-          <div class="plt-front">
-            <div class="plt-color">
-              <span class="plt-icon">🟧</span>
-              <div>
-                <div class="plt-type">JE PEUX ESSAYER</div>
-                <div style="font-size:0.68rem; color:#555; margin-top:2px;">Actions possibles</div>
-              </div>
-            </div>
-            <div class="plt-body">
-              Des actions concrètes à tenter :<br>
-              stage d'observation, réunion publique, bénévolat, forum emploi…
-            </div>
-            <div class="plt-flip-hint">Cliquer pour voir les exemples →</div>
-          </div>
-          <div class="plt-back">
-            <div class="plt-color">
-              <span class="plt-icon">🟧</span>
-              <div><div class="plt-type">Exemples d'actions</div></div>
-            </div>
-            <div class="plt-body">
-              <ul>
-                <li>Participer à une réunion publique</li>
-                <li>S'inscrire à un atelier de quartier</li>
-                <li>Faire une journée de bénévolat</li>
-                <li>Aller à un forum emploi / découverte</li>
-                <li>Demander un stage d'observation</li>
-              </ul>
-            </div>
-            <div class="plt-flip-hint">← Cliquer pour revenir</div>
-          </div>
-        </div>
-
-        <div class="plt-card rouge" onclick="this.classList.toggle('flipped')">
-          <div class="plt-front">
-            <div class="plt-color">
-              <span class="plt-icon">🟥</span>
-              <div>
-                <div class="plt-type">MOI ET LE TERRITOIRE</div>
-                <div style="font-size:0.68rem; color:#555; margin-top:2px;">Expression personnelle</div>
-              </div>
-            </div>
-            <div class="plt-body">
-              Ma relation au territoire :<br>
-              lieu connu, lieu qui intimide, zone à découvrir, souvenir lié à un endroit…
-            </div>
-            <div class="plt-flip-hint">Cliquer pour voir les exemples →</div>
-          </div>
-          <div class="plt-back">
-            <div class="plt-color">
-              <span class="plt-icon">🟥</span>
-              <div><div class="plt-type">Ce que ça peut évoquer</div></div>
-            </div>
-            <div class="plt-body">
-              <ul>
-                <li>Un lieu qui me fait peur ou m'intimide</li>
-                <li>Un endroit où je me sens bien</li>
-                <li>Une zone que je n'ai jamais explorée</li>
-                <li>Un souvenir fort lié à un lieu</li>
-                <li>Un lieu que j'aimerais découvrir</li>
-              </ul>
-            </div>
-            <div class="plt-flip-hint">← Cliquer pour revenir</div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ═══ PHASE 3 ═══ -->
-  <div class="phase" id="phase3">
-    <div class="phase-header turq">
-      <div class="phase-icon">🎲</div>
-      <div class="phase-title">
-        <h3>Phase 3 · Le jeu des cartes</h3>
-        <small>4 tours de ~7 min · 1 carte par participant par tour · 3 questions</small>
-      </div>
-      <div class="phase-duration">30 min</div>
-    </div>
-    <div class="phase-body">
-
-      <div class="axe-row">
-        <span class="axe-badge ressou">💙 Ressources</span>
-      </div>
-
-      <div style="font-size:0.84rem; line-height:1.5; margin-bottom:16px; padding:12px 16px; background:#E0F7FA; border:2px solid var(--black); border-radius:10px; box-shadow:3px 3px 0 var(--black);">
-        🧭 Pour chaque carte présentée, l'animateur·rice pose les 3 questions ci-dessous au groupe.
-        Les réponses sont notées sur le paperboard dans la colonne <strong>Liste collective des lieux connus</strong>.
-        <br><em style="color:#00838F; font-weight:600;">Si personne ne connaît → la carte rejoint la pile "À découvrir" — ce n'est pas un vide, c'est une piste.</em>
-      </div>
-
-      <!-- Les 3 questions -->
-      <div class="questions-jeu">
-        <div class="q-jeu">
-          <div class="q-jeu-header" style="background:#E3F2FD;">
-            <span style="background:var(--teal); color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0;">1</span>
-            Question au porteur de la carte
-          </div>
-          <div class="q-jeu-body">
-            <em>"Est-ce que toi, tu connais un endroit ou une personne pour ça ?"</em>
-          </div>
-        </div>
-        <div class="q-jeu">
-          <div class="q-jeu-header" style="background:#E8F5E9;">
-            <span style="background:var(--mint); color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0;">2</span>
-            Question au reste du groupe
-          </div>
-          <div class="q-jeu-body">
-            <em>"Est-ce que quelqu'un dans le groupe connaît un lieu ou une personne pour ça ?"</em>
-          </div>
-        </div>
-        <div class="q-jeu">
-          <div class="q-jeu-header" style="background:#FFF9C4;">
-            <span style="background:var(--orange); color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0;">3</span>
-            Question sur le vécu
-          </div>
-          <div class="q-jeu-body">
-            <em>"Est-ce que tu as déjà eu une expérience là-bas ? Qu'est-ce que tu y as fait ou appris ?"</em>
-          </div>
-        </div>
-      </div>
-
-      <!-- Compteur de tours -->
-      <div style="margin-top:18px; background:#f9f9f9; border:2px solid var(--black); border-radius:10px; padding:14px 16px; box-shadow:var(--shadow);">
-        <strong style="font-family:'Poppins',sans-serif; font-size:0.82rem; display:block; margin-bottom:10px;">⏱️ Avancement des tours (cocher au fil du jeu)</strong>
-        <div class="tours-wrapper">
-          <span class="tours-label">Tour :</span>
-          <div class="tour-dot-row">
-            <div class="tour-dot" onclick="toggleTour(this)" id="t1">1</div>
-            <div class="tour-dot" onclick="toggleTour(this)" id="t2">2</div>
-            <div class="tour-dot" onclick="toggleTour(this)" id="t3">3</div>
-            <div class="tour-dot" onclick="toggleTour(this)" id="t4">4</div>
-          </div>
-          <span class="tours-label" id="tour-msg" style="color:var(--teal);"></span>
-        </div>
-        <div style="font-size:0.76rem; color:#888; margin-top:8px;">
-          ~7 min par tour · 1 carte / participant / tour · Si échanges riches : réduire la Phase 4B (Personnes Qui) à 5 min
-        </div>
-      </div>
-
-      <div class="tip-box">
-        <div class="tip-box-header">💡 Règle d'or du jeu des cartes</div>
+      <div class="tip-box" style="margin-top:14px;">
+        <div class="tip-box-header">💬 Questions pour débriefer en groupe (5 min)</div>
         <div class="tip-box-body">
           <ul>
-            <li>✦ On ne débat pas. On collecte des pistes concrètes.</li>
-            <li>✦ Aucun lieu n'est jugé — pas de "c'est nul" ni de "c'est bien".</li>
-            <li>✦ Valorisez chaque savoir partagé : <em>"Tu savais ça ? Excellent !"</em> — c'est de la valorisation de soi en acte.</li>
+            <li>✦ Y a-t-il des différences entre vos deux listes ? Lesquelles vous surprennent ?</li>
+            <li>✦ Qu'est-ce qu'un professionnel va remarquer chez vous en quelques minutes lors de la visite ?</li>
+            <li>✦ Est-ce que votre image, c'est quelque chose de fixe… ou est-ce que ça dépend de comment vous vous comportez ?</li>
           </ul>
         </div>
       </div>
@@ -652,105 +789,96 @@
     </div>
   </div>
 
-  <!-- ═══ PHASE 4 ═══ -->
-  <div class="phase" id="phase4">
+  <!-- PHASE 2 -->
+  <div class="phase" id="phase2">
     <div class="phase-header yellow">
-      <div class="phase-icon">🗺️</div>
+      <div class="phase-icon">🔍</div>
       <div class="phase-title">
-        <h3>Phase 4 · Cartographie vivante + Les personnes qui…</h3>
-        <small>Classer les cartes en 3 colonnes · Transformer les lieux en réseau humain</small>
+        <h3>Phase 2 · Le Savoir-Être en entreprise</h3>
+        <small>Identifier les attentes concrètes des professionnels</small>
       </div>
       <div class="phase-duration">20 min</div>
     </div>
     <div class="phase-body">
 
-      <div class="axe-row">
-        <span class="axe-badge bienetre">💚 Bien-être</span>
+      <div style="font-size:0.84rem; line-height:1.5; margin-bottom:16px; padding:12px 16px; background:#FFFDE7; border:2px solid var(--black); border-radius:10px; box-shadow:3px 3px 0 var(--black);">
+        📌 <strong>Contexte :</strong> Vous allez visiter une structure dans le cadre d'une enquête professionnelle.
+        Ce n'est pas un entretien d'embauche. Mais la façon dont vous vous comportez compte quand même —
+        les gens qui vous reçoivent se font une idée de vous <strong>très vite, dès les premières minutes</strong>.
       </div>
 
-      <!-- Étape A -->
-      <div style="margin-bottom:20px;">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-          <div style="background:var(--teal); color:#fff; width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.82rem; flex-shrink:0;">A</div>
-          <strong style="font-family:'Poppins',sans-serif; font-size:0.88rem;">Cartographie des lieux (10 min)</strong>
+      <div class="cards-grid">
+        <div class="card yellow">
+          <div class="card-icon">🧠</div>
+          <h4>L'attitude prime</h4>
+          <p>L'employeur préfère quelqu'un de motivé et volontaire, même sans toutes les compétences techniques.</p>
         </div>
-
-        <div style="font-size:0.83rem; margin-bottom:12px; color:#444;">
-          Les participants viennent coller eux-mêmes leurs cartes dans les 3 colonnes.
-          Le geste d'appropriation compte autant que le résultat.
-          <br>Débriefing rapide : <em>"Regardez ce que vous savez déjà. Et ce que vous pourriez découvrir ensemble."</em>
+        <div class="card turq">
+          <div class="card-icon">🕐</div>
+          <h4>La ponctualité</h4>
+          <p>Arriver à l'heure, c'est montrer du respect. 5 minutes en avance, c'est parfait.</p>
         </div>
-
-        <div class="carto-cols">
-          <div class="carto-col-header connais">✅ Je connais</div>
-          <div class="carto-col-header decouvrir">🔍 À découvrir</div>
-          <div class="carto-col-header interesse">⭐ Ça m'intéresse</div>
-
-          <div class="carto-drop" id="col-connais">
-            <div class="carto-input-row">
-              <input class="carto-input" id="inp-connais" placeholder="Un lieu que je connais…">
-              <button class="carto-add-btn" onclick="addPostit('connais')">+ Ajouter</button>
-            </div>
-          </div>
-          <div class="carto-drop mid" id="col-decouvrir">
-            <div class="carto-input-row">
-              <input class="carto-input" id="inp-decouvrir" placeholder="Un lieu à explorer…">
-              <button class="carto-add-btn" onclick="addPostit('decouvrir')" style="background:var(--turq);">+ Ajouter</button>
-            </div>
-          </div>
-          <div class="carto-drop" id="col-interesse">
-            <div class="carto-input-row">
-              <input class="carto-input" id="inp-interesse" placeholder="Un lieu qui m'attire…">
-              <button class="carto-add-btn" onclick="addPostit('interesse')" style="background:var(--orange);">+ Ajouter</button>
-            </div>
-          </div>
+        <div class="card mint">
+          <div class="card-icon">📱</div>
+          <h4>Le téléphone</h4>
+          <p>Hors de vue, hors de portée. Le phone reste dans la poche pendant la visite.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">👗</div>
+          <h4>La tenue vestimentaire</h4>
+          <p>Pas besoin d'un costume, mais une tenue propre et appropriée au secteur s'impose.</p>
+        </div>
+        <div class="card red">
+          <div class="card-icon">🤝</div>
+          <h4>La poignée de main</h4>
+          <p>Ferme, avec le regard, et un sourire. Ça commence dès le "bonjour".</p>
+        </div>
+        <div class="card yellow">
+          <div class="card-icon">💬</div>
+          <h4>Le langage</h4>
+          <p>Pas d'argot, pas de "ouais", pas de familiarités. Vouvoiement systématique.</p>
+        </div>
+        <div class="card turq">
+          <div class="card-icon">👂</div>
+          <h4>L'écoute active</h4>
+          <p>Ne pas interrompre. Hocher la tête. Montrer qu'on suit. Prendre des notes si possible.</p>
+        </div>
+        <div class="card mint">
+          <div class="card-icon">❓</div>
+          <h4>Poser des questions</h4>
+          <p>Un jeune qui pose des questions intelligentes est perçu comme motivé et curieux.</p>
         </div>
       </div>
 
-      <!-- Étape B -->
-      <div>
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-          <div style="background:var(--orange); color:#fff; width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.82rem; flex-shrink:0;">B</div>
-          <strong style="font-family:'Poppins',sans-serif; font-size:0.88rem;">Les personnes qui… (10 min)</strong>
-        </div>
-
-        <div style="font-size:0.83rem; margin-bottom:12px; padding:10px 14px; background:#FFF3E0; border:2px solid var(--black); border-radius:8px; box-shadow:2px 2px 0 var(--black); color:#444;">
-          Pour chaque lieu dans <strong>"Je connais"</strong>, on pose ces questions au groupe :
-          <em>"Qui dans ton entourage connaît ou fréquente cet endroit ?"</em> · <em>"Qui pourrait t'y accompagner ?"</em> · <em>"Qui t'y a fait entrer ?"</em>
-          <br><strong>Résultat :</strong> la carte devient un <strong>réseau-territoire</strong> — des lieux ET des personnes.
-        </div>
-
-        <div class="personnes-grid">
-          <div class="pq-card">
-            <div class="pq-header" style="background:#E0F7FA;">
-              <span>👤</span> Qui t'y a emmené ou te l'a fait découvrir ?
-            </div>
-            <div class="pq-body">
-              <textarea rows="3" placeholder="Nom / lien avec la personne…"></textarea>
+      <div style="margin-top:16px; background:#fff; border:2px solid var(--black); border-radius:10px; padding:14px 18px; box-shadow:var(--shadow);">
+        <strong style="font-family:'Poppins',sans-serif; font-size:0.82rem;">⭐ Auto-évaluation : Comment tu te sens sur ces points ?</strong>
+        <div class="eval-items" id="evalItems">
+          <div class="eval-item">
+            <label><span class="ico">🕐</span> Ponctualité</label>
+            <div class="star-row" data-key="ponc">
+              <span class="star" data-v="1">⭐</span><span class="star" data-v="2">⭐</span>
+              <span class="star" data-v="3">⭐</span><span class="star" data-v="4">⭐</span><span class="star" data-v="5">⭐</span>
             </div>
           </div>
-          <div class="pq-card">
-            <div class="pq-header" style="background:#E8F5E9;">
-              <span>🤝</span> Qui pourrait t'accompagner la première fois ?
-            </div>
-            <div class="pq-body">
-              <textarea rows="3" placeholder="Nom / lien avec la personne…"></textarea>
-            </div>
-          </div>
-          <div class="pq-card">
-            <div class="pq-header" style="background:#FFF9C4;">
-              <span>📡</span> Qui pourrait te donner des tuyaux sur ce lieu ?
-            </div>
-            <div class="pq-body">
-              <textarea rows="3" placeholder="Nom / lien avec la personne…"></textarea>
+          <div class="eval-item">
+            <label><span class="ico">💬</span> Langage professionnel</label>
+            <div class="star-row" data-key="lang">
+              <span class="star" data-v="1">⭐</span><span class="star" data-v="2">⭐</span>
+              <span class="star" data-v="3">⭐</span><span class="star" data-v="4">⭐</span><span class="star" data-v="5">⭐</span>
             </div>
           </div>
-          <div class="pq-card">
-            <div class="pq-header" style="background:#FCE4EC;">
-              <span>🔗</span> Qui pourrait te présenter quelqu'un là-bas ?
+          <div class="eval-item">
+            <label><span class="ico">👗</span> Tenue vestimentaire</label>
+            <div class="star-row" data-key="tenu">
+              <span class="star" data-v="1">⭐</span><span class="star" data-v="2">⭐</span>
+              <span class="star" data-v="3">⭐</span><span class="star" data-v="4">⭐</span><span class="star" data-v="5">⭐</span>
             </div>
-            <div class="pq-body">
-              <textarea rows="3" placeholder="Nom / lien avec la personne…"></textarea>
+          </div>
+          <div class="eval-item">
+            <label><span class="ico">👂</span> Écoute & posture</label>
+            <div class="star-row" data-key="ecut">
+              <span class="star" data-v="1">⭐</span><span class="star" data-v="2">⭐</span>
+              <span class="star" data-v="3">⭐</span><span class="star" data-v="4">⭐</span><span class="star" data-v="5">⭐</span>
             </div>
           </div>
         </div>
@@ -759,261 +887,262 @@
     </div>
   </div>
 
-  <!-- ═══ PHASE 5 ═══ -->
-  <div class="phase" id="phase5">
-    <div class="phase-header orange">
-      <div class="phase-icon">🎯</div>
+  <!-- PHASE 3 -->
+  <div class="phase" id="phase3">
+    <div class="phase-header turq">
+      <div class="phase-icon">🎭</div>
       <div class="phase-title">
-        <h3>Phase 5 · Passage à l'action</h3>
-        <small>Choisir 1 carte · Écrire 1 engagement · Partage oral volontaire</small>
+        <h3>Phase 3 · Scénarios : Bonne ou mauvaise posture ?</h3>
+        <small>Mise en situation — débat collectif</small>
       </div>
-      <div class="phase-duration">15 min</div>
+      <div class="phase-duration">25 min</div>
     </div>
     <div class="phase-body">
 
-      <div class="axe-row">
-        <span class="axe-badge valori">🧡 Valorisation de soi</span>
+      <div style="font-size:0.84rem; margin-bottom:16px; line-height:1.5;">
+        👉 <strong>Consigne :</strong> Pour chaque situation, discutez en groupe avant de choisir.
+        Il n'y a pas toujours de réponse parfaite — l'important c'est de réfléchir ensemble à ce qu'on ferait vraiment.
       </div>
 
-      <div style="font-size:0.84rem; line-height:1.5; margin-bottom:14px; color:#444;">
-        Chaque participant choisit <strong>UNE carte</strong> dans "À découvrir" ou "Ça m'intéresse"
-        et écrit son engagement sur un post-it en suivant la formule ci-dessous.
-      </div>
-
-      <!-- Formule -->
-      <div style="background:var(--black); border-radius:12px; padding:16px 20px; margin-bottom:18px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
-        <span style="font-size:1.5rem;">✍️</span>
-        <div style="font-family:'Poppins',sans-serif; font-size:0.92rem; font-weight:800; color:var(--yellow); font-style:italic;">
-          "Dans les prochaines semaines, je pourrais aller voir <span style="text-decoration:underline;">___</span>… parce que <span style="text-decoration:underline;">___</span>"
+      <!-- SCÉNARIO 1 -->
+      <div class="scenario-block">
+        <div class="scenario-header">🎬 Scénario 1 · Tu arrives en retard</div>
+        <div class="scenario-body">
+          <div class="scenario-situation">
+            Tu t'es trompé(e) d'arrêt de bus. Tu arrives avec 10 minutes de retard. La personne qui vous reçoit attendait le groupe depuis un moment. Elle a l'air un peu agacée. Qu'est-ce que tu fais en entrant ?
+          </div>
+          <div class="scenario-choices" id="sc1">
+            <div class="choice" onclick="chooseScenario(this,'sc1',false)">
+              <span class="choice-letter">A</span>
+              <span>Tu entres discrètement et tu t'assois sans rien dire pour pas attirer l'attention.</span>
+            </div>
+            <div class="choice" onclick="chooseScenario(this,'sc1',true)">
+              <span class="choice-letter">B</span>
+              <span>Tu t'excuses brièvement et clairement — "Désolé(e) pour le retard" — sans rentrer dans des explications à rallonge. Et tu passes à autre chose.</span>
+            </div>
+            <div class="choice" onclick="chooseScenario(this,'sc1',false)">
+              <span class="choice-letter">C</span>
+              <span>Tu expliques tout dans le détail : le bus, le chauffeur, la connexion ratée, le plan Google Maps qui t'a mal guidé…</span>
+            </div>
+          </div>
+          <div id="fb-sc1" class="choice-feedback hidden"></div>
         </div>
       </div>
 
-      <!-- Post-it interactif -->
-      <div class="postit-big">
-        <h4>📝 Mon post-it engagement</h4>
-        <textarea id="engagement-text" rows="3" placeholder="Dans les prochaines semaines, je pourrais aller voir… parce que…"></textarea>
-        <br>
-        <button class="btn-ok" onclick="addEngagement()">Coller mon post-it sur la carte ✓</button>
+      <!-- SCÉNARIO 2 -->
+      <div class="scenario-block">
+        <div class="scenario-header">🎬 Scénario 2 · Tu t'ennuies pendant la visite</div>
+        <div class="scenario-body">
+          <div class="scenario-situation">
+            Le professionnel explique son métier depuis 15 minutes. Il parle beaucoup, c'est assez technique et tu décroches. Le gars à côté de toi ricane doucement. Qu'est-ce que tu fais ?
+          </div>
+          <div class="scenario-choices" id="sc2">
+            <div class="choice" onclick="chooseScenario(this,'sc2',false)">
+              <span class="choice-letter">A</span>
+              <span>Tu rigoles aussi discrètement — bah c'est vrai que c'est un peu long.</span>
+            </div>
+            <div class="choice" onclick="chooseScenario(this,'sc2',false)">
+              <span class="choice-letter">B</span>
+              <span>Tu regardes ton téléphone le temps que ça passe.</span>
+            </div>
+            <div class="choice" onclick="chooseScenario(this,'sc2',true)">
+              <span class="choice-letter">C</span>
+              <span>Tu gardes le contact visuel avec la personne qui parle, tu continues à prendre des notes même si c'est dur, et tu ignores le gars à côté.</span>
+            </div>
+          </div>
+          <div id="fb-sc2" class="choice-feedback hidden"></div>
+        </div>
       </div>
 
-      <div class="engagements-list" id="eng-list"></div>
+      <!-- SCÉNARIO 3 -->
+      <div class="scenario-block">
+        <div class="scenario-header">🎬 Scénario 3 · Tu n'as rien compris</div>
+        <div class="scenario-body">
+          <div class="scenario-situation">
+            Tu poses ta question. La personne te répond avec des termes techniques que tu ne connais pas du tout. Tu n'as rien compris à sa réponse. Qu'est-ce que tu fais ?
+          </div>
+          <div class="scenario-choices" id="sc3">
+            <div class="choice" onclick="chooseScenario(this,'sc3',false)">
+              <span class="choice-letter">A</span>
+              <span>Tu hoches la tête comme si t'avais compris pour pas avoir l'air bête.</span>
+            </div>
+            <div class="choice" onclick="chooseScenario(this,'sc3',true)">
+              <span class="choice-letter">B</span>
+              <span>Tu lui dis poliment : "Excusez-moi, je n'ai pas bien saisi ce que vous voulez dire par [mot]. Est-ce que vous pouvez m'expliquer ça autrement ?"</span>
+            </div>
+            <div class="choice" onclick="chooseScenario(this,'sc3',false)">
+              <span class="choice-letter">C</span>
+              <span>Tu passes directement à ta prochaine question — au moins celle-là tu la comprends.</span>
+            </div>
+          </div>
+          <div id="fb-sc3" class="choice-feedback hidden"></div>
+        </div>
+      </div>
 
-      <div class="tip-box teal" style="margin-top:16px;">
-        <div class="tip-box-header">⚠️ Important — Ne pas forcer</div>
-        <div class="tip-box-body">
-          Si un jeune ne se sent pas prêt : <em>"Si tu ne te sens pas prêt·e, c'est OK. Juste noter pour voir, c'est déjà quelque chose."</em>
-          <br><br>
-          Si disponible : présenter les lieux pré-identifiés par la ML (visites, journées découverte) en lien avec les cartes "À découvrir".
-          Photographier le mur des cartes + post-its → trace collective à réutiliser en entretien individuel.
+      <!-- SCÉNARIO 4 -->
+      <div class="scenario-block">
+        <div class="scenario-header">🎬 Scénario 4 · Le temps s'est envolé</div>
+        <div class="scenario-body">
+          <div class="scenario-situation">
+            La visite se termine. Tu réalises que t'as posé seulement 3 de tes 10 questions parce que la personne a beaucoup parlé. Tu repars avec la moitié des infos qu'il te fallait. Qu'est-ce que tu fais ?
+          </div>
+          <div class="scenario-choices" id="sc4">
+            <div class="choice" onclick="chooseScenario(this,'sc4',true)">
+              <span class="choice-letter">A</span>
+              <span>Tu remercies chaleureusement et tu lui demandes si tu peux lui envoyer tes questions restantes par mail, ou si tu peux revenir vers lui plus tard.</span>
+            </div>
+            <div class="choice" onclick="chooseScenario(this,'sc4',false)">
+              <span class="choice-letter">B</span>
+              <span>Tu es déçu(e) et tu le montres — tu soupires ou tu dis que finalement c'était pas très utile.</span>
+            </div>
+            <div class="choice" onclick="chooseScenario(this,'sc4',false)">
+              <span class="choice-letter">C</span>
+              <span>Tu inventes des réponses plausibles pour compléter ta fiche plus tard — personne le saura.</span>
+            </div>
+          </div>
+          <div id="fb-sc4" class="choice-feedback hidden"></div>
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- ═══ PHASE 6 ═══ -->
-  <div class="phase" id="phase6">
-    <div class="phase-header red">
-      <div class="phase-icon">🤝</div>
+  <!-- PHASE 4 -->
+  <div class="phase" id="phase4">
+    <div class="phase-header mint">
+      <div class="phase-icon">📋</div>
       <div class="phase-title">
-        <h3>Phase 6 · Clôture — Réseau de soutien social</h3>
-        <small>Identifier les personnes-soutien · Connecter territoire et bien-être</small>
+        <h3>Phase 4 · Mon code de conduite personnel</h3>
+        <small>Co-construction collective d'un guide de visite</small>
+      </div>
+      <div class="phase-duration">20 min</div>
+    </div>
+    <div class="phase-body">
+
+      <div style="font-size:0.84rem; line-height:1.5; margin-bottom:16px;">
+        👉 <strong>Consigne :</strong> En groupe, construisez votre propre liste des <strong>"je fais"</strong> et des <strong>"j'évite"</strong>
+        pour les enquêtes professionnelles. Chacun contribue avec ses idées.
+        L'animateur synthétise sur paperboard ou tableau.
+      </div>
+
+      <div class="code-grid">
+        <div class="code-item">
+          <div class="code-item-header do">✅ Ce que je fais</div>
+          <ul>
+            <li>✅ J'arrive 5 minutes avant l'heure prévue</li>
+            <li>✅ Je dis bonjour à chaque personne que je croise</li>
+            <li>✅ Je tutoie… non : je vouvoie tout le monde</li>
+            <li>✅ J'ai préparé mes questions à l'avance</li>
+            <li>✅ Je prends des notes pendant la visite</li>
+            <li>✅ J'écoute sans interrompre</li>
+            <li>✅ Je remercie à la fin et je serre la main</li>
+            <li>✅ Ma tenue est propre et adaptée au secteur</li>
+          </ul>
+        </div>
+        <div class="code-item">
+          <div class="code-item-header dont">❌ Ce que j'évite</div>
+          <ul>
+            <li>❌ Sortir mon téléphone pendant la visite</li>
+            <li>❌ Parler en argot ou utiliser des grossièretés</li>
+            <li>❌ Regarder mes pieds ou croiser les bras</li>
+            <li>❌ Parler trop fort ou rire bruyamment</li>
+            <li>❌ Mâcher du chewing-gum</li>
+            <li>❌ Couper la parole à l'interlocuteur</li>
+            <li>❌ Faire semblant de comprendre quand je ne comprends pas</li>
+            <li>❌ Me moquer d'un collègue du groupe devant l'entreprise</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-box-header">🎓 Pour l'animateur · Animation de la phase</div>
+        <div class="tip-box-body">
+          <ul>
+            <li>📌 Affichez les "je fais / j'évite" sur un paperboard visible par tous. Laissez les jeunes bonifier la liste.</li>
+            <li>📌 Valorisez les propositions originales, même imparfaites. L'important est l'appropriation.</li>
+            <li>📌 Si un jeune propose quelque chose de discutable, questionnez le groupe plutôt que de le reprendre directement.</li>
+            <li>📌 Ce code sera rappelé le matin des visites comme un rituel de groupe.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="phase" id="phase5">
+    <div class="phase-header orange">
+      <div class="phase-icon">🌟</div>
+      <div class="phase-title">
+        <h3>Phase 5 · Mon engagement personnel</h3>
+        <small>Clôture individuelle — formalisation d'un objectif concret</small>
       </div>
       <div class="phase-duration">10 min</div>
     </div>
     <div class="phase-body">
 
-      <div class="axe-row">
-        <span class="axe-badge bienetre">💚 Bien-être</span>
-        <span class="axe-badge ressou">💙 Ressources</span>
+      <div style="font-size:0.84rem; line-height:1.5; margin-bottom:16px;">
+        👉 <strong>Consigne :</strong> Chaque jeune identifie <strong>1 point fort</strong> qu'il amènera lors de la visite et
+        <strong>1 point à améliorer</strong> sur lequel il se fixe un objectif concret avant le jour J.
       </div>
 
-      <div style="font-size:0.84rem; line-height:1.5; margin-bottom:16px; color:#444;">
-        Pour clore, on zoome sur les <strong>personnes-soutien</strong> derrière les lieux explorés.
-        Trois types de soutien à identifier dans son entourage.
-      </div>
-
-      <div class="reseau-grid">
-
-        <div class="rs-card">
-          <div class="rs-header pratique">
-            <span class="rs-icon">💼</span>
-            <div>
-              <div class="rs-title">Soutien pratique</div>
-              <div class="rs-question">QUI pourrait prendre soin de mes affaires si je devais m'absenter ?</div>
-            </div>
-          </div>
-          <div class="rs-body">
-            <input placeholder="Prénom / lien">
-            <input placeholder="Comment je pourrais le/la contacter ?">
-          </div>
+      <div class="engagement-card">
+        <h3>🎯 Mon engagement pour la visite</h3>
+        <div class="engagement-form">
+          <input type="text" id="prenom" placeholder="Mon prénom…">
+          <input type="text" id="force" placeholder="✅ Mon point fort que j'apporte…">
+          <input type="text" id="amelio" placeholder="📈 Ce que je vais travailler avant la visite…">
+          <input type="text" id="objectif" placeholder="🎯 Mon objectif concret (ex : ne pas sortir mon téléphone)…">
+          <button class="btn-engage" onclick="submitEngagement()">Je m'engage 🤝</button>
         </div>
-
-        <div class="rs-card">
-          <div class="rs-header consultat">
-            <span class="rs-icon">💡</span>
-            <div>
-              <div class="rs-title">Soutien consultatif</div>
-              <div class="rs-question">À QUI je parle quand je dois prendre une décision importante ?</div>
-            </div>
-          </div>
-          <div class="rs-body">
-            <input placeholder="Prénom / lien">
-            <input placeholder="Comment je pourrais le/la contacter ?">
-          </div>
-        </div>
-
-        <div class="rs-card">
-          <div class="rs-header emotion">
-            <span class="rs-icon">💛</span>
-            <div>
-              <div class="rs-title">Soutien émotionnel</div>
-              <div class="rs-question">À QUI je m'adresse en premier en cas de coup dur ?</div>
-            </div>
-          </div>
-          <div class="rs-body">
-            <input placeholder="Prénom / lien">
-            <input placeholder="Comment je pourrais le/la contacter ?">
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Lien territoire → réseau -->
-      <div style="background:var(--black); color:#fff; border-radius:12px; padding:14px 18px; margin-top:16px; font-size:0.83rem; line-height:1.6;">
-        💬 <strong style="color:var(--yellow);">Question de connexion pour débriefer :</strong>
-        <em>"Les lieux que vous avez découverts aujourd'hui pourraient-ils vous connecter à de nouvelles personnes de soutien ?"</em>
-      </div>
-
-      <!-- Tour de table final -->
-      <div style="background:#f9f9f9; border:2px solid var(--black); border-radius:10px; padding:14px 16px; margin-top:14px; box-shadow:var(--shadow);">
-        <strong style="font-family:'Poppins',sans-serif; font-size:0.82rem; display:block; margin-bottom:10px;">🔄 Tour de table final · 1 mot / 1 image / 1 couleur</strong>
-        <div style="font-size:0.8rem; color:#555; line-height:1.5;">
-          Chacun choisit <strong>une seule chose</strong> pour décrire comment il repart :<br>
-          un mot · ou une image mentale · ou une couleur.
-          Pas d'obligation d'explication.
-        </div>
+        <div class="engagement-result" id="engResult"></div>
       </div>
 
     </div>
   </div>
 
-  <!-- ═══ QUESTIONS DE DÉBRIEFING LS ═══ -->
+  <!-- FEEDBACK FORMATEUR -->
   <div class="phase">
     <div class="phase-header" style="background:#1A1A1A; color:var(--yellow);">
-      <div class="phase-icon">💬</div>
+      <div class="phase-icon">🛠</div>
       <div class="phase-title">
-        <h3>Questions de débriefing Life Skills</h3>
-        <small>À poser en clôture selon la dynamique du groupe — cliquer pour révéler la reformulation</small>
+        <h3>Notes pour le formateur</h3>
+        <small>Conseils pédagogiques & matériel nécessaire</small>
       </div>
     </div>
     <div class="phase-body">
-
-      <div class="debrief-list">
-        <div class="debrief-q" onclick="this.classList.toggle('revealed')">
-          <div class="debrief-axe" style="background:#EDE7F6;">💜</div>
-          <div class="debrief-content">
-            <strong>Personnalité</strong>
-            <em>"Avez-vous découvert quelque chose sur les endroits qui vous correspondent vraiment ?"</em>
-            <div class="debrief-reveal">→ Ce que tu cherches dans un lieu, c'est souvent le reflet de ce dont tu as besoin. Se poser la question, c'est mieux se connaître.</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div>
+          <div class="tip-box">
+            <div class="tip-box-header">🌱 Environnement bienveillant</div>
+            <div class="tip-box-body">
+              Créez un cadre sécurisant où chacun peut parler de ses difficultés sans jugement.
+              L'image de soi est un sujet sensible : validez toutes les contributions avant de nuancer.
+            </div>
           </div>
         </div>
-        <div class="debrief-q" onclick="this.classList.toggle('revealed')">
-          <div class="debrief-axe" style="background:#E0F7FA;">💚</div>
-          <div class="debrief-content">
-            <strong>Bien-être</strong>
-            <em>"Avez-vous repéré un lieu ou une personne qui pourrait vous aider dans les moments difficiles ?"</em>
-            <div class="debrief-reveal">→ Savoir vers qui ou quoi aller quand ça ne va pas, c'est une ressource concrète. Aujourd'hui vous l'avez mise en mots.</div>
-          </div>
-        </div>
-        <div class="debrief-q" onclick="this.classList.toggle('revealed')">
-          <div class="debrief-axe" style="background:#FFF3E0;">🧡</div>
-          <div class="debrief-content">
-            <strong>Valorisation de soi</strong>
-            <em>"Qu'est-ce que vous saviez déjà sur votre territoire sans savoir que vous le saviez ?"</em>
-            <div class="debrief-reveal">→ Ça, c'est une compétence. Connaître son territoire local, ça s'appelle avoir un capital social et géographique — deux atouts réels pour s'insérer.</div>
-          </div>
-        </div>
-        <div class="debrief-q" onclick="this.classList.toggle('revealed')">
-          <div class="debrief-axe" style="background:#E0F7FA;">💙</div>
-          <div class="debrief-content">
-            <strong>Ressources</strong>
-            <em>"Quelle est la ressource la plus surprenante que vous avez découverte aujourd'hui ?"</em>
-            <div class="debrief-reveal">→ Souvent, ce sont les ressources les plus proches et les moins formelles qui débloquent les situations. Votre entourage est une ressource, votre quartier est une ressource.</div>
-          </div>
-        </div>
-        <div class="debrief-q" onclick="this.classList.toggle('revealed')">
-          <div class="debrief-axe" style="background:#E8F5E9;">🤝</div>
-          <div class="debrief-content">
-            <strong>Réseau</strong>
-            <em>"Qui, dans votre entourage, pourrait vous accompagner dans la première démarche que vous avez notée ?"</em>
-            <div class="debrief-reveal">→ Ne pas y aller seul·e pour la première fois, c'est une stratégie, pas une faiblesse. Un ancrage social, ça se construit pas à pas.</div>
+        <div>
+          <div class="tip-box">
+            <div class="tip-box-header">🔄 Méthode de feedback</div>
+            <div class="tip-box-body">
+              Pour la clôture, invitez chaque jeune à partager en 1 phrase :
+              <em>"Ce que je retiens de cet atelier, c'est…"</em>
+              — sans obligation, la parole est libre.
+            </div>
           </div>
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- ═══ MATÉRIEL & SUIVI ═══ -->
-  <div class="phase">
-    <div class="phase-header black">
-      <div class="phase-icon">📦</div>
-      <div class="phase-title">
-        <h3>Matériel · Gestion du temps · Suivi</h3>
-        <small>Tout ce qu'il faut préparer avant · Conseils pour les cas difficiles</small>
-      </div>
-    </div>
-    <div class="phase-body">
-
-      <div class="materiel-grid" style="margin-bottom:16px;">
-        <div class="mat-item">
-          <div class="mat-header" style="background:var(--teal-l);">📋 Matériel à préparer (J-1)</div>
-          <div class="mat-body">
-            <ul>
-              <li>Cartes PLT4U imprimées et découpées (4 types × 8–10 cartes min.)</li>
-              <li>Carte géographique Pays Basque A3+ pour le mur</li>
-              <li>Post-its 4 couleurs (une par type de carte) + post-its neutres</li>
-              <li>Feutres et marqueurs de couleur</li>
-              <li>Paperboard ou grand mur pour les 3 colonnes</li>
-              <li>Liste pré-établie des lieux ressources ML (à distribuer en fin)</li>
-              <li>Téléphone pour photographier le mur final</li>
-            </ul>
-          </div>
+      <div style="margin-top:14px; display:grid; grid-template-columns:1fr 1fr; gap:14px; font-size:0.79rem;">
+        <div style="background:#E3F2FD; border:2px solid var(--black); border-radius:10px; padding:12px 16px; box-shadow:var(--shadow);">
+          <strong style="display:block; margin-bottom:6px; font-family:'Poppins',sans-serif;">📦 Matériel · Présentiel</strong>
+          Tableau blanc ou paperboard · Post-its (3 couleurs) · Stylos ·
+          Fiches d'auto-évaluation imprimées · Exemple de tenue "avant/après" en photos
         </div>
-        <div class="mat-item">
-          <div class="mat-header" style="background:#FFFDE7;">⏱️ Gestion du temps · 7 participants</div>
-          <div class="mat-body">
-            <ul>
-              <li>La <strong>Phase 3</strong> (jeu des cartes) est la phase pivot — ne pas la sacrifier</li>
-              <li>Limiter à 1 carte / participant / tour — 4 tours × ~7 min</li>
-              <li>Si échanges riches : réduire la Phase 4B à 5 min</li>
-              <li>Ne jamais sacrifier Phase 5 (post-its) ni Phase 6 (clôture)</li>
-              <li>Phases 1 et 2 : non-négociables pour la dynamique de groupe</li>
-            </ul>
-          </div>
-        </div>
-        <div class="mat-item">
-          <div class="mat-header" style="background:#FCE4EC;">🧩 Participants en difficulté d'expression</div>
-          <div class="mat-body">
-            <ul>
-              <li>Reformulez : <em>"Un endroit que tu as fréquenté, même une fois ?"</em></li>
-              <li>Valorisez chaque réponse minimale — pas de bonne ou mauvaise réponse</li>
-              <li>Proposez de dessiner ou de montrer sur la carte plutôt que de parler</li>
-            </ul>
-          </div>
-        </div>
-        <div class="mat-item">
-          <div class="mat-header" style="background:#E8F5E9;">🔁 Suivi post-atelier · J+7 / J+14</div>
-          <div class="mat-body">
-            <ul>
-              <li>Reprendre le post-it : <em>"Tu avais dit vouloir aller voir… tu as pu ?"</em></li>
-              <li>Si fait → <em>"Qu'est-ce que tu as appris sur toi en y allant ?"</em> (Valorisation)</li>
-              <li>Si pas fait → explorer le frein sans jugement (Personnalité, zone d'inconfort)</li>
-              <li>La carte enrichie + les post-its = document de suivi dans le dossier jeune</li>
-              <li>Les cartes Ressources alimentent aussi le DiagMob360 (ROAMING)</li>
-            </ul>
-          </div>
+        <div style="background:#F3E5F5; border:2px solid var(--black); border-radius:10px; padding:12px 16px; box-shadow:var(--shadow);">
+          <strong style="display:block; margin-bottom:6px; font-family:'Poppins',sans-serif;">🎯 Résultats attendus</strong>
+          Meilleure conscience de la posture professionnelle · Code de conduite co-construit ·
+          Engagement individuel formalisé · Groupe soudé avant les visites
         </div>
       </div>
 
@@ -1022,12 +1151,757 @@
 
 </div>
 
-<div class="footer">LS4YOU · Axe Ressources & Personnalité · Mission Locale Pays Basque · Atelier 1 – Trouve ta place sur le territoire</div>
+<!-- ═══════════════════════════════════════════════════════════
+     OUTIL DE PRÉPARATION À L'ENQUÊTE MÉTIER
+     ═══════════════════════════════════════════════════════════ -->
+
+<div style="background:var(--black); padding:0; margin-top:0;">
+  <div style="max-width:960px; margin:0 auto; padding:28px 20px 12px; display:flex; align-items:center; gap:16px;">
+    <div style="background:var(--turq); border:3px solid rgba(255,255,255,0.3); border-radius:50%; width:56px; height:56px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; flex-shrink:0;">🔍</div>
+    <div>
+      <div style="font-family:'Poppins',sans-serif; font-weight:900; font-size:1.5rem; color:#fff; line-height:1.1;">
+        Préparer mon <span style="color:var(--yellow)">enquête métier</span>
+      </div>
+      <div style="margin-top:6px; display:flex; gap:8px; flex-wrap:wrap;">
+        <span style="background:rgba(255,255,255,0.12); border:1.5px solid rgba(255,255,255,0.3); border-radius:20px; padding:3px 11px; font-size:0.72rem; font-weight:600; color:#fff;">Outil de préparation</span>
+        <span style="background:var(--turq); border:1.5px solid var(--black); border-radius:20px; padding:3px 11px; font-size:0.72rem; font-weight:600; color:#fff; box-shadow:2px 2px 0 rgba(0,0,0,0.3);">Avant la visite</span>
+        <span style="background:var(--yellow); border:1.5px solid rgba(0,0,0,0.3); border-radius:20px; padding:3px 11px; font-size:0.72rem; font-weight:600; color:var(--black);">Individuel</span>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:960px; margin:0 auto; padding:0 20px 18px;">
+    <p style="font-size:0.82rem; color:rgba(255,255,255,0.7); line-height:1.6;">
+      Une enquête métier, ce n'est ni un entretien d'embauche, ni un questionnaire scolaire.
+      C'est un échange authentique avec un professionnel pour découvrir la réalité d'un métier de l'intérieur.
+      Cet outil t'aide à te préparer étape par étape.
+    </p>
+  </div>
+</div>
+
+<div style="max-width:960px; margin:0 auto; padding:28px 20px 60px;">
+
+  <!-- TABS NAVIGATION -->
+  <div style="display:flex; gap:0; border:3px solid var(--black); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-lg); margin-bottom:28px;">
+    <button class="enq-tab active" onclick="switchTab('tab-info')" id="btn-tab-info">
+      <span>1</span> Infos structure
+    </button>
+    <button class="enq-tab" onclick="switchTab('tab-questions')" id="btn-tab-questions" style="border-left:3px solid var(--black);">
+      <span>2</span> Mes questions
+    </button>
+    <button class="enq-tab" onclick="switchTab('tab-checklist')" id="btn-tab-checklist" style="border-left:3px solid var(--black);">
+      <span>3</span> Check départ
+    </button>
+    <button class="enq-tab" onclick="switchTab('tab-notes')" id="btn-tab-notes" style="border-left:3px solid var(--black);">
+      <span>4</span> Mes notes
+    </button>
+    <button class="enq-tab" onclick="switchTab('tab-bilan')" id="btn-tab-bilan" style="border-left:3px solid var(--black);">
+      <span>5</span> Bilan
+    </button>
+  </div>
+
+  <!-- ── TAB 1 · INFOS STRUCTURE ── -->
+  <div id="tab-info" class="enq-panel">
+    <div class="phase" style="margin-bottom:20px;">
+      <div class="phase-header turq">
+        <div class="phase-icon">🏛️</div>
+        <div class="phase-title">
+          <h3>La structure que je vais visiter</h3>
+          <small>Note les informations essentielles avant de partir</small>
+        </div>
+      </div>
+      <div class="phase-body">
+
+        <!-- Type de structure -->
+        <div style="margin-bottom:18px;">
+          <label class="enq-label">Type de structure visitée</label>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;" id="struct-type-btns">
+            <button class="struct-btn" onclick="selectStruct(this,'🏭 Entreprise')">🏭 Entreprise</button>
+            <button class="struct-btn" onclick="selectStruct(this,'🤝 Association')">🤝 Association</button>
+            <button class="struct-btn" onclick="selectStruct(this,'🏛️ Institution / Service public')">🏛️ Institution / Service public</button>
+            <button class="struct-btn" onclick="selectStruct(this,'🛒 Commerce')">🛒 Commerce</button>
+            <button class="struct-btn" onclick="selectStruct(this,'🔧 Artisan')">🔧 Artisan</button>
+          </div>
+          <div id="struct-selected" style="display:none; margin-top:8px; font-size:0.8rem; font-weight:700; padding:7px 12px; border:2px solid var(--black); border-radius:8px; background:#E0F7FA; box-shadow:2px 2px 0 var(--black);"></div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div>
+            <label class="enq-label">Nom de la structure</label>
+            <input class="enq-input" id="ent-nom" placeholder="Ex : Mairie de Bayonne, Croix-Rouge locale…">
+          </div>
+          <div>
+            <label class="enq-label">Secteur / Domaine d'activité</label>
+            <input class="enq-input" id="ent-secteur" placeholder="Ex : Social, bâtiment, restauration…">
+          </div>
+          <div>
+            <label class="enq-label">Adresse / Localisation</label>
+            <input class="enq-input" id="ent-adresse" placeholder="Ex : 12 rue du Moulin, Bayonne…">
+          </div>
+          <div>
+            <label class="enq-label">Date & heure de la visite</label>
+            <input class="enq-input" id="ent-date" placeholder="Ex : Mardi 10 juin à 10h00">
+          </div>
+          <div>
+            <label class="enq-label">Nom de la personne rencontrée</label>
+            <input class="enq-input" id="ent-contact" placeholder="Prénom + Nom…">
+          </div>
+          <div>
+            <label class="enq-label">Son poste / rôle dans la structure</label>
+            <input class="enq-input" id="ent-poste" placeholder="Ex : Responsable RH, chef cuisinier, éducateur…">
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <label class="enq-label">Ce que je sais déjà sur cette structure (quelques mots)</label>
+          <textarea class="enq-textarea" id="ent-connais" placeholder="Ex : C'est une association qui aide les personnes sans abri. J'ai vu leur site. Environ 20 bénévoles…" rows="3"></textarea>
+        </div>
+
+        <!-- Métiers multiples -->
+        <div style="margin-top:16px;">
+          <label class="enq-label">Le(s) métier(s) que j'explore lors de cette visite</label>
+          <div id="metiers-list" style="display:flex; flex-direction:column; gap:8px; margin-top:6px;"></div>
+          <button onclick="addMetier()" style="margin-top:8px; background:#fff; border:2px dashed var(--black); border-radius:8px; padding:8px 16px; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer; width:100%; color:var(--black); transition:background 0.15s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='#fff'">
+            ＋ Ajouter un métier à explorer
+          </button>
+        </div>
+
+        <div style="margin-top:16px; text-align:right;">
+          <button class="enq-btn-next" onclick="switchTab('tab-questions')">Suivant : mes questions →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pourquoi préparer ? -->
+    <div class="tip-box">
+      <div class="tip-box-header">💡 Pourquoi préparer l'enquête métier ?</div>
+      <div class="tip-box-body">
+        <ul>
+          <li>✦ <strong>Clarifier ton projet</strong> : passer d'une idée vague à une vision concrète du métier.</li>
+          <li>✦ <strong>Identifier les compétences</strong> attendues sur le terrain — pas dans une fiche théorique.</li>
+          <li>✦ <strong>Découvrir la réalité</strong> : rythme, outils, collègues, contraintes… ce qu'on ne dit pas dans les livres.</li>
+          <li>✦ <strong>Tisser des liens</strong> : chaque professionnel rencontré peut devenir un contact précieux pour la suite.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB 2 · MES QUESTIONS ── -->
+  <div id="tab-questions" class="enq-panel hidden">
+
+    <div style="background:#E0F7FA; border:3px solid var(--black); border-radius:12px; padding:14px 18px; margin-bottom:20px; box-shadow:var(--shadow); font-size:0.83rem; line-height:1.5;">
+      📌 <strong>Consigne :</strong> Coche les questions qui t'intéressent le plus. Tu peux en ajouter de personnalisées.
+      Pour la visite, prépare <strong>8 à 12 questions maximum</strong> pour ne pas dépasser le temps disponible.
+      <span style="display:block; margin-top:6px; color:#00838F; font-weight:700;">👇 Clique sur une question pour la sélectionner / désélectionner</span>
+    </div>
+
+    <!-- Thématique 1 -->
+    <div class="qblock">
+      <div class="qblock-header" style="background:var(--turq);">
+        <span>📋</span> Le contenu du poste et les missions
+        <span class="q-counter" id="counter-1">0 sélectionnée(s)</span>
+      </div>
+      <div class="qblock-body" id="qgroup-1">
+        <div class="qitem" onclick="toggleQ(this,'1')"><span class="qcheck">☐</span> Quelles sont vos principales tâches au quotidien ?</div>
+        <div class="qitem" onclick="toggleQ(this,'1')"><span class="qcheck">☐</span> Y a-t-il des tâches insoupçonnées que vous réalisez régulièrement ?</div>
+        <div class="qitem" onclick="toggleQ(this,'1')"><span class="qcheck">☐</span> Quelle part de votre travail est consacrée à l'opérationnel, à la coordination, à la réflexion ?</div>
+        <div class="qitem" onclick="toggleQ(this,'1')"><span class="qcheck">☐</span> À quoi ressemble une journée type dans votre métier ?</div>
+        <div class="qitem qitem-custom" onclick="addCustomQ('qgroup-1','1')" style="border:2px dashed #aaa; background:#f9f9f9; color:#888; cursor:pointer; justify-content:center; gap:6px;">
+          <span>＋</span> Ajouter ma propre question…
+        </div>
+      </div>
+    </div>
+
+    <!-- Thématique 2 -->
+    <div class="qblock">
+      <div class="qblock-header" style="background:var(--mint);">
+        <span>🎓</span> L'accès au métier
+        <span class="q-counter" id="counter-2">0 sélectionnée(s)</span>
+      </div>
+      <div class="qblock-body" id="qgroup-2">
+        <div class="qitem" onclick="toggleQ(this,'2')"><span class="qcheck">☐</span> Quel a été votre parcours pour accéder à ce poste ?</div>
+        <div class="qitem" onclick="toggleQ(this,'2')"><span class="qcheck">☐</span> Existe-t-il plusieurs voies pour exercer ce métier (formation, apprentissage, reconversion…) ?</div>
+        <div class="qitem" onclick="toggleQ(this,'2')"><span class="qcheck">☐</span> Avez-vous rencontré des obstacles pour décrocher votre premier emploi dans ce domaine ?</div>
+        <div class="qitem" onclick="toggleQ(this,'2')"><span class="qcheck">☐</span> Est-ce qu'un diplôme spécifique est obligatoire, ou d'autres profils sont-ils acceptés ?</div>
+        <div class="qitem qitem-custom" onclick="addCustomQ('qgroup-2','2')" style="border:2px dashed #aaa; background:#f9f9f9; color:#888; cursor:pointer; justify-content:center; gap:6px;">
+          <span>＋</span> Ajouter ma propre question…
+        </div>
+      </div>
+    </div>
+
+    <!-- Thématique 3 -->
+    <div class="qblock">
+      <div class="qblock-header" style="background:var(--orange);">
+        <span>🧠</span> Les compétences clés
+        <span class="q-counter" id="counter-3">0 sélectionnée(s)</span>
+      </div>
+      <div class="qblock-body" id="qgroup-3">
+        <div class="qitem" onclick="toggleQ(this,'3')"><span class="qcheck">☐</span> Quelles sont les compétences techniques indispensables pour ce métier ?</div>
+        <div class="qitem" onclick="toggleQ(this,'3')"><span class="qcheck">☐</span> Quelles qualités humaines font vraiment la différence au quotidien ?</div>
+        <div class="qitem" onclick="toggleQ(this,'3')"><span class="qcheck">☐</span> Avez-vous développé des compétences sur le terrain que vous n'aviez pas au départ ?</div>
+        <div class="qitem" onclick="toggleQ(this,'3')"><span class="qcheck">☐</span> Qu'est-ce qui distingue les bons professionnels dans ce métier selon vous ?</div>
+        <div class="qitem qitem-custom" onclick="addCustomQ('qgroup-3','3')" style="border:2px dashed #aaa; background:#f9f9f9; color:#888; cursor:pointer; justify-content:center; gap:6px;">
+          <span>＋</span> Ajouter ma propre question…
+        </div>
+      </div>
+    </div>
+
+    <!-- Thématique 4 -->
+    <div class="qblock">
+      <div class="qblock-header" style="background:#7E57C2; color:#fff;">
+        <span>🌍</span> L'environnement et les conditions de travail
+        <span class="q-counter" id="counter-4">0 sélectionnée(s)</span>
+      </div>
+      <div class="qblock-body" id="qgroup-4">
+        <div class="qitem" onclick="toggleQ(this,'4')"><span class="qcheck">☐</span> À quoi ressemble votre cadre de travail (lieu, rythme, outils…) ?</div>
+        <div class="qitem" onclick="toggleQ(this,'4')"><span class="qcheck">☐</span> Travaillez-vous de manière autonome ou en équipe ? Les deux ?</div>
+        <div class="qitem" onclick="toggleQ(this,'4')"><span class="qcheck">☐</span> Comment se passent les relations avec vos collègues, clients, supérieurs ?</div>
+        <div class="qitem" onclick="toggleQ(this,'4')"><span class="qcheck">☐</span> Votre emploi du temps est-il flexible ou contraignant ?</div>
+        <div class="qitem qitem-custom" onclick="addCustomQ('qgroup-4','4')" style="border:2px dashed #aaa; background:#f9f9f9; color:#888; cursor:pointer; justify-content:center; gap:6px;">
+          <span>＋</span> Ajouter ma propre question…
+        </div>
+      </div>
+    </div>
+
+    <!-- Thématique 5 -->
+    <div class="qblock">
+      <div class="qblock-header" style="background:#EF5350; color:#fff;">
+        <span>⚠️</span> Les contraintes du métier
+        <span class="q-counter" id="counter-5">0 sélectionnée(s)</span>
+      </div>
+      <div class="qblock-body" id="qgroup-5">
+        <div class="qitem" onclick="toggleQ(this,'5')"><span class="qcheck">☐</span> Qu'aimez-vous le moins dans votre travail ?</div>
+        <div class="qitem" onclick="toggleQ(this,'5')"><span class="qcheck">☐</span> Qu'auriez-vous aimé savoir avant d'exercer ce métier ?</div>
+        <div class="qitem" onclick="toggleQ(this,'5')"><span class="qcheck">☐</span> Ce métier permet-il un bon équilibre vie professionnelle / vie personnelle ?</div>
+        <div class="qitem" onclick="toggleQ(this,'5')"><span class="qcheck">☐</span> Diriez-vous que votre métier est stressant ? Pour quelles raisons ?</div>
+        <div class="qitem qitem-custom" onclick="addCustomQ('qgroup-5','5')" style="border:2px dashed #aaa; background:#f9f9f9; color:#888; cursor:pointer; justify-content:center; gap:6px;">
+          <span>＋</span> Ajouter ma propre question…
+        </div>
+      </div>
+    </div>
+
+    <!-- Thématique 6 -->
+    <div class="qblock">
+      <div class="qblock-header" style="background:#26A69A; color:#fff;">
+        <span>💶</span> La rémunération
+        <span class="q-counter" id="counter-6">0 sélectionnée(s)</span>
+      </div>
+      <div class="qblock-body" id="qgroup-6">
+        <div class="qitem" onclick="toggleQ(this,'6')"><span class="qcheck">☐</span> Quelle est la rémunération à l'entrée dans ce métier ? Après quelques années ?</div>
+        <div class="qitem" onclick="toggleQ(this,'6')"><span class="qcheck">☐</span> La rémunération comprend-elle une part variable, des primes, des avantages ?</div>
+        <div class="qitem" onclick="toggleQ(this,'6')"><span class="qcheck">☐</span> Le salaire vous semble-t-il en adéquation avec le niveau d'exigence du poste ?</div>
+        <div class="qitem qitem-custom" onclick="addCustomQ('qgroup-6','6')" style="border:2px dashed #aaa; background:#f9f9f9; color:#888; cursor:pointer; justify-content:center; gap:6px;">
+          <span>＋</span> Ajouter ma propre question…
+        </div>
+      </div>
+    </div>
+
+    <!-- Thématique 7 -->
+    <div class="qblock">
+      <div class="qblock-header" style="background:var(--black); color:var(--yellow);">
+        <span>🌟</span> Les conseils du professionnel
+        <span class="q-counter" id="counter-7">0 sélectionnée(s)</span>
+      </div>
+      <div class="qblock-body" id="qgroup-7">
+        <div class="qitem" onclick="toggleQ(this,'7')"><span class="qcheck">☐</span> Quels conseils donneriez-vous à quelqu'un qui souhaite se lancer dans ce métier ?</div>
+        <div class="qitem" onclick="toggleQ(this,'7')"><span class="qcheck">☐</span> Si c'était à refaire, que feriez-vous différemment dans votre parcours ?</div>
+        <div class="qitem" onclick="toggleQ(this,'7')"><span class="qcheck">☐</span> Avez-vous des ressources à recommander (formations, sites, personnes à contacter…) ?</div>
+        <div class="qitem" onclick="toggleQ(this,'7')"><span class="qcheck">☐</span> Comment voyez-vous l'avenir de ce métier dans 5 ou 10 ans ?</div>
+        <div class="qitem qitem-custom" onclick="addCustomQ('qgroup-7','7')" style="border:2px dashed #aaa; background:#f9f9f9; color:#888; cursor:pointer; justify-content:center; gap:6px;">
+          <span>＋</span> Ajouter ma propre question…
+        </div>
+      </div>
+    </div>
+
+    <!-- Compteur global -->
+    <div id="q-total-bar" style="background:var(--yellow); border:3px solid var(--black); border-radius:12px; padding:14px 20px; box-shadow:var(--shadow); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-top:8px;">
+      <div>
+        <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:1.1rem;" id="total-q-count">0</span>
+        <span style="font-size:0.82rem; font-weight:600;"> question(s) sélectionnée(s) </span>
+        <span style="font-size:0.78rem; color:#666;" id="q-advice">— Vise 8 à 12 questions idéalement.</span>
+      </div>
+      <button class="enq-btn-next" onclick="switchTab('tab-checklist')">Suivant : check départ →</button>
+    </div>
+  </div>
+
+  <!-- ── TAB 3 · CHECKLIST DÉPART ── -->
+  <div id="tab-checklist" class="enq-panel hidden">
+    <div class="phase">
+      <div class="phase-header" style="background:var(--orange); color:#fff;">
+        <div class="phase-icon">✅</div>
+        <div class="phase-title">
+          <h3>Ma checklist avant de partir</h3>
+          <small>Coche chaque point — zéro improvisation le jour J</small>
+        </div>
+      </div>
+      <div class="phase-body">
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <!-- Colonne gauche -->
+          <div>
+            <div class="chk-section-title">📋 Préparation</div>
+            <div class="chk-item" onclick="toggleChk(this)">
+              <span class="chk-box">☐</span>
+              <div><strong>J'ai noté le nom, le poste et le lieu exact</strong> de la personne que je rencontre</div>
+            </div>
+            <div class="chk-item" onclick="toggleChk(this)">
+              <span class="chk-box">☐</span>
+              <div><strong>J'ai préparé mes questions</strong> et je les ai sur moi (papier ou téléphone)</div>
+            </div>
+            <div class="chk-item" onclick="toggleChk(this)">
+              <span class="chk-box">☐</span>
+              <div><strong>Je me suis renseigné(e) sur la structure</strong> (activité, taille, ce qu'ils font)</div>
+            </div>
+            <div class="chk-item" onclick="toggleChk(this)">
+              <span class="chk-box">☐</span>
+              <div><strong>J'ai prévu de quoi prendre des notes</strong> (carnet + stylo)</div>
+            </div>
+            <div class="chk-item" onclick="toggleChk(this)">
+              <span class="chk-box">☐</span>
+              <div><strong>Je connais l'itinéraire</strong> et j'ai vérifié les horaires de transport</div>
+            </div>
+          </div>
+          <!-- Colonne droite -->
+          <div>
+            <div class="chk-section-title">👗 Tenue & Attitude</div>
+            <div class="chk-item" onclick="toggleChk(this)">
+              <span class="chk-box">☐</span>
+              <div><strong>Ma tenue est propre et adaptée</strong> au secteur de l'entreprise</div>
+            </div>
+            <div class="chk-item" onclick="toggleChk(this)">
+              <span class="chk-box">☐</span>
+              <div><strong>Je pars avec assez d'avance</strong> pour arriver 5 min avant</div>
+            </div>
+            <div class="chk-item" onclick="toggleChk(this)">
+              <span class="chk-box">☐</span>
+              <div><strong>Mon téléphone sera silencieux</strong> et rangé pendant la visite</div>
+            </div>
+            <div class="chk-item" onclick="toggleChk(this)">
+              <span class="chk-box">☐</span>
+              <div><strong>Je me rappelle pourquoi je fais cette enquête</strong> : découvrir, pas décrocher un emploi</div>
+            </div>
+            <div class="chk-item" onclick="toggleChk(this)">
+              <span class="chk-box">☐</span>
+              <div><strong>Je suis prêt(e) à remercier</strong> chaleureusement à la fin et à serrer la main</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Barre de progression checklist -->
+        <div style="margin-top:20px; background:#f5f5f5; border:2px solid var(--black); border-radius:10px; padding:14px 18px; box-shadow:var(--shadow);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-family:'Poppins',sans-serif; font-weight:700; font-size:0.82rem;">Progression</span>
+            <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:0.9rem;" id="chk-count">0 / 10</span>
+          </div>
+          <div style="background:#e0e0e0; border:2px solid var(--black); border-radius:6px; height:14px; overflow:hidden;">
+            <div id="chk-bar" style="height:100%; background:var(--mint); width:0%; transition:width 0.3s; border-radius:4px;"></div>
+          </div>
+          <div id="chk-msg" style="margin-top:8px; font-size:0.78rem; color:#666; font-weight:600;"></div>
+        </div>
+
+        <div style="margin-top:16px; text-align:right;">
+          <button class="enq-btn-next" onclick="switchTab('tab-notes')">Suivant : mes notes de visite →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB 4 · NOTES DE VISITE ── -->
+  <div id="tab-notes" class="enq-panel hidden">
+    <div class="phase">
+      <div class="phase-header" style="background:#7E57C2; color:#fff;">
+        <div class="phase-icon">✏️</div>
+        <div class="phase-title">
+          <h3>Mes notes pendant et après la visite</h3>
+          <small>Complète pendant ou juste après l'enquête — à chaud !</small>
+        </div>
+      </div>
+      <div class="phase-body">
+
+        <div style="background:#EDE7F6; border:2px solid var(--black); border-radius:10px; padding:12px 16px; font-size:0.82rem; margin-bottom:18px; box-shadow:var(--shadow);">
+          💡 <strong>Astuce :</strong> Remplis ces notes <em>immédiatement après</em> la visite, pendant que les souvenirs sont frais.
+          Ce que tu ne notes pas maintenant sera oublié dans 48h.
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div>
+            <label class="enq-label">🔑 Les 3 informations les plus importantes que j'ai apprises</label>
+            <textarea class="enq-textarea" id="notes-top3" placeholder="1. …&#10;2. …&#10;3. …" rows="4"></textarea>
+          </div>
+          <div>
+            <label class="enq-label">😮 Ce qui m'a surpris (en bien ou en mal)</label>
+            <textarea class="enq-textarea" id="notes-surprise" placeholder="Ex : Je ne savais pas que ce métier impliquait autant de travail administratif…" rows="3"></textarea>
+          </div>
+          <div>
+            <label class="enq-label">💪 Les compétences mentionnées qui me semblent accessibles</label>
+            <textarea class="enq-textarea" id="notes-forces" placeholder="Ex : L'organisation, le sens du contact client — je pense que j'ai déjà ça…" rows="3"></textarea>
+          </div>
+          <div>
+            <label class="enq-label">📈 Les compétences que je devrais développer</label>
+            <textarea class="enq-textarea" id="notes-dev" placeholder="Ex : La maîtrise d'un logiciel métier spécifique, la gestion du stress…" rows="3"></textarea>
+          </div>
+          <div>
+            <label class="enq-label">🌡️ Ce métier m'attire-t-il toujours autant après la visite ?</label>
+            <div style="display:flex; gap:10px; margin-top:6px;" id="attractivite">
+              <button class="attract-btn" onclick="setAttract(this,'🔥 Encore plus motivé(e) !')">🔥 Encore plus</button>
+              <button class="attract-btn" onclick="setAttract(this,'✅ Toujours autant')">✅ Toujours autant</button>
+              <button class="attract-btn" onclick="setAttract(this,'🤔 Je dois y réfléchir')">🤔 À réfléchir</button>
+              <button class="attract-btn" onclick="setAttract(this,'❌ Moins qu'avant')">❌ Moins qu'avant</button>
+            </div>
+            <div id="attract-result" style="display:none; margin-top:8px; font-size:0.8rem; font-weight:700; padding:8px 12px; border:2px solid var(--black); border-radius:8px; background:#FFFDE7;"></div>
+          </div>
+          <div>
+            <label class="enq-label">📬 J'ai pensé à remercier mon interlocuteur ?</label>
+            <div style="display:flex; gap:8px; margin-top:6px; flex-wrap:wrap;">
+              <div class="chk-item" onclick="toggleChk(this)" style="flex:0;">
+                <span class="chk-box">☐</span> <span style="font-size:0.82rem;">Message de remerciement envoyé</span>
+              </div>
+            </div>
+            <textarea class="enq-textarea" id="notes-merci" placeholder="Brouillon du message de remerciement (optionnel) :&#10;Bonjour [Prénom], je vous remercie chaleureusement pour le temps accordé…" rows="3" style="margin-top:8px;"></textarea>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; text-align:right;">
+          <button class="enq-btn-next" onclick="switchTab('tab-bilan')">Suivant : mon bilan →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB 5 · BILAN ── -->
+  <div id="tab-bilan" class="enq-panel hidden">
+    <div style="background:var(--turq); border:3px solid var(--black); border-radius:16px; padding:22px 24px; box-shadow:var(--shadow-lg); margin-bottom:20px; color:#fff;">
+      <h3 style="font-family:'Poppins',sans-serif; font-weight:900; font-size:1.1rem; margin-bottom:6px;">🎯 Mon bilan d'enquête</h3>
+      <p style="font-size:0.82rem; opacity:0.9;">Synthèse personnelle — ce que je retiens et ma prochaine action concrète</p>
+    </div>
+
+    <div class="phase">
+      <div class="phase-body" style="padding-top:20px;">
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div>
+            <label class="enq-label">✍️ En 2-3 phrases, ce que je retiens de cette enquête</label>
+            <textarea class="enq-textarea" id="bilan-synthese" placeholder="Ex : Ce métier est plus varié que ce que je pensais. J'ai découvert que la relation client est centrale. Ça confirme mon intérêt, mais je dois me former sur…" rows="4"></textarea>
+          </div>
+
+          <div>
+            <label class="enq-label">🔄 Est-ce que cette visite change quelque chose dans mon projet ?</label>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;" id="impact-btns">
+              <button class="attract-btn" onclick="setImpact(this,'✅ Ça confirme mon projet !')">✅ Confirme mon projet</button>
+              <button class="attract-btn" onclick="setImpact(this,'🔀 Je nuance un peu mon projet')">🔀 Je nuance un peu</button>
+              <button class="attract-btn" onclick="setImpact(this,'🔄 Je reconsidère une piste')">🔄 Je reconsidère une piste</button>
+              <button class="attract-btn" onclick="setImpact(this,'💡 Je découvre une nouvelle piste')">💡 Nouvelle piste découverte</button>
+            </div>
+            <div id="impact-result" style="display:none; margin-top:8px; font-size:0.8rem; font-weight:700; padding:8px 12px; border:2px solid var(--black); border-radius:8px; background:#E0F7FA;"></div>
+          </div>
+
+          <div>
+            <label class="enq-label">🚀 Ma prochaine action concrète (dans les 7 jours)</label>
+            <input class="enq-input" id="bilan-action" placeholder="Ex : Chercher une formation en menuiserie, contacter un deuxième professionnel, revoir mon CV…">
+          </div>
+
+          <div>
+            <label class="enq-label">📅 Je partage ce bilan avec mon conseiller le…</label>
+            <input class="enq-input" id="bilan-rdv" placeholder="Date du prochain rendez-vous Mission Locale…">
+          </div>
+        </div>
+
+        <!-- Fiche récap générée -->
+        <div style="margin-top:22px;">
+          <button style="width:100%; background:var(--black); color:var(--yellow); border:3px solid var(--black); border-radius:10px; padding:14px; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.9rem; cursor:pointer; box-shadow:var(--shadow); transition:transform 0.1s;" onclick="generateRecap()" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+            📄 Générer ma fiche récapitulative d'enquête
+          </button>
+        </div>
+
+        <div id="recap-output" style="display:none; margin-top:18px; background:#FFFDF7; border:3px solid var(--black); border-radius:12px; padding:22px; box-shadow:var(--shadow-lg); font-size:0.82rem; line-height:1.7;"></div>
+
+      </div>
+    </div>
+
+    <div class="tip-box" style="margin-top:0;">
+      <div class="tip-box-header">📌 Ce que tu dois faire après chaque enquête</div>
+      <div class="tip-box-body">
+        <ul>
+          <li>✦ <strong>Relis tes notes à chaud</strong> : identifie les points saillants, les surprises, les confirmations.</li>
+          <li>✦ <strong>Envoie un message de remerciement</strong> simple et personnalisé à ton interlocuteur.</li>
+          <li>✦ <strong>Garde une trace claire</strong> de chaque échange (nom, date, métier, points clés) pour bâtir ton réseau.</li>
+          <li>✦ <strong>Partage ton bilan</strong> avec ton conseiller Mission Locale pour ajuster ton plan d'action.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">LS4YOU · Mission Locale Pays Basque · Atelier Image de soi & Posture professionnelle</div>
 
 <script>
-// ── Scroll progress ──
+// ─── Stars ───
+document.querySelectorAll('.star-row').forEach(row => {
+  const stars = row.querySelectorAll('.star');
+  stars.forEach((star, i) => {
+    star.addEventListener('click', () => {
+      stars.forEach((s, j) => {
+        s.classList.toggle('active', j <= i);
+        s.style.filter = j <= i ? 'none' : 'grayscale(1)';
+        s.style.opacity = j <= i ? '1' : '0.3';
+      });
+    });
+  });
+});
+
+// ─── Scenarios ───
+const feedbacks = {
+  sc1: {
+    good: "✅ C'est la bonne attitude. S'excuser simplement et passer à autre chose, c'est la preuve qu'on est adulte. Pas besoin de se justifier pendant 5 minutes — ça rend les choses encore plus gênantes.",
+    bad: "❌ Pas top. Entrer sans rien dire, ça peut passer pour de l'insolence. À l'inverse, expliquer tout dans le détail, ça donne l'impression qu'on cherche des excuses. Un \"désolé pour le retard\" direct, c'est suffisant et efficace."
+  },
+  sc2: {
+    good: "✅ Bonne posture. Maintenir l'attention même quand c'est difficile, c'est ce qu'on attend de quelqu'un qui est là pour apprendre. Et ignorer celui qui ricane, c'est aussi une forme de respect envers la personne qui prend du temps pour vous.",
+    bad: "❌ Ça se voit toujours plus qu'on croit. Rire ou regarder son téléphone, même \"discrètement\", ça marque les gens. La personne en face a accepté de vous recevoir — ça mérite qu'on reste présent, même quand c'est long."
+  },
+  sc3: {
+    good: "✅ Exactement ça. Oser dire \"je n'ai pas compris\" c'est une force, pas une faiblesse. Les professionnels apprécient les jeunes qui posent des vraies questions plutôt que ceux qui font semblant de tout suivre.",
+    bad: "❌ Les deux autres options ont un problème en commun : tu repars sans l'info dont tu avais besoin. Faire semblant de comprendre ou esquiver, ça ne t'aide pas. Reformuler une question, c'est toujours mieux qu'un vide dans tes notes."
+  },
+  sc4: {
+    good: "✅ Réflexe nickel. Demander à poursuivre l'échange par mail ou plus tard, c'est montrer que la démarche compte vraiment pour toi. Et c'est souvent comme ça qu'on garde un contact utile pour la suite.",
+    bad: "❌ Attention. Montrer sa déception ou inventer des réponses, ce sont deux façons de terminer sur une mauvaise note. La visite n'est pas un examen — si t'as pas tout eu, t'as quand même appris des choses. Et tu peux toujours demander à revenir vers la personne."
+  }
+};
+
+function chooseScenario(el, scenId, isGood) {
+  const container = document.getElementById(scenId);
+  if (container.dataset.answered) return;
+  container.dataset.answered = '1';
+
+  container.querySelectorAll('.choice').forEach(c => {
+    c.style.pointerEvents = 'none';
+    c.style.opacity = '0.6';
+  });
+  el.style.opacity = '1';
+  el.style.borderColor = isGood ? 'var(--mint)' : 'var(--red)';
+  el.style.background = isGood ? '#E8F5E9' : '#FFEBEE';
+
+  const fb = document.getElementById('fb-' + scenId);
+  fb.textContent = isGood ? feedbacks[scenId].good : feedbacks[scenId].bad;
+  fb.className = 'choice-feedback ' + (isGood ? 'good' : 'bad');
+  fb.classList.remove('hidden');
+
+  // update progress
+  updateProgress();
+}
+
+// ─── Engagement ───
+function submitEngagement() {
+  const p = document.getElementById('prenom').value.trim();
+  const f = document.getElementById('force').value.trim();
+  const a = document.getElementById('amelio').value.trim();
+  const o = document.getElementById('objectif').value.trim();
+  if (!p) { alert("Écris ton prénom pour t'engager !"); return; }
+
+  const res = document.getElementById('engResult');
+  res.innerHTML = `🤝 <strong>${p}</strong>, tu t'engages !<br>
+    ✅ Tu apportes : <em>${f || '…'}</em><br>
+    📈 Tu vas travailler : <em>${a || '…'}</em><br>
+    🎯 Ton objectif : <em>${o || '…'}</em><br><br>
+    <span style="font-size:1.2rem">💪 Bonne visite !</span>`;
+  res.style.display = 'block';
+  res.classList.add('bounce');
+}
+
+// ─── Progress ───
+function updateProgress() {
+  const answered = document.querySelectorAll('[data-answered]').length;
+  const dots = document.querySelectorAll('.step-dot');
+  dots.forEach((d, i) => d.classList.toggle('active', i <= answered));
+}
+
+// ─── Structure type ───
+function selectStruct(btn, label) {
+  document.querySelectorAll('.struct-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const r = document.getElementById('struct-selected');
+  r.style.display = 'block';
+  r.textContent = '→ ' + label;
+}
+
+// ─── Métiers multiples ───
+let metierCount = 0;
+function addMetier() {
+  metierCount++;
+  const list = document.getElementById('metiers-list');
+  const row = document.createElement('div');
+  row.className = 'metier-row';
+  row.id = 'metier-row-' + metierCount;
+  row.innerHTML = `
+    <input class="enq-input" id="metier-${metierCount}" placeholder="Ex : Agent d'accueil, cuisinier, éducateur…">
+    <div class="metier-del" onclick="removeMetier(${metierCount})" title="Supprimer">✕</div>
+  `;
+  list.appendChild(row);
+}
+function removeMetier(id) {
+  const row = document.getElementById('metier-row-' + id);
+  if (row) row.remove();
+}
+function getMetiers() {
+  return [...document.querySelectorAll('#metiers-list input')].map(i => i.value.trim()).filter(Boolean);
+}
+
+// ─── Enquête : Tabs ───
+function switchTab(id) {
+  document.querySelectorAll('.enq-panel').forEach(p => p.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  document.querySelectorAll('.enq-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('btn-' + id).classList.add('active');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── Enquête : Questions ───
+const qCounts = { '1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0 };
+function toggleQ(el, gid) {
+  if (el.classList.contains('qitem-custom')) return;
+  el.classList.toggle('selected');
+  const chk = el.querySelector('.qcheck');
+  const on = el.classList.contains('selected');
+  chk.textContent = on ? '☑' : '☐';
+  qCounts[gid] = document.querySelectorAll('#qgroup-' + gid + ' .qitem.selected').length;
+  document.getElementById('counter-' + gid).textContent = qCounts[gid] + ' sélectionnée(s)';
+  updateQTotal();
+}
+function updateQTotal() {
+  const total = Object.values(qCounts).reduce((a,b)=>a+b,0);
+  document.getElementById('total-q-count').textContent = total;
+  const adv = document.getElementById('q-advice');
+  if (total < 8) adv.textContent = '— Vise 8 à 12 questions idéalement.';
+  else if (total <= 12) adv.textContent = '— Parfait ! Tu as un bon nombre de questions. ✅';
+  else adv.textContent = '— Attention, tu en as un peu trop. Affine ta sélection.';
+}
+function addCustomQ(groupId, gid) {
+  const text = prompt('Ta question personnalisée :');
+  if (!text || !text.trim()) return;
+  const group = document.getElementById(groupId);
+  const addBtn = group.querySelector('.qitem-custom');
+  const newQ = document.createElement('div');
+  newQ.className = 'qitem';
+  newQ.innerHTML = '<span class="qcheck">☐</span>' + text.trim();
+  newQ.onclick = function() { toggleQ(newQ, gid); };
+  group.insertBefore(newQ, addBtn);
+}
+
+// ─── Enquête : Checklist ───
+let chkTotal = 0;
+function toggleChk(el) {
+  el.classList.toggle('checked');
+  const box = el.querySelector('.chk-box');
+  const on = el.classList.contains('checked');
+  box.textContent = on ? '☑' : '☐';
+  const allChk = document.querySelectorAll('#tab-checklist .chk-item');
+  const done = document.querySelectorAll('#tab-checklist .chk-item.checked').length;
+  const pct = Math.round(done / allChk.length * 100);
+  document.getElementById('chk-count').textContent = done + ' / ' + allChk.length;
+  document.getElementById('chk-bar').style.width = pct + '%';
+  const msgs = ['','Bon début !','Continue !','Tu avances bien !','Presque prêt(e) !','Presque prêt(e) !','Presque prêt(e) !','Presque prêt(e) !','Presque prêt(e) !','Encore un peu !','✅ Tu es 100% prêt(e) pour la visite !'];
+  document.getElementById('chk-msg').textContent = msgs[done] || '';
+}
+
+// ─── Enquête : Attractivité ───
+function setAttract(btn, label) {
+  document.querySelectorAll('#attractivite .attract-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const r = document.getElementById('attract-result');
+  r.style.display = 'block';
+  r.textContent = '→ ' + label;
+}
+function setImpact(btn, label) {
+  document.querySelectorAll('#impact-btns .attract-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const r = document.getElementById('impact-result');
+  r.style.display = 'block';
+  r.textContent = '→ ' + label;
+}
+
+// ─── Enquête : Récap ───
+function generateRecap() {
+  const nom = document.getElementById('ent-nom').value || '—';
+  const secteur = document.getElementById('ent-secteur').value || '—';
+  const contact = document.getElementById('ent-contact').value || '—';
+  const poste = document.getElementById('ent-poste').value || '—';
+  const date = document.getElementById('ent-date').value || '—';
+  const metiers = getMetiers();
+  const metierStr = metiers.length ? metiers.join(' · ') : '—';
+  const structEl = document.querySelector('.struct-btn.selected');
+  const structType = structEl ? structEl.textContent : '—';
+  const top3 = document.getElementById('notes-top3').value || '—';
+  const surprise = document.getElementById('notes-surprise').value || '—';
+  const forces = document.getElementById('notes-forces').value || '—';
+  const dev = document.getElementById('notes-dev').value || '—';
+  const synthese = document.getElementById('bilan-synthese').value || '—';
+  const action = document.getElementById('bilan-action').value || '—';
+  const rdv = document.getElementById('bilan-rdv').value || '—';
+  const attractEl = document.querySelector('#attractivite .attract-btn.selected');
+  const attract = attractEl ? attractEl.textContent : '—';
+  const impactEl = document.querySelector('#impact-btns .attract-btn.selected');
+  const impact = impactEl ? impactEl.textContent : '—';
+
+  const qSelected = [...document.querySelectorAll('.qitem.selected')].map(q => q.textContent.replace('☑','').trim());
+
+  const out = document.getElementById('recap-output');
+  out.style.display = 'block';
+  out.innerHTML = `
+    <div style="background:var(--black); color:var(--yellow); font-family:'Poppins',sans-serif; font-weight:900; font-size:0.95rem; padding:12px 16px; border-radius:8px; margin-bottom:16px; letter-spacing:0.5px;">
+      📄 FICHE D'ENQUÊTE MÉTIER — ${nom.toUpperCase()}
+    </div>
+    <table style="width:100%; border-collapse:collapse; font-size:0.8rem; margin-bottom:16px;">
+      <tr><td style="padding:5px 8px; font-weight:700; width:200px; background:#f5f5f5; border:1px solid #ddd;">Structure</td><td style="padding:5px 8px; border:1px solid #ddd;">${nom} <em style="color:#888; font-size:0.75rem;">(${structType})</em></td></tr>
+      <tr><td style="padding:5px 8px; font-weight:700; background:#f5f5f5; border:1px solid #ddd;">Secteur / Domaine</td><td style="padding:5px 8px; border:1px solid #ddd;">${secteur}</td></tr>
+      <tr><td style="padding:5px 8px; font-weight:700; background:#f5f5f5; border:1px solid #ddd;">Personne rencontrée</td><td style="padding:5px 8px; border:1px solid #ddd;">${contact} — ${poste}</td></tr>
+      <tr><td style="padding:5px 8px; font-weight:700; background:#f5f5f5; border:1px solid #ddd;">Date de visite</td><td style="padding:5px 8px; border:1px solid #ddd;">${date}</td></tr>
+      <tr><td style="padding:5px 8px; font-weight:700; background:#f5f5f5; border:1px solid #ddd;">Métier(s) explorés</td><td style="padding:5px 8px; border:1px solid #ddd;">${metierStr}</td></tr>
+    </table>
+    ${qSelected.length ? `<div style="margin-bottom:12px;"><strong style="font-family:'Poppins',sans-serif; font-size:0.8rem;">Questions posées (${qSelected.length}) :</strong><ul style="margin-top:6px; padding-left:16px;">${qSelected.map(q=>`<li style="margin-bottom:3px;">${q}</li>`).join('')}</ul></div>` : ''}
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+      <div style="background:#E0F7FA; border:1.5px solid #ccc; border-radius:8px; padding:10px 12px;">
+        <strong style="font-size:0.78rem; font-family:'Poppins',sans-serif;">🔑 Points clés retenus</strong>
+        <p style="margin-top:4px; font-size:0.77rem; white-space:pre-wrap;">${top3}</p>
+      </div>
+      <div style="background:#FFF9E6; border:1.5px solid #ccc; border-radius:8px; padding:10px 12px;">
+        <strong style="font-size:0.78rem; font-family:'Poppins',sans-serif;">😮 Surprises</strong>
+        <p style="margin-top:4px; font-size:0.77rem;">${surprise}</p>
+      </div>
+      <div style="background:#E8F5E9; border:1.5px solid #ccc; border-radius:8px; padding:10px 12px;">
+        <strong style="font-size:0.78rem; font-family:'Poppins',sans-serif;">💪 Mes points forts</strong>
+        <p style="margin-top:4px; font-size:0.77rem;">${forces}</p>
+      </div>
+      <div style="background:#FBE9E7; border:1.5px solid #ccc; border-radius:8px; padding:10px 12px;">
+        <strong style="font-size:0.78rem; font-family:'Poppins',sans-serif;">📈 À développer</strong>
+        <p style="margin-top:4px; font-size:0.77rem;">${dev}</p>
+      </div>
+    </div>
+    <div style="background:#F3E5F5; border:1.5px solid #ccc; border-radius:8px; padding:10px 12px; margin-bottom:10px;">
+      <strong style="font-size:0.78rem; font-family:'Poppins',sans-serif;">✍️ Synthèse personnelle</strong>
+      <p style="margin-top:4px; font-size:0.77rem;">${synthese}</p>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
+      <div style="background:#E8F5E9; border:1.5px solid #ccc; border-radius:8px; padding:8px 12px; flex:1; min-width:180px;">
+        <strong style="font-size:0.77rem;">🌡️ Attractivité :</strong> ${attract}
+      </div>
+      <div style="background:#E3F2FD; border:1.5px solid #ccc; border-radius:8px; padding:8px 12px; flex:1; min-width:180px;">
+        <strong style="font-size:0.77rem;">🔄 Impact sur mon projet :</strong> ${impact}
+      </div>
+    </div>
+    <div style="background:var(--yellow); border:2px solid var(--black); border-radius:8px; padding:10px 14px; font-family:'Poppins',sans-serif; font-weight:700; font-size:0.82rem;">
+      🚀 Prochaine action : ${action} <span style="font-weight:400; margin-left:10px;">📅 RDV conseiller : ${rdv}</span>
+    </div>
+    <div style="margin-top:12px; text-align:center; font-size:0.72rem; color:#888; font-style:italic;">
+      Généré avec l'outil LS4YOU · Mission Locale Pays Basque
+    </div>
+  `;
+  out.classList.add('bounce');
+}
+
+// ─── Scroll progress ───
 window.addEventListener('scroll', () => {
-  const phases = ['phase1','phase2','phase3','phase4','phase5','phase6'];
+  const phases = ['phase1','phase2','phase3','phase4','phase5'];
   const dots = document.querySelectorAll('.step-dot');
   let active = 0;
   phases.forEach((id, i) => {
@@ -1036,65 +1910,6 @@ window.addEventListener('scroll', () => {
   });
   dots.forEach((d, i) => d.classList.toggle('active', i <= active));
 });
-
-// ── Phase 1 · Mur des lieux ──
-const lieuxColors = ['#FFD54F','#A5D6A7','#90CAF9','#FFAB91','#CE93D8','#F48FB1'];
-let lieuxCount = 0;
-function addLieu() {
-  const inp = document.getElementById('lieu-input');
-  const val = inp.value.trim();
-  if (!val) return;
-  const wall = document.getElementById('lieux-wall');
-  const postit = document.createElement('div');
-  postit.style.cssText = `background:${lieuxColors[lieuxCount % lieuxColors.length]};border:2px solid var(--black);border-radius:8px;padding:7px 12px;font-size:0.78rem;font-weight:700;box-shadow:2px 2px 0 rgba(0,0,0,0.12);display:flex;align-items:center;gap:6px;animation:pop-in 0.2s ease;`;
-  postit.innerHTML = `<span style="font-size:0.85rem;">📍</span>${val}`;
-  wall.appendChild(postit);
-  lieuxCount++;
-  inp.value = '';
-  inp.focus();
-}
-document.getElementById('lieu-input').addEventListener('keypress', e => { if (e.key === 'Enter') addLieu(); });
-
-// ── Phase 3 · Tours ──
-const tourMsgs = ['', '1 tour terminé !', '2 tours terminés — à mi-parcours.', '3 tours — encore un !', '✅ 4 tours terminés — passer à la Phase 4.'];
-function toggleTour(el) {
-  el.classList.toggle('done');
-  const done = document.querySelectorAll('.tour-dot.done').length;
-  document.getElementById('tour-msg').textContent = tourMsgs[done] || '';
-}
-
-// ── Phase 4 · Cartographie ──
-const posColors = { connais:'#A5D6A7', decouvrir:'#90CAF9', interesse:'#FFD54F' };
-function addPostit(col) {
-  const inp = document.getElementById('inp-' + col);
-  const val = inp.value.trim();
-  if (!val) return;
-  const container = document.getElementById('col-' + col);
-  const inputRow = container.querySelector('.carto-input-row');
-  const postit = document.createElement('div');
-  postit.className = 'carto-postit';
-  postit.style.background = posColors[col];
-  const id = Date.now();
-  postit.innerHTML = `<span>${val}</span><button class="postit-del" onclick="this.parentElement.remove()">✕</button>`;
-  container.insertBefore(postit, inputRow);
-  inp.value = '';
-  inp.focus();
-}
-['connais','decouvrir','interesse'].forEach(col => {
-  document.getElementById('inp-' + col).addEventListener('keypress', e => { if (e.key === 'Enter') addPostit(col); });
-});
-
-// ── Phase 5 · Engagements ──
-function addEngagement() {
-  const val = document.getElementById('engagement-text').value.trim();
-  if (!val) { alert('Écris ton engagement d\'abord.'); return; }
-  const list = document.getElementById('eng-list');
-  const item = document.createElement('div');
-  item.className = 'eng-item bounce';
-  item.innerHTML = `<span>📌 ${val}</span><button style="background:none;border:none;cursor:pointer;color:#888;font-size:0.8rem;" onclick="this.parentElement.remove()">✕</button>`;
-  list.appendChild(item);
-  document.getElementById('engagement-text').value = '';
-}
 </script>
 </body>
 </html>
